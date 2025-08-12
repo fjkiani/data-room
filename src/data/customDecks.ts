@@ -4,6 +4,7 @@ import type { SlideDeck } from '../types/slides.js';
 // Import your custom components here
 import RUNX1Component from './decks/runx1.jsx';
 import crisPRO101 from './decks/101.jsx';
+import ZetaShieldSecurity from './decks/security.jsx';
 
 // Helper function to create a deck from just a component
 export const createCustomDeck = (
@@ -59,5 +60,15 @@ export const customDecks: SlideDeck[] = [
     crisPRO101,
     'Fahad Kiani',
     'product' // Category - thumbnail auto-generated from first slide
+  ),
+
+  // Zeta Shield Security Presentation
+  createCustomDeck(
+    'zeta-shield-security',
+    'Zeta Shield: Security Operating System',
+    'Comprehensive security architecture for AI-driven R&D - featuring agent monitoring, threat detection, compliance, and verifiable access control',
+    ZetaShieldSecurity,
+    'Fahad Kiani',
+    'product' // Category - security and product showcase
   ),
 ]; 
