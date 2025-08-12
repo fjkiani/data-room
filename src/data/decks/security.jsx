@@ -107,7 +107,7 @@ const ZetaShieldIntroVisual = ({ visual, summary }) => (
     </>
 );
 
-const OktaVisual = ({ processSteps }) => (
+const Auth0Visual = ({ processSteps }) => (
     <div className="flex flex-col lg:flex-row items-center justify-center space-y-8 lg:space-y-0 lg:space-x-12">
         {/* Left Side - Users */}
         <div className="flex flex-col space-y-6">
@@ -125,11 +125,11 @@ const OktaVisual = ({ processSteps }) => (
         <div className="flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-6">
             <ArrowRight className="text-4xl text-blue-400 animate-pulse" />
             
-            {/* Okta Logo Card */}
-            <div className="p-8 bg-white rounded-2xl shadow-2xl border-4 border-blue-500/30">
+            {/* Auth0 Logo Card */}
+            <div className="p-8 bg-white rounded-2xl shadow-2xl border-4 border-orange-500/30">
                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="h-20 w-20">
-                    <title>Okta</title>
-                    <path fill="#007DC1" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 19.2a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4z"/>
+                    <title>Auth0</title>
+                    <path fill="#EB5424" d="M21.98 7.448L19.62 0H4.347L2.02 7.448c-1.352 4.312.03 9.206 3.815 12.015L12.007 24l6.157-4.537c3.785-2.809 5.167-7.703 3.815-12.015zm-9.973 5.134c-2.212 0-4.003-1.79-4.003-4.003s1.79-4.003 4.003-4.003 4.003 1.79 4.003 4.003-1.791 4.003-4.003 4.003z"/>
                 </svg>
                 <p className="text-center text-slate-800 font-bold mt-3">Enterprise Identity</p>
             </div>
@@ -178,7 +178,7 @@ const TwoColumnGrid = ({ content }) => (
                         {React.createElement(item.icon, { className: `${item.iconColor} mt-1`, size: 20 })}
                         <div>
                             <h4 className="font-semibold text-slate-200">{item.title}</h4>
-                            <p className="text-slate-300 text-sm">{item.text}</p>
+                            <p className="text-slate-200 text-base">{item.text}</p>
                         </div>
                     </div>
                 ))}
@@ -197,7 +197,7 @@ const TwoColumnGrid = ({ content }) => (
                             <span className={item.statusColor}>{item.status}</span>
                         </div>
                         <p className="text-slate-200 mt-2">{item.description}</p>
-                        <p className="text-xs text-slate-500">{item.metadata}</p>
+                        <p className="text-sm text-slate-400">{item.metadata}</p>
                     </div>
                 ))}
             </div>
@@ -283,11 +283,11 @@ const Slide = ({ slideData }) => {
                 <>
                     <div className="flex items-center justify-center space-x-4">
                         <div className="flex flex-col items-center space-y-2 p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
-                            <div className="p-4 bg-white rounded-lg">
-                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="h-12 w-12"><title>Okta</title><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 19.2a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4z"/></svg>
-                            </div>
-                            <h3 className="text-2xl font-bold text-blue-400">{content.okta.title}</h3>
-                            <p className="text-slate-400">{content.okta.text}</p>
+                                                    <div className="p-4 bg-white rounded-lg">
+                            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="h-12 w-12"><title>Auth0</title><path fill="#EB5424" d="M21.98 7.448L19.62 0H4.347L2.02 7.448c-1.352 4.312.03 9.206 3.815 12.015L12.007 24l6.157-4.537c3.785-2.809 5.167-7.703 3.815-12.015zm-9.973 5.134c-2.212 0-4.003-1.79-4.003-4.003s1.79-4.003 4.003-4.003 4.003 1.79 4.003 4.003-1.791 4.003-4.003 4.003z"/></svg>
+                        </div>
+                        <h3 className="text-2xl font-bold text-orange-400">{content.auth0.title}</h3>
+                        <p className="text-slate-400">{content.auth0.text}</p>
                         </div>
                         <div className="text-5xl text-slate-500 font-black">+</div>
                         <div className="flex flex-col items-center space-y-2 p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
@@ -331,10 +331,10 @@ const Slide = ({ slideData }) => {
                 </>
             )}
 
-            {content.type === 'okta-gatekeeper' && (
+            {content.type === 'auth0-gatekeeper' && (
                 <>
-                    <OktaVisual />
-                    <p className="text-xl text-slate-300 max-w-4xl mx-auto border-l-4 border-blue-500 pl-6 text-left" dangerouslySetInnerHTML={{ __html: content.footerText }}></p>
+                    <Auth0Visual />
+                    <p className="text-xl text-slate-300 max-w-4xl mx-auto border-l-4 border-orange-500 pl-6 text-left" dangerouslySetInnerHTML={{ __html: content.footerText }}></p>
                 </>
             )}
 
@@ -646,7 +646,7 @@ const slidesData = [
             summary: {
                 title: "Comprehensive Security Architecture",
                 items: [
-                    { icon: UserCheck, title: "Identity Layer", subtitle: "Okta Integration", color: "cyan" },
+                    { icon: UserCheck, title: "Identity Layer", subtitle: "Auth0 Integration", color: "cyan" },
                     { icon: Fingerprint, title: "Asset Control", subtitle: "Blockchain Permissions", color: "cyan" },
                     { icon: FileClock, title: "Audit Trail", subtitle: "Immutable Records", color: "cyan" },
                     { icon: Bot, title: "AI Security", subtitle: "Engine Protection", color: "cyan" }
@@ -696,7 +696,7 @@ const slidesData = [
                 {
                     icon: UserPlus,
                     title: "1. Identity Verification",
-                    description: "Multi-factor authentication through Okta, background verification, and role-based access assignment with cryptographic key generation.",
+                    description: "Multi-factor authentication through Auth0, background verification, and role-based access assignment with cryptographic key generation.",
                     iconColor: "text-blue-400",
                     iconBgClass: "bg-blue-500/20",
                     iconBorderClass: "border-blue-500",
@@ -778,7 +778,7 @@ const slidesData = [
             response: {
                 title: "Research Security Framework",
                 sections: [
-                    { title: "Access Control", bulletColor: "bg-emerald-400", points: ["Okta-verified researcher authentication", "Project-specific permission validation", "Granular data access boundaries"] },
+                    { title: "Access Control", bulletColor: "bg-emerald-400", points: ["Auth0-verified researcher authentication", "Project-specific permission validation", "Granular data access boundaries"] },
                     { title: "IP Protection", bulletColor: "bg-green-400", points: ["Real-time tracking of research outputs", "Immutable audit trail of all AI operations", "Secure IP-NFT generation upon completion"] }
                 ]
             }
@@ -860,8 +860,8 @@ const slidesData = [
             },
             doctrinePoints: [
                 {
-                    title: "Layer 1: Identity & Authentication (Okta Integration)",
-                    text: "Okta serves as the authoritative source for user identity and role-based permissions. Every researcher, partner, and administrator must authenticate through Okta's enterprise platform with multi-factor authentication before accessing any therapeutic data or AI engines."
+                    title: "Layer 1: Identity & Authentication (Auth0 Integration)",
+                    text: "Auth0 serves as the authoritative source for user identity and role-based permissions. Every researcher, partner, and administrator must authenticate through Auth0's enterprise platform with multi-factor authentication before accessing any therapeutic data or AI engines."
                 },
                 {
                     title: "Layer 2: Asset-Level Access Control (Blockchain)",
@@ -898,7 +898,7 @@ const slidesData = [
                     title: "Zeta Shield Core",
                     titleColor: "text-cyan-400",
                     items: [
-                        { icon: UserCheck, iconColor: "text-cyan-400", text: "Unified Identity (Okta)" },
+                        { icon: UserCheck, iconColor: "text-cyan-400", text: "Unified Identity (Auth0)" },
                         { icon: Fingerprint, iconColor: "text-cyan-400", text: "Blockchain Verification" },
                         { icon: Monitor, iconColor: "text-cyan-400", text: "Global Threat Detection" },
                     ]
@@ -929,11 +929,11 @@ const slidesData = [
     },
     {
         title: "Enterprise Identity Management",
-        subtitle: "Okta integration for seamless, secure access control",
-        titleGradient: "from-blue-400 to-indigo-400",
+        subtitle: "Auth0 integration for seamless, secure access control",
+        titleGradient: "from-orange-400 to-red-400",
         content: {
-            type: 'okta-gatekeeper',
-            footerText: "Unlike traditional systems that apply generic IT security to biotech, Zeta Shield recognizes that **intellectual property requires asset-specific protection**. Okta provides enterprise-grade identity management, while our blockchain layer ensures that authenticated users can only access the specific therapeutic data they're authorized to work with."
+            type: 'auth0-gatekeeper',
+            footerText: "Unlike traditional systems that apply generic IT security to biotech, Zeta Shield recognizes that **intellectual property requires asset-specific protection**. Auth0 provides enterprise-grade identity management, while our blockchain layer ensures that authenticated users can only access the specific therapeutic data they're authorized to work with."
         }
     },
     {
@@ -1068,14 +1068,14 @@ const slidesData = [
         titleGradient: "from-purple-400 to-pink-400",
         content: {
             type: 'access-control',
-            okta: { title: "Identity Verification", text: "Okta verifies *who* you are." },
+            auth0: { title: "Identity Verification", text: "Auth0 verifies *who* you are." },
             blockchain: { title: "Permission Verification", text: "The blockchain verifies *what you're allowed to do*." },
             strategic: {
                 title: "The Strategic Opportunity",
                 points: [
-                    { icon: Globe, title: "Bridge Web2 & Web3", text: "Combines Okta's enterprise-grade identity with the immutable, verifiable nature of the blockchain." },
+                    { icon: Globe, title: "Bridge Web2 & Web3", text: "Combines Auth0's enterprise-grade identity with the immutable, verifiable nature of the blockchain." },
                     { icon: Zap, title: "Solve a High-Value Problem", text: "Purpose-built for securing multi-billion dollar digital assets in biotech, AI development, and beyond." },
-                    { icon: Building, title: "Expand the Ecosystem", text: "Creates a new product category that extends Okta's reach into the high-growth world of verifiable, decentralized data." }
+                    { icon: Building, title: "Expand the Ecosystem", text: "Creates a new product category that extends Auth0's reach into the high-growth world of verifiable, decentralized data." }
                 ]
             }
         }
