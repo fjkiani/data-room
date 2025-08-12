@@ -238,9 +238,9 @@ const StatCard = ({ value, label, className = '' }) => (
  */
 const InfoCard = ({ icon, title, children, color = 'cyan' }) => (
     <div className={`bg-slate-800/50 p-6 rounded-xl border border-${color}-500/30 text-center`}>
-        {React.createElement(icon, { size: 48, className: `mx-auto text-${color}-400 mb-4` })}
+        {icon && React.createElement(icon, { size: 48, className: `mx-auto text-${color}-400 mb-4` })}
         <h4 className={`text-xl font-bold text-${color}-400 mb-2`}>{title}</h4>
-        <p className="text-slate-400">{children}</p>
+        <div className="text-slate-400">{children}</div>
     </div>
 );
 
@@ -700,20 +700,8 @@ const Slide = ({ slideData }) => {
 const slidesData = [
   // SLIDE 1: TITLE
   {
-    title: (
-      <>
-        CrisPRO.ai<br />
-        {/* <span className="text-6xl md:text-8xl bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-          .AI
-        </span> */}
-      </>
-    ),
-    subtitle: (
-      <>
-        The End of Guesswork. <span className="font-bold text-yellow-400">for Oncology</span> 
-        {/* <span className="italic font-semibold text-cyan-400">In Silico</span> */}
-      </>
-    ),
+    title: "CrisPRO.ai",
+    subtitle: "The End of Guesswork for Oncology",
     titleClassName: "from-purple-400 via-pink-400 to-red-400 drop-shadow-2xl leading-none tracking-tight text-7xl md:text-9xl",
     backgroundClass: "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900",
     content: {
@@ -957,9 +945,9 @@ const slidesData = [
       type: 'feature-grid-with-info',
       useEnhancedLayout: true,
       features: [
-        { icon: '❓', title: 'Clinical Dead End', description: 'A "Variant of Uncertain Significance" (VUS) is found. Treatment decisions are paralyzed.', borderColor: 'border-yellow-500', accentColor: 'bg-yellow-500/20 text-yellow-400' },
-        { icon: '🧠', title: 'The Intelligence Engine', borderColor: 'border-cyan-400/50', accentColor: 'bg-none text-cyan-400', animation: 'animate-ping', isAI: true },
-        { icon: '✅', title: 'Actionable Intelligence', description: 'The Zeta Oracle delivers a quantitative Zeta Score, transforming ambiguity into certainty.', borderColor: 'border-green-500', accentColor: 'bg-green-500/20 text-green-400' }
+        { icon: React.createElement(AlertTriangle, { size: 48 }), title: 'Clinical Dead End', description: 'A "Variant of Uncertain Significance" (VUS) is found. Treatment decisions are paralyzed.', borderColor: 'border-yellow-500', accentColor: 'bg-yellow-500/20 text-yellow-400' },
+        { icon: React.createElement(BrainCircuit, { size: 48 }), title: 'The Intelligence Engine', borderColor: 'border-cyan-400/50', accentColor: 'bg-none text-cyan-400', animation: 'animate-ping', isAI: true },
+        { icon: React.createElement(UserCheck, { size: 48 }), title: 'Actionable Intelligence', description: 'The Zeta Oracle delivers a quantitative Zeta Score, transforming ambiguity into certainty.', borderColor: 'border-green-500', accentColor: 'bg-green-500/20 text-green-400' }
       ],
       infoBoxes: [
         { title: 'The Doctrine', description: "We taught our AI the entire language of DNA. It doesn't just check a database; it understands biological grammar.", borderColor: 'border-cyan-500/30', textColor: 'text-cyan-400' },
@@ -1022,6 +1010,247 @@ const slidesData = [
       ]
     }
   },
+
+  // KILL CHAIN SLIDES
+  // R&D Efficiency Crisis
+  {
+    title: 'The R&D Efficiency Crisis',
+    subtitle: 'The current model for drug discovery is defined by high risk and inefficiency.',
+    titleClassName: "from-red-500 to-orange-400",
+    content: {
+      type: 'stats-grid',
+      useEnhancedLayout: true,
+      stats: [
+        { value: '>90%', label: 'Clinical Trial Failure Rate' },
+        { value: '$2.8B+', label: 'Cost Per Approved Drug' },
+        { value: '5-10', label: 'Years to a Candidate' }
+      ]
+    },
+    notes: "This high-risk, trial-and-error process is unsustainable. Our platform re-architects R&D into a rapid, data-driven, and predictive science."
+  },
+
+  // Kill Chain Target
+  {
+    title: 'Step 1: Target Validation',
+    subtitle: 'We replace ambiguity with a definitive, data-driven verdict.',
+    titleClassName: "from-cyan-500 to-sky-400",
+    content: {
+      type: 'simple-block',
+      useEnhancedLayout: true,
+      block: {
+        icon: Target,
+        mainText: 'The first step in any successful R&D program is choosing the right target. While others are paralyzed by uncertain data ("VUS"), our **Zeta Oracle** delivers a quantitative verdict on any genetic target\'s functional impact.',
+        subText: '**For Biotech Partners:** This means you don\'t waste billions chasing the wrong target. We provide the foundational intelligence to proceed with confidence.',
+        iconColor: "text-cyan-400",
+        borderColor: "border-slate-700"
+      }
+    }
+  },
+
+  // Kill Chain Target Detail
+  {
+    title: 'The Triumvirate Threat Assessment',
+    subtitle: 'Our multi-layered protocol for achieving absolute certainty.',
+    titleClassName: "from-cyan-500 to-sky-400",
+    content: {
+      type: 'process-flow',
+      useEnhancedLayout: true,
+      steps: [
+        {
+          icon: Dna,
+          title: 'Input: The Threat',
+          description: 'A "Variant of Uncertain Significance" (VUS) is identified in a critical gene like RUNX1.',
+          bgClass: 'bg-slate-700/50',
+          borderClass: 'border-slate-600',
+          textClass: 'text-slate-300',
+          titleClass: 'text-slate-300'
+        },
+        {
+          icon: Cpu,
+          title: 'The Zeta Oracle',
+          description: 'Our AI, built on the first principles of biology, calculates a quantitative Zeta Score of the variant\'s functional damage.',
+          bgClass: 'bg-cyan-500/20',
+          borderClass: 'border-cyan-500',
+          textClass: 'text-cyan-400',
+          titleClass: 'text-cyan-400'
+        },
+        {
+          icon: Shield,
+          title: 'The Verdict',
+          description: 'The VUS is definitively re-classified as Pathogenic, providing a validated, actionable target for therapeutic design.',
+          bgClass: 'bg-green-500/20',
+          borderClass: 'border-green-500',
+          textClass: 'text-green-400',
+          titleClass: 'text-green-400'
+        }
+      ]
+    }
+  },
+
+  // Kill Chain Forge
+  {
+    title: 'Step 2: Therapeutic Design',
+    subtitle: 'We don\'t discover candidates. We engineer them.',
+    titleClassName: "from-purple-500 to-pink-400",
+    content: {
+      type: 'simple-block',
+      useEnhancedLayout: true,
+      block: {
+        icon: Bot,
+        mainText: 'With a validated target, our generative AI, the **Zeta Forge**, is commanded to engineer a multi-modal arsenal of potential therapeutic solutions, from CRISPR payloads to novel biologics.',
+        subText: '**For Biotech Partners:** This compresses the "Lead Generation" phase from years to a matter of hours, providing a diverse portfolio of proprietary candidates.',
+        iconColor: "text-purple-400",
+        borderColor: "border-slate-700"
+      }
+    }
+  },
+
+  // Kill Chain Forge Detail
+  {
+    title: 'The Zeta Forge: In Silico Factory',
+    subtitle: 'Our Unfair Advantage: The 1M Token Context Window.',
+    titleClassName: "from-purple-500 to-pink-400",
+    content: {
+      type: 'process-flow',
+      useEnhancedLayout: true,
+      steps: [
+        {
+          icon: Shield,
+          title: 'Input: Validated Target',
+          description: 'A pathogenic variant from the Zeta Oracle becomes the mission objective.',
+          bgClass: 'bg-green-500/20',
+          borderClass: 'border-green-500',
+          textClass: 'text-green-400',
+          titleClass: 'text-green-400'
+        },
+        {
+          icon: Bot,
+          title: 'The Zeta Forge',
+          description: 'Our generative AI, with its massive 1M token context, designs a portfolio of therapeutic candidates.',
+          bgClass: 'bg-purple-500/20',
+          borderClass: 'border-purple-500',
+          textClass: 'text-purple-400',
+          titleClass: 'text-purple-400'
+        },
+        {
+          icon: TestTube2,
+          title: 'Output: The Arsenal',
+          description: 'The result is a diverse set of in silico validated weapons, from CRISPR payloads to novel biologics.',
+          bgClass: 'bg-slate-700/50',
+          borderClass: 'border-slate-600',
+          textClass: 'text-slate-300',
+          titleClass: 'text-slate-300'
+        }
+      ]
+    }
+  },
+
+  // Kill Chain Boltz
+  {
+    title: 'Step 3: In Silico Validation',
+    subtitle: 'Every therapeutic is battle-tested before it\'s built.',
+    titleClassName: "from-orange-500 to-yellow-400",
+    content: {
+      type: 'simple-block',
+      useEnhancedLayout: true,
+      block: {
+        icon: Cuboid,
+        mainText: 'A sequence is not a therapy. Our **Zeta Boltz** engine runs every designed candidate through an in silico firing range, simulating its 3D interaction with the target to predict binding affinity and efficacy.',
+        subText: '**For Biotech Partners:** This provides the critical, structural proof of mechanism, dramatically de-risking the candidate before committing to expensive lab synthesis.',
+        iconColor: "text-orange-400",
+        borderColor: "border-slate-700"
+      }
+    }
+  },
+
+  // Kill Chain Boltz Detail
+  {
+    title: 'The Zeta Boltz: In Silico Firing Range',
+    subtitle: 'From a 1D Blueprint to a 3D Proof of Victory.',
+    titleClassName: "from-orange-500 to-yellow-400",
+    content: {
+      type: 'process-flow',
+      useEnhancedLayout: true,
+      steps: [
+        {
+          icon: Bot,
+          title: 'Input: Forged Weapon',
+          description: 'A novel nanobody sequence, generated by the Zeta Forge.',
+          bgClass: 'bg-purple-500/20',
+          borderClass: 'border-purple-500',
+          textClass: 'text-purple-400',
+          titleClass: 'text-purple-400'
+        },
+        {
+          icon: Cuboid,
+          title: 'The Simulation',
+          description: 'Our AlphaFold 3-powered engine simulates the 3D protein-protein interaction between our weapon and its target.',
+          bgClass: 'bg-orange-500/20',
+          borderClass: 'border-orange-500',
+          textClass: 'text-orange-400',
+          titleClass: 'text-orange-400'
+        },
+        {
+          icon: Shield,
+          title: 'The Verdict',
+          description: 'The result is a quantitative Binding Affinity Score, providing definitive proof of the weapon\'s physical lethality.',
+          bgClass: 'bg-green-500/20',
+          borderClass: 'border-green-500',
+          textClass: 'text-green-400',
+          titleClass: 'text-green-400'
+        }
+      ]
+    }
+  },
+
+  // Kill Chain Asset
+  {
+    title: 'The Deliverable: A De-Risked Asset',
+    subtitle: 'We don\'t deliver data. We deliver a validated, pre-clinical asset.',
+    titleClassName: "from-green-500 to-teal-400",
+    content: {
+      type: 'simple-block',
+      useEnhancedLayout: true,
+      block: {
+        icon: Package,
+        mainText: 'The final output of our in silico kill chain is not a report; it is a **de-risked, high-value therapeutic asset** with a complete dossier of predictive data.',
+        subText: '**For Biotech Partners:** We give you a candidate that has already won the digital war, dramatically increasing its probability of victory on the clinical battlefield.',
+        iconColor: "text-green-400",
+        borderColor: "border-slate-700"
+      }
+    }
+  },
+
+  // Kill Chain Asset Detail
+  {
+    title: 'The Therapeutic Dossier',
+    subtitle: 'The final output of our in silico conquest.',
+    titleClassName: "from-green-500 to-teal-400",
+    content: {
+      type: 'asset-dossier',
+      useEnhancedLayout: true,
+      assetId: 'Asset: CS-RUNX1-GC-001',
+      status: 'Ready for Wet-Lab',
+      checkpoints: [
+        {
+          icon: Target,
+          iconColor: 'text-cyan-400',
+          text: '**Target Validation:** <span class="font-mono text-green-400">COMPLETE</span>'
+        },
+        {
+          icon: Bot,
+          iconColor: 'text-purple-400',
+          text: '**Weapon Design:** <span class="font-mono text-green-400">COMPLETE</span>'
+        },
+        {
+          icon: Cuboid,
+          iconColor: 'text-orange-400',
+          text: '**Structural Validation:** <span class="font-mono text-green-400">COMPLETE</span>'
+        }
+      ],
+      description: 'This dossier contains the full sequence data, in silico efficacy and safety scores, and structural binding predictions, providing our partners with a de-risked asset with a high probability of clinical success.'
+    }
+  },
 ];
 
 //================================================================================
@@ -1042,7 +1271,11 @@ const SlideManager = {
       'ip-nft', 'competitive-advantage', 'target-validation', 'deliverable',
       // New slides
       'rd-command-center', 'zeta-oracle-uncertainty', 'beyond-analysis', 
-      'zeta-forge-engineering', 'ip-nft-lifecycle'
+      'zeta-forge-engineering', 'ip-nft-lifecycle',
+      // Kill chain slides
+      'rd-efficiency-crisis', 'kill-chain-target', 'kill-chain-target-detail',
+      'kill-chain-forge', 'kill-chain-forge-detail', 'kill-chain-boltz',
+      'kill-chain-boltz-detail', 'kill-chain-asset', 'kill-chain-asset-detail'
     ];
     
     slideNames.forEach((name, index) => {
