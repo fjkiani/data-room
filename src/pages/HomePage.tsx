@@ -7,22 +7,15 @@ import type { SlideDeck } from '../types/slides.js';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   const filteredDecks = useMemo(() => {
     return sampleDecks.filter(deck => {
-      const matchesSearch = searchQuery === '' || 
-        deck.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        deck.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        deck.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-      
       const matchesCategory = selectedCategory === 'all' || deck.category === selectedCategory;
-      
-      return matchesSearch && matchesCategory;
+      return matchesCategory;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [selectedCategory]);
 
   const handleDeckClick = (deck: SlideDeck) => {
     navigate(`/deck/${deck.id}`);
