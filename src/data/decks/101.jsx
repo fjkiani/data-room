@@ -5,36 +5,42 @@
 // Define your slide order here - just change the order to rearrange!
 const SLIDE_ORDER = [
   'title',
+//   'rd-command-center',
   'crisis', 
   'actionability-gap',
   'command-center',
-  'oracle-action',
+//   'oracle-action',
   'zeta-oracle-uncertainty',
-  'generative-advantage',
+//   'generative-advantage',
+'beyond-analysis',
+
   'forge-action',
   'structural-blind-spot',
   'boltz-action',
   // Add the new slides from your other presentation
-  'rd-command-center',
 //   'zeta-oracle-uncertainty',
-  'beyond-analysis',
-  'zeta-forge-engineering',
-  'ip-nft-lifecycle',
+//   'ip-nft-lifecycle',
   // Add the kill chain slides
-  'rd-efficiency-crisis',
-  'kill-chain-target',
+//   'kill-chain-target',
   'kill-chain-target-detail',
-  'kill-chain-forge',
-  'kill-chain-forge-detail',
-  'kill-chain-boltz',
-  'kill-chain-boltz-detail',
-  'kill-chain-asset',
-  'kill-chain-asset-detail',
-  // Continue with existing slides
-  'ip-nft',
+  'zeta-oracle-deep-dive',
+  'zeta-forge-deep-dive',
+  'zeta-boltz-deep-dive',
+  'risk-prediction',
+  'fda-approval-strategy',
   'competitive-advantage',
-  'target-validation',
-  'deliverable'
+//   'target-validation',
+//   'kill-chain-forge',
+//   'kill-chain-forge-detail',
+//   'kill-chain-boltz',
+//   'kill-chain-boltz-detail',
+//   'kill-chain-asset',
+//   'kill-chain-asset-detail',
+//   // Continue with existing slides
+//   'ip-nft',
+//   'competitive-advantage',
+//   'target-validation',
+//   'deliverable'
 ];
 
 // You can also create different presentation flows:
@@ -46,7 +52,9 @@ const PRESENTATION_MODES = {
   alternative: ['title', 'rd-command-center', 'zeta-oracle-uncertainty', 'beyond-analysis', 'zeta-forge-engineering', 'ip-nft-lifecycle'], // Alternative flow with new slides
   combined: ['title', 'crisis', 'rd-command-center', 'oracle-action', 'zeta-oracle-uncertainty', 'forge-action', 'zeta-forge-engineering', 'competitive-advantage'], // Best of both
   killchain: ['title', 'rd-efficiency-crisis', 'kill-chain-target', 'kill-chain-target-detail', 'kill-chain-forge', 'kill-chain-forge-detail', 'kill-chain-boltz', 'kill-chain-boltz-detail', 'kill-chain-asset', 'kill-chain-asset-detail'], // Full kill chain process
-  process: ['title', 'kill-chain-target', 'kill-chain-forge', 'kill-chain-boltz', 'kill-chain-asset'] // Simplified process view
+  process: ['title', 'kill-chain-target', 'kill-chain-forge', 'kill-chain-boltz', 'kill-chain-asset'], // Simplified process view
+  enhanced: ['title', 'crisis', 'zeta-oracle-deep-dive', 'zeta-forge-deep-dive', 'zeta-boltz-deep-dive', 'risk-prediction', 'fda-approval-strategy', 'competitive-advantage'], // Enhanced detail slides
+  deepdive: ['title', 'zeta-oracle-deep-dive', 'zeta-forge-deep-dive', 'zeta-boltz-deep-dive'] // Just the enhanced component slides
 };
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -461,25 +469,7 @@ const Slide = ({ slideData }) => {
                 </div>
             )}
 
-            {content?.type === 'two-hit-hypothesis' && (
-                <div className="bg-gradient-to-r from-slate-900/80 to-slate-800/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-2xl border border-slate-600/50">
-                    <div className="flex flex-col lg:flex-row items-center justify-around space-y-8 lg:space-y-0 lg:space-x-4">
-                        {content.steps.map((step, i) => (
-                            <React.Fragment key={i}>
-                                <div className="flex flex-col items-center group">
-                                    <div className={`relative w-32 h-32 ${step.bgClass} rounded-full flex items-center justify-center text-white shadow-2xl`}>
-                                        <span className="text-sm font-bold z-10">{step.title}</span>
-                                    </div>
-                                    <div className="mt-4 bg-green-500/20 rounded-lg px-4 py-2 border border-green-500/30">
-                                        <p className="text-green-300 text-lg font-semibold">{step.label}</p>
-                                    </div>
-                                </div>
-                                {i < content.steps.length - 1 && <div className="text-5xl text-slate-400 animate-pulse">⚡</div>}
-                            </React.Fragment>
-                        ))}
-                    </div>
-                </div>
-            )}
+
             
             {content?.type === 'process-steps-with-info' && (
                 <>
@@ -684,6 +674,13 @@ const Slide = ({ slideData }) => {
                 </div>
             )}
 
+            {/* Enhanced content types from runx1 */}
+            {content?.type === 'two-hit-hypothesis' && <TwoHitHypothesis content={content} />}
+            {content?.type === 'risk-prediction-map' && <RiskPredictionMap content={content} />}
+            {content?.type === 'therapeutic-arsenal' && <TherapeuticArsenal content={content} />}
+            {content?.type === 'gene-correction' && <GeneCorrection content={content} />}
+            {content?.type === 'approval-process' && <ApprovalProcess content={content} />}
+
             {notes && (
                 <p className="text-slate-400 text-lg max-w-4xl mx-auto mt-8" dangerouslySetInnerHTML={{ __html: notes }}></p>
             )}
@@ -691,6 +688,180 @@ const Slide = ({ slideData }) => {
         </Layout>
     );
 };
+
+// Enhanced content type components from runx1
+const TwoHitHypothesis = ({ content }) => (
+    <div className="relative w-full max-w-7xl mx-auto px-4">
+        {/* Background flow line */}
+        <div className="absolute top-1/2 left-8 right-8 h-1 bg-gradient-to-r from-yellow-400 via-cyan-400 via-green-400 to-purple-400 opacity-30 transform -translate-y-1/2 hidden lg:block"></div>
+        
+        <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between w-full space-y-12 lg:space-y-0 relative z-10">
+            {content.steps.map((step, index) => (
+                <React.Fragment key={index}>
+                    <div className="flex flex-col items-center group">
+                        {/* Icon circle */}
+                        <div className={`relative w-32 h-32 rounded-full flex items-center justify-center mb-6 shadow-2xl transform transition-all duration-300 group-hover:scale-110 ${step.colorClass} ${step.animationClass || ''}`}>
+                            <div className="absolute inset-0 rounded-full bg-white/10 backdrop-blur-sm"></div>
+                            <div className="text-6xl relative z-10">{step.mutationIcon}</div>
+                            {step.animationClass && (
+                                <div className="absolute inset-0 rounded-full border-4 border-white/30 animate-ping"></div>
+                            )}
+                        </div>
+                        
+                        {/* Content card */}
+                        <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-600/50 shadow-xl w-72 text-center transform transition-all duration-300 group-hover:-translate-y-2">
+                            <h3 className="text-2xl font-bold text-white mb-3">{step.title}</h3>
+                            <p className="text-slate-300 text-sm leading-relaxed">{step.subtext}</p>
+                        </div>
+                        
+                        {/* Step number */}
+                        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                            {index + 1}
+                        </div>
+                    </div>
+                    
+                    {/* Arrow connector */}
+                    {index < content.steps.length - 1 && (
+                        <div className="flex items-center justify-center lg:mx-4">
+                            <div className="hidden lg:flex items-center">
+                                <div className="w-16 h-0.5 bg-gradient-to-r from-slate-400 to-slate-600"></div>
+                                <div className="w-0 h-0 border-l-8 border-r-0 border-t-4 border-b-4 border-l-slate-500 border-t-transparent border-b-transparent ml-1"></div>
+                            </div>
+                            <div className="lg:hidden">
+                                <div className="h-16 w-0.5 bg-gradient-to-b from-slate-400 to-slate-600"></div>
+                                <div className="w-0 h-0 border-t-8 border-b-0 border-l-4 border-r-4 border-t-slate-500 border-l-transparent border-r-transparent mt-1"></div>
+                            </div>
+                        </div>
+                    )}
+                </React.Fragment>
+            ))}
+        </div>
+    </div>
+);
+
+const RiskPredictionMap = ({ content }) => (
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+        {/* Known Threat */}
+        <div className="flex flex-col space-y-4">
+            <div className={`flex flex-col items-center space-y-4 p-6 rounded-2xl border-2 ${content.knownThreat.borderColor} ${content.knownThreat.iconBg}`}>
+                <div className="text-4xl">{content.knownThreat.icon}</div>
+                <h3 className={`text-2xl font-bold ${content.knownThreat.accentColor}`}>{content.knownThreat.title}</h3>
+                <p className="text-slate-400 text-center">{content.knownThreat.subtext}</p>
+            </div>
+        </div>
+
+        {/* AI Core */}
+        <div className="flex flex-col items-center space-y-4">
+            <div className={`text-8xl p-4 rounded-full border-2 ${content.aiCore.borderColor} relative`}>
+                {content.aiCore.icon}
+                <div className={`absolute inset-0 -m-4 border-2 ${content.aiCore.borderColor} rounded-full animate-ping`}></div>
+            </div>
+            <h3 className="text-2xl font-bold text-cyan-400">{content.aiCore.title}</h3>
+        </div>
+
+        {/* Predictions */}
+        <div className="flex flex-col space-y-4">
+            <h3 className="text-2xl font-bold text-slate-300 mb-4">Predicted Mutations:</h3>
+            {content.predictions.map((prediction, i) => (
+                <div key={i} className="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                    <p className="text-lg font-semibold text-slate-300">{prediction.name}</p>
+                    <p className={`text-sm font-bold ${prediction.colorClass}`}>{prediction.risk}</p>
+                </div>
+            ))}
+        </div>
+    </div>
+);
+
+const TherapeuticArsenal = ({ content }) => (
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+        {/* Input */}
+        <div className={`flex flex-col items-center space-y-4 p-6 rounded-2xl border-2 ${content.input.borderColor} ${content.input.iconBg}`}>
+            <div className="text-4xl">{content.input.icon}</div>
+            <h3 className={`text-2xl font-bold ${content.input.accentColor}`}>{content.input.title}</h3>
+        </div>
+
+        {/* Process */}
+        <div className="flex flex-col items-center space-y-4">
+            <div className={`text-8xl p-4 rounded-full border-2 ${content.process.borderColor} relative`}>
+                {content.process.icon}
+                <div className={`absolute inset-0 -m-4 border-2 ${content.process.borderColor} rounded-full animate-ping`}></div>
+            </div>
+            <h3 className="text-2xl font-bold text-purple-400">{content.process.title}</h3>
+        </div>
+
+        {/* Outputs */}
+        <div className="flex flex-col space-y-4">
+            <h3 className="text-2xl font-bold text-slate-300 mb-4">Therapeutic Arsenal:</h3>
+            {content.outputs.map((output, i) => (
+                <div key={i} className="bg-slate-800/50 p-4 rounded-xl border border-green-500/30">
+                    <div className="flex items-center">
+                        <span className="text-green-400 mr-4 text-2xl">{output.icon}</span>
+                        <p className="font-semibold text-green-400">{output.text}</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+);
+
+const GeneCorrection = ({ content }) => (
+    <>
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full space-y-8 lg:space-y-0 lg:space-x-12 mb-12">
+            {/* Problem */}
+            <div className={`flex flex-col items-center space-y-4 p-8 rounded-2xl border-2 ${content.problem.borderColor} ${content.problem.accentColor} w-72`}>
+                <div className="text-4xl">{content.problem.icon}</div>
+                <h3 className={`text-2xl font-bold ${content.problem.textColor}`}>{content.problem.title}</h3>
+                <p className="text-slate-400 text-center">{content.problem.subtext}</p>
+            </div>
+
+            <div className="text-5xl text-slate-500 animate-pulse">➡️</div>
+
+            {/* Outcome */}
+            <div className={`flex flex-col items-center space-y-4 p-8 rounded-2xl border-2 ${content.outcome.borderColor} ${content.outcome.accentColor} w-72`}>
+                <div className="text-4xl">{content.outcome.icon}</div>
+                <h3 className={`text-2xl font-bold ${content.outcome.textColor}`}>{content.outcome.title}</h3>
+                <p className="text-slate-400 text-center">{content.outcome.subtext}</p>
+            </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {content.infoBoxes.map((box, i) => (
+                <div key={i} className={`${box.bgClass} p-6 rounded-xl border ${box.borderColor} text-center`}>
+                    <h4 className={`text-2xl font-bold ${box.textColor} mb-3`}>{box.title}</h4>
+                    <p className="text-slate-300 text-lg">{box.text}</p>
+                </div>
+            ))}
+        </div>
+    </>
+);
+
+const ApprovalProcess = ({ content }) => (
+    <>
+        <div className="mb-12">
+            <h3 className="text-3xl font-bold text-slate-300 mb-8 text-center">Our Digital Dossier</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                {content.dossier.map((item, i) => (
+                    <div key={i} className={`${item.bgClass} p-6 rounded-2xl ${item.borderClass} text-center text-white`}>
+                        <h4 className="text-xl font-bold mb-2">{item.title}</h4>
+                        <p className="text-sm opacity-90">{item.subtitle}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        <div className="max-w-4xl mx-auto">
+            <h3 className="text-3xl font-bold text-slate-300 mb-6 text-center">FDA Evidence Hierarchy</h3>
+            <div className="space-y-4">
+                {content.fdaTiers.map((tier, i) => (
+                    <div key={i} className={`${tier.bgClass} p-4 rounded-xl border border-slate-700 text-center`}>
+                        <p className={`text-lg font-semibold ${tier.textColor}`}>{tier.title}</p>
+                    </div>
+                ))}
+            </div>
+            <p className="text-slate-400 text-center mt-6 text-lg">{content.fdaText}</p>
+        </div>
+    </>
+);
 
 
 //================================================================================
@@ -763,8 +934,8 @@ const slidesData = [
       type: 'simple-block',
       block: {
         icon: FlaskConical,
-        mainText: "Competitors are analysts. They are trapped in the world of observation, identifying problems without the tools to solve them.",
-        subText: "This is our most profound advantage. We are the only platform with a **generative engine**. We don't just find the target; we engineer the therapeutic to neutralize it.",
+        mainText: "We are the only platform with a Generative Engine. We don't just find the target; we engineer the therapeutic to neutralize it..",
+        // subText: "This is our most profound advantage",
         iconColor: "text-purple-400",
         borderColor: "border-slate-700"
       }
@@ -789,9 +960,9 @@ const slidesData = [
       column2: {
         title: 'Our Unfair Advantage:',
         highlight: '1M Token Context',
-        description: "The Evo2 model's massive context window is our most defensible moat. While competitors are limited to designing therapeutics with short, inefficient components, we see the entire genomic neighborhood.",
+        description: "We see the entire genomic neighborhood.",
         infoHeader: 'This allows us to forge:',
-        infoText: "Ultra-Long Homology Arms for high-efficiency gene correction—a capability that is physically impossible for smaller models. We don't just design a patch; we engineer a perfect, factory-spec replacement part."
+        infoText: "Ultra-Long Homology Arms (HDR), a DNA repair mechanism in cells for high-efficiency gene correction —a capability where we don't just design a patch; we engineer a perfect, factory-spec replacement part."
       }
     }
   },
@@ -805,7 +976,7 @@ const slidesData = [
       block: {
         icon: Puzzle,
         mainText: "The Zeta Forge creates a perfect 1D blueprint (the sequence). But in biology, war is fought in three dimensions. A protein's function is defined by its shape.",
-        subText: "Without knowing if our forged weapon can physically bind to its target, our `in silico` campaign is incomplete. We must bridge the gap from sequence to structure.",
+        // subText: "Without knowing if our forged weapon can physically bind to its target, our `in silico` campaign is incomplete. We must bridge the gap from sequence to structure.",
         iconColor: "text-orange-400",
         borderColor: "border-slate-700"
       }
@@ -965,8 +1136,8 @@ const slidesData = [
     content: {
       type: 'text-block-with-icon',
       useEnhancedLayout: true,
-      mainText: 'Competitors are analysts. They are trapped in the world of observation, identifying problems without the tools to solve them.',
-      subText: 'This is our most profound advantage. We are the only platform with a **generative engine**. We don\'t just find the target; we engineer the therapeutic to neutralize it.'
+      mainText: 'We are the only platform with a Generative Engine. We don\'t just find the target; we engineer the therapeutic to neutralize it..',
+    //   subText: 'This is our most profound advantage. We are the only platform with a **generative engine**. We don\'t just find the target; we engineer the therapeutic to neutralize it.'
     }
   },
 
@@ -1251,6 +1422,187 @@ const slidesData = [
       description: 'This dossier contains the full sequence data, in silico efficacy and safety scores, and structural binding predictions, providing our partners with a de-risked asset with a high probability of clinical success.'
     }
   },
+
+  // Enhanced Zeta Oracle Deep Dive
+  {
+    title: 'The Zeta Oracle: Clinical VUS Resolution',
+    subtitle: 'From Genetic Ambiguity to Actionable Intelligence',
+    titleClassName: "from-cyan-400 to-blue-300",
+    backgroundClass: 'bg-gradient-to-br from-slate-900 via-cyan-900/20 to-slate-900',
+    content: {
+      type: 'two-hit-hypothesis',
+      steps: [
+        { 
+          title: 'VUS Discovery', 
+          subtext: 'Unknown Impact & Clinical Paralysis', 
+          colorClass: 'bg-gradient-to-br from-yellow-400 to-orange-500',
+          mutationIcon: '❓'
+        },
+        { 
+          title: 'Oracle Analysis', 
+          subtext: 'AI Grammar Check on Biology', 
+          colorClass: 'bg-gradient-to-br from-cyan-400 to-blue-600',
+          mutationIcon: '🧠',
+          animationClass: 'animate-pulse'
+        },
+        { 
+          title: 'Zeta Score', 
+          subtext: 'Quantitative Functional Impact', 
+          colorClass: 'bg-gradient-to-br from-green-400 to-emerald-600',
+          mutationIcon: '✅'
+        },
+        { 
+          title: 'Clinical Action', 
+          subtext: 'Validated Target Ready for Design', 
+          colorClass: 'bg-gradient-to-br from-purple-400 to-pink-600',
+          mutationIcon: '🎯'
+        }
+      ]
+    },
+    notes: "The Zeta Oracle doesn't just check databases—it understands the fundamental grammar of biology. This allows it to predict the functional impact of any variant, even those never seen before."
+  },
+
+  // Enhanced Zeta Forge Deep Dive
+  {
+    title: 'The Zeta Forge: Therapeutic Engineering',
+    subtitle: 'From Validated Target to Multi-Modal Arsenal',
+    titleClassName: "from-purple-400 to-pink-300",
+    backgroundClass: 'bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900',
+    content: {
+      type: 'therapeutic-arsenal',
+      input: { 
+        icon: '🎯', 
+        title: 'Validated Target', 
+        iconBg: 'bg-cyan-500/20', 
+        borderColor: 'border-cyan-500', 
+        accentColor: 'text-cyan-400' 
+      },
+      process: { 
+        icon: '🔨', 
+        title: 'Zeta Forge Engine', 
+        borderColor: 'border-purple-400/50' 
+      },
+      outputs: [
+        { icon: '🧬', text: 'Precision Gene Correction' },
+        { icon: '✂️', text: 'Synthetic Lethal Payload' },
+        { icon: '🛡️', text: 'Novel Nanobody Inhibitor' },
+        { icon: '💊', text: 'Small Molecule Modulator' }
+      ]
+    },
+    notes: "Our 1M token context window provides an unfair advantage: we can design ultra-long homology arms and complex therapeutic architectures that are impossible for smaller models."
+  },
+
+  // Enhanced Boltz Deep Dive  
+  {
+    title: 'Zeta Boltz: Structural Validation Engine',
+    subtitle: 'From 1D Blueprint to 3D Proof of Mechanism',
+    titleClassName: "from-orange-500 to-yellow-400",
+    backgroundClass: 'bg-gradient-to-br from-slate-900 via-orange-900/20 to-slate-900',
+    content: {
+      type: 'gene-correction',
+      problem: { 
+        icon: '🧪', 
+        title: 'The Challenge', 
+        subtext: 'Sequence ≠ Function', 
+        borderColor: 'border-yellow-500', 
+        accentColor: 'bg-yellow-500/20', 
+        textColor: 'text-yellow-400' 
+      },
+      outcome: { 
+        icon: '🏆', 
+        title: 'The Solution', 
+        subtext: 'Structural Proof', 
+        borderColor: 'border-green-500', 
+        accentColor: 'bg-green-500/20', 
+        textColor: 'text-green-400' 
+      },
+      infoBoxes: [
+        { 
+          title: 'AlphaFold 3 Integration', 
+          text: 'Our engine leverages the latest protein folding models to simulate 3D interactions between designed therapeutics and their targets, providing quantitative binding affinity predictions.', 
+          bgClass: 'bg-slate-800/50', 
+          borderColor: 'border-orange-500/30', 
+          textColor: 'text-orange-400' 
+        },
+        { 
+          title: 'In Silico Clinical Validation', 
+          text: 'Every therapeutic candidate is battle-tested in our digital firing range before a single dollar is spent on wet-lab synthesis. This dramatically de-risks the development process.', 
+          bgClass: 'bg-slate-800/50', 
+          borderColor: 'border-green-500/30', 
+          textColor: 'text-green-400' 
+        }
+      ]
+    },
+    notes: "Zeta Boltz transforms drug discovery from an art into an engineering discipline. We don't hope for binding—we engineer it."
+  },
+
+  // Risk Prediction & Resistance Modeling
+  {
+    title: 'Predictive Disease Evolution Modeling',
+    subtitle: 'Anticipating Mutations to Design Future-Proof Therapies',
+    titleClassName: "from-indigo-400 to-purple-400",
+    backgroundClass: 'bg-gradient-to-br from-slate-900 via-indigo-900/20 to-slate-900',
+    content: {
+      type: 'risk-prediction-map',
+      knownThreat: { 
+        icon: '🧬', 
+        title: 'Known Risk Factor', 
+        subtext: 'RUNX1 Mutation', 
+        iconBg: 'bg-red-500/20', 
+        borderColor: 'border-red-500', 
+        accentColor: 'text-red-400' 
+      },
+      aiCore: { 
+        icon: '🧠', 
+        title: 'Predictive Engine', 
+        borderColor: 'border-cyan-400/50' 
+      },
+      predictions: [
+        { name: 'ASXL1', risk: 'High Risk (-15k)', colorClass: 'text-red-400' },
+        { name: 'TET2', risk: 'Med Risk (-12k)', colorClass: 'text-orange-400' },
+        { name: 'DNMT3A', risk: 'Low Risk (-9k)', colorClass: 'text-yellow-400' },
+        { name: 'IDH2', risk: 'Emerging Risk', colorClass: 'text-blue-400' }
+      ]
+    },
+    notes: "Instead of reacting to disease evolution, we predict it. This allows us to design therapies that are effective today and resilient against future resistance mutations."
+  },
+
+  // FDA Approval Strategy
+  {
+    title: 'Accelerating FDA Approval',
+    subtitle: 'Digital Evidence for Regulatory Success',
+    titleClassName: "from-blue-400 to-teal-400",
+    backgroundClass: 'bg-gradient-to-br from-slate-900 via-blue-900/30 to-slate-900',
+    content: {
+      type: 'approval-process',
+      dossier: [
+        { 
+          title: 'Zeta Score Evidence', 
+          subtitle: 'Quantified Target Validation', 
+          bgClass: 'bg-gradient-to-br from-cyan-600 to-blue-700', 
+          borderClass: 'border-2 border-cyan-400/50' 
+        },
+        { 
+          title: 'Design Rationale', 
+          subtitle: 'AI-Engineered Solutions', 
+          bgClass: 'bg-gradient-to-br from-purple-600 to-indigo-700', 
+          borderClass: 'border-2 border-purple-400/50' 
+        },
+        { 
+          title: 'Structural Validation', 
+          subtitle: 'In Silico Proof of Mechanism', 
+          bgClass: 'bg-gradient-to-br from-orange-600 to-red-700', 
+          borderClass: 'border-2 border-orange-400/50' 
+        }
+      ],
+      fdaTiers: [
+        { title: 'Tier 3: Case Reports & Observational Studies', bgClass: 'bg-red-500/20', textColor: 'text-red-300' },
+        { title: 'Tier 2: Cohort Studies & Registry Data', bgClass: 'bg-yellow-500/20', textColor: 'text-yellow-300' },
+        { title: 'Tier 1: Randomized Controlled Trials', bgClass: 'bg-green-500/20', textColor: 'text-green-300' }
+      ],
+      fdaText: 'Our comprehensive digital dossier provides evidence across all FDA tiers, dramatically accelerating the path to approval and reducing regulatory risk.'
+    }
+  },
 ];
 
 //================================================================================
@@ -1275,7 +1627,10 @@ const SlideManager = {
       // Kill chain slides
       'rd-efficiency-crisis', 'kill-chain-target', 'kill-chain-target-detail',
       'kill-chain-forge', 'kill-chain-forge-detail', 'kill-chain-boltz',
-      'kill-chain-boltz-detail', 'kill-chain-asset', 'kill-chain-asset-detail'
+      'kill-chain-boltz-detail', 'kill-chain-asset', 'kill-chain-asset-detail',
+      // Enhanced detail slides
+      'zeta-oracle-deep-dive', 'zeta-forge-deep-dive', 'zeta-boltz-deep-dive',
+      'risk-prediction', 'fda-approval-strategy'
     ];
     
     slideNames.forEach((name, index) => {
