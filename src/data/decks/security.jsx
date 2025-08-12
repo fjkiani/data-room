@@ -1080,23 +1080,7 @@ const slidesData = [
             }
         }
     },
-    {
-        title: "The Market Opportunity",
-        subtitle: "Securing the Future of Digital R&D",
-        titleGradient: "from-green-400 to-teal-400",
-        content: {
-            type: 'market-opportunity',
-            icon: FlaskConical,
-            strategyTitle: "Go-to-Market Strategy",
-            strategyMainText: "Our beachhead market is the **$200B+ annual spend** in biotech and pharma R&D, where the need for verifiable data integrity is most acute.",
-            strategySubText: "From there, we will expand to become the security standard for all high-value digital R&D, including AI model development, advanced materials science, and beyond.",
-            satellites: [
-                { icon: BrainCircuit, text: "AI Model Development", position: "top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center" },
-                { icon: Gem, text: "Advanced Materials", position: "bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 text-center" },
-                { icon: Globe, text: "All High-Value IP", position: "left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 text-center" }
-            ]
-        }
-    }
+
 ];
 
 //================================================================================
