@@ -42,13 +42,13 @@ const HomePage: React.FC = () => {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
           {/* Search Bar */}
           <div className="flex-1 max-w-lg">
-            <input
+            {/* <input
               type="text"
               placeholder="Search decks, tags, or content..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+            /> */}
           </div>
 
           {/* Category Filter */}

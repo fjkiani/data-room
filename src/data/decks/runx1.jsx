@@ -128,17 +128,17 @@ const ProcessStep = ({ icon, title, description, accentColor, borderColor, subte
 // Component for the "Two-Hit Hypothesis" diagram
 const TwoHitDiagramCell = ({ title, subtext, colorClass, mutationIcon, animationClass }) => (
     <div className="flex flex-col items-center group">
-        <div className={`relative w-32 h-32 ${colorClass} rounded-full flex items-center justify-center text-white shadow-2xl transform transition-transform group-hover:scale-110`}>
-            {animationClass && <div className={`absolute inset-0 ${colorClass} rounded-full ${animationClass} opacity-20`}></div>}
+        <div className={`relative w-32 h-32 ${colorClass} rounded-full flex items-center justify-center text-white shadow-2xl transform transition-transform group-hover:scale-110 ${animationClass || ''}`}>
+            <div className="absolute inset-0 rounded-full bg-white/10 backdrop-blur-sm"></div>
             {mutationIcon && (
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center animate-bounce">
-                    <span className="text-xs">{mutationIcon}</span>
+                <div className="absolute -top-2 -right-2 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg">
+                    <span className="text-lg">{mutationIcon}</span>
                 </div>
             )}
-            <span className="text-sm font-bold z-10">{title}</span>
+            <span className="text-sm font-bold z-10 text-center px-2" dangerouslySetInnerHTML={{__html: title}}></span>
         </div>
-        <div className={`mt-4 ${colorClass.replace('from-', 'bg-').replace('to-', 'bg-').replace('600', '500').replace('700', '500')}/20 rounded-lg px-4 py-2 border ${colorClass.replace('from-', 'border-').replace('to-', 'border-').replace('600', '500').replace('700', '500')}/30`}>
-            <p className={`${colorClass.replace('from-', 'text-').replace('to-', 'text-').replace('600', '300').replace('700', '300')} text-lg font-semibold`}>{subtext}</p>
+        <div className="mt-4 bg-slate-800/60 rounded-lg px-4 py-2 border border-slate-600/50 backdrop-blur-sm">
+            <p className="text-slate-200 text-sm font-semibold text-center" dangerouslySetInnerHTML={{__html: subtext}}></p>
         </div>
     </div>
 );
@@ -194,8 +194,15 @@ const Slide = ({ slideData }) => {
                                 <React.Fragment key={index}>
                                     <TwoHitDiagramCell {...step} />
                                     {index < content.steps.length - 1 && (
-                                        <div className="text-5xl text-slate-400 animate-pulse">
-                                            <span className="inline-block transform hover:scale-125 transition-transform">⚡</span>
+                                        <div className="flex items-center justify-center mx-4">
+                                            <div className="hidden lg:flex items-center">
+                                                <div className="w-12 h-0.5 bg-gradient-to-r from-slate-400 to-slate-600"></div>
+                                                <div className="w-0 h-0 border-l-6 border-r-0 border-t-3 border-b-3 border-l-slate-500 border-t-transparent border-b-transparent ml-1"></div>
+                                            </div>
+                                            <div className="lg:hidden">
+                                                <div className="h-12 w-0.5 bg-gradient-to-b from-slate-400 to-slate-600"></div>
+                                                <div className="w-0 h-0 border-t-6 border-b-0 border-l-3 border-r-3 border-t-slate-500 border-l-transparent border-r-transparent mt-1"></div>
+                                            </div>
                                         </div>
                                     )}
                                 </React.Fragment>

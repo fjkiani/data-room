@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
           </div>
 
           {/* Search Bar */}
-          <div className="flex-1 max-w-md mx-8">
+          {/* <div className="flex-1 max-w-md mx-8">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
                 onChange={(e) => onSearch?.(e.target.value)}
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Navigation */}
           <nav className="flex items-center space-x-4">
