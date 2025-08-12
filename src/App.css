@@ -36,3 +36,15 @@ html, body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Mobile swipe hint animation */
+@keyframes fade-in-out {
+  0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+}
+
+.animate-fade-in-out {
+  animation: fade-in-out 4s ease-in-out;
+}

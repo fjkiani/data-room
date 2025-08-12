@@ -81,6 +81,49 @@ const DeckViewerPage: React.FC = () => {
     setCurrentSlideIndex(index);
   };
 
+  // Touch/swipe support state
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      goToNextSlide();
+    } else if (isRightSwipe) {
+      goToPreviousSlide();
+    }
+  };
+
+  // Handle click/tap navigation (left/right sides of screen)
+  const handleScreenClick = (e: React.MouseEvent) => {
+    const screenWidth = window.innerWidth;
+    const clickX = e.clientX;
+    
+    // Left third of screen = previous, right third = next, middle third = no action
+    if (clickX < screenWidth / 3) {
+      goToPreviousSlide();
+    } else if (clickX > (screenWidth * 2) / 3) {
+      goToNextSlide();
+    }
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') goToPreviousSlide();
@@ -107,10 +150,24 @@ const DeckViewerPage: React.FC = () => {
   if (isCinematic) {
     // Full cinematic mode - no header, no sidebar, just the slide
     return (
-      <div className="cinematic-mode bg-slate-900 z-50">
+      <div 
+        className="cinematic-mode bg-slate-900 z-50"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onClick={handleScreenClick}
+        style={{ touchAction: 'pan-y' }} // Allow vertical scrolling but handle horizontal swipes
+      >
         <div className="absolute inset-0 w-full h-full">
           {currentSlide && <SlideRenderer slide={currentSlide} />}
           
+          {/* Mobile swipe hint - only show on mobile for first few seconds */}
+          <div className="absolute top-5 left-1/2 transform -translate-x-1/2 z-40 md:hidden animate-fade-in-out">
+            <div className="bg-black/50 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full">
+              ← Swipe to navigate →
+            </div>
+          </div>
+
           {/* Minimal navigation controls for cinematic mode */}
           <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 z-50 flex items-center space-x-2 bg-black/30 backdrop-blur-sm p-3 rounded-2xl">
             <button
@@ -238,7 +295,14 @@ const DeckViewerPage: React.FC = () => {
         {/* Slide Display Area */}
         <div className="flex-1 flex flex-col">
           {/* Slide Content */}
-          <div className={`flex-1 flex items-center justify-center w-full ${isFullscreen ? 'p-0' : 'p-8'}`}>
+          <div 
+            className={`flex-1 flex items-center justify-center w-full ${isFullscreen ? 'p-0' : 'p-8'}`}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onClick={handleScreenClick}
+            style={{ touchAction: 'pan-y' }}
+          >
             <div className="w-full h-full flex items-center justify-center">
               {currentSlide && <SlideRenderer slide={currentSlide} />}
             </div>

@@ -25,16 +25,27 @@ const DeckPreview: React.FC<DeckPreviewProps> = ({
     );
   }
 
+  // Calculate scale to fit while maintaining aspect ratio
+  const scaleX = width / 1920;
+  const scaleY = height / 1080;
+  const scale = Math.min(scaleX, scaleY);
+  
+  // Calculate centered positioning
+  const scaledWidth = 1920 * scale;
+  const scaledHeight = 1080 * scale;
+  const offsetX = (width - scaledWidth) / 2;
+  const offsetY = (height - scaledHeight) / 2;
+
   return (
     <div 
       className="overflow-hidden relative bg-slate-900"
       style={{ width, height }}
     >
-      {/* Scale down the component to fit in preview */}
+      {/* Scale down and center the component */}
       <div 
         className="origin-top-left"
         style={{ 
-          transform: `scale(${Math.min(width / 1920, height / 1080)})`,
+          transform: `translate(${offsetX}px, ${offsetY}px) scale(${scale})`,
           width: '1920px',
           height: '1080px'
         }}

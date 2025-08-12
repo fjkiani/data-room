@@ -691,21 +691,21 @@ const Slide = ({ slideData }) => {
 
 // Enhanced content type components from runx1
 const TwoHitHypothesis = ({ content }) => (
-    <div className="relative w-full max-w-7xl mx-auto px-4">
+    <div className="relative w-full max-w-6xl mx-auto px-8">
         {/* Background flow line */}
-        <div className="absolute top-1/2 left-8 right-8 h-2 bg-gradient-to-r from-yellow-400 via-cyan-400 via-green-400 to-purple-400 opacity-40 transform -translate-y-1/2 hidden lg:block rounded-full shadow-lg">
+        <div className="absolute top-1/2 left-12 right-12 h-2 bg-gradient-to-r from-yellow-400 via-cyan-400 via-green-400 to-purple-400 opacity-40 transform -translate-y-1/2 hidden lg:block rounded-full shadow-lg">
             <div className="absolute inset-0 bg-gradient-to-r from-yellow-300 via-cyan-300 via-green-300 to-purple-300 rounded-full animate-pulse opacity-50"></div>
         </div>
         
-        <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between w-full space-y-12 lg:space-y-0 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-evenly w-full space-y-12 lg:space-y-0 lg:space-x-4 relative z-10">
             {content.steps.map((step, index) => (
                 <React.Fragment key={index}>
                     <div className="flex flex-col items-center group">
                         {/* Icon circle */}
-                        <div className={`relative w-40 h-40 rounded-full flex items-center justify-center mb-8 shadow-2xl transform transition-all duration-500 group-hover:scale-115 group-hover:rotate-3 ${step.colorClass} ${step.animationClass || ''}`}>
+                        <div className={`relative w-32 h-32 rounded-full flex items-center justify-center mb-6 shadow-2xl transform transition-all duration-500 group-hover:scale-115 group-hover:rotate-3 ${step.colorClass} ${step.animationClass || ''}`}>
                             <div className="absolute inset-0 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/30"></div>
                             <div className="absolute inset-2 rounded-full bg-black/10"></div>
-                            <div className="text-7xl relative z-10 filter drop-shadow-2xl">{step.mutationIcon}</div>
+                            <div className="text-5xl relative z-10 filter drop-shadow-2xl">{step.mutationIcon}</div>
                             {step.animationClass && (
                                 <div className="absolute inset-0 rounded-full border-4 border-white/40 animate-ping"></div>
                             )}
@@ -713,12 +713,12 @@ const TwoHitHypothesis = ({ content }) => (
                         </div>
                         
                         {/* Content card */}
-                        <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-md rounded-2xl p-8 border border-slate-500/30 shadow-2xl w-80 text-center transform transition-all duration-500 group-hover:-translate-y-3 group-hover:shadow-3xl group-hover:border-slate-400/50">
-                            <div className="mb-4">
-                                <h3 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-200 mb-2 tracking-tight">{step.title}</h3>
-                                <div className="h-1 w-16 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto rounded-full"></div>
+                        <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-md rounded-2xl p-6 border border-slate-500/30 shadow-2xl w-64 text-center transform transition-all duration-500 group-hover:-translate-y-3 group-hover:shadow-3xl group-hover:border-slate-400/50">
+                            <div className="mb-3">
+                                <h3 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-200 mb-2 tracking-tight">{step.title}</h3>
+                                <div className="h-1 w-12 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto rounded-full"></div>
                             </div>
-                            <p className="text-slate-300 text-base leading-relaxed font-medium tracking-wide">{step.subtext}</p>
+                            <p className="text-slate-300 text-sm leading-relaxed font-medium tracking-wide">{step.subtext}</p>
                         </div>
                         
                         {/* Step number */}
@@ -730,18 +730,18 @@ const TwoHitHypothesis = ({ content }) => (
                     
                     {/* Arrow connector */}
                     {index < content.steps.length - 1 && (
-                        <div className="flex items-center justify-center lg:mx-6">
+                        <div className="flex items-center justify-center lg:mx-2">
                             <div className="hidden lg:flex items-center opacity-80 hover:opacity-100 transition-opacity duration-300">
-                                <div className="w-20 h-1 bg-gradient-to-r from-slate-300 via-slate-400 to-slate-500 rounded-full shadow-lg relative">
+                                <div className="w-12 h-1 bg-gradient-to-r from-slate-300 via-slate-400 to-slate-500 rounded-full shadow-lg relative">
                                     <div className="absolute inset-0 bg-gradient-to-r from-white/30 to-transparent rounded-full animate-pulse"></div>
                                 </div>
-                                <div className="w-0 h-0 border-l-10 border-r-0 border-t-5 border-b-5 border-l-slate-400 border-t-transparent border-b-transparent ml-1 filter drop-shadow-lg"></div>
+                                <div className="w-0 h-0 border-l-8 border-r-0 border-t-4 border-b-4 border-l-slate-400 border-t-transparent border-b-transparent ml-1 filter drop-shadow-lg"></div>
                             </div>
                             <div className="lg:hidden opacity-80">
-                                <div className="h-20 w-1 bg-gradient-to-b from-slate-300 via-slate-400 to-slate-500 rounded-full shadow-lg relative mx-auto">
+                                <div className="h-12 w-1 bg-gradient-to-b from-slate-300 via-slate-400 to-slate-500 rounded-full shadow-lg relative mx-auto">
                                     <div className="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent rounded-full animate-pulse"></div>
                                 </div>
-                                <div className="w-0 h-0 border-t-10 border-b-0 border-l-5 border-r-5 border-t-slate-400 border-l-transparent border-r-transparent mt-1 mx-auto filter drop-shadow-lg"></div>
+                                <div className="w-0 h-0 border-t-8 border-b-0 border-l-4 border-r-4 border-t-slate-400 border-l-transparent border-r-transparent mt-1 mx-auto filter drop-shadow-lg"></div>
                             </div>
                         </div>
                     )}
