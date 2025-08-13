@@ -1,0 +1,24 @@
+# Deck Registry Refactor (Metadata-only)
+
+Goal: Make homepage ultra-light by loading only deck metadata at first, and loading actual deck components only in the viewer.
+
+## Create registry
+- Add `src/data/deckRegistry.ts` exporting `DeckSummary[]` with: `{ id, title, description, category, tags, blurb?, thumbnail?, importer }`
+- `importer`: `() => import('.../decks/<id>.jsx')`
+
+## Use registry on HomePage
+- Replace `sampleDecks` with `deckRegistry` for listing
+- Show thumbnail or placeholder; show `metadata.blurb` as Executive Summary
+- Prefetch `/deck/:id` on hover
+
+## Use importer in DeckViewerPage
+- Resolve `deckId` → find registry entry → call `importer()` and render via `CustomReactContent` or deck’s exported component
+
+## Keep compatibility
+- Keep `customDecks` temporarily; migrate gradually by filling the registry and reading metadata from deck files if needed
+
+References: [src/data/customDecks.ts](mdc:src/data/customDecks.ts), [src/pages/HomePage.tsx](mdc:src/pages/HomePage.tsx), [src/pages/DeckViewerPage.tsx](mdc:src/pages/DeckViewerPage.tsx), [src/components/slides/content/CustomReactContent.tsx](mdc:src/components/slides/content/CustomReactContent.tsx)
+description:
+globs:
+alwaysApply: false
+---

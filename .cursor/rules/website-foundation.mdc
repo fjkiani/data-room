@@ -1,0 +1,57 @@
+# Website Foundation: Structure, Navigation, Components, Content
+
+Use this rule to scaffold and evolve the main website consistently with our Data Room and Zeta Shield decks.
+
+## Site goals
+- Communicate Zeta Shield as the Security OS for AI-first Biotech R&D
+- Convert with clear CTAs: Request Access, Explore Data Room, Read Docs
+
+## Primary navigation
+- Product: Zeta Shield Security OS, AI Engine Protection
+- Solutions: Variant Interpretation (VUS), In Silico R&D, Precision Oncology
+- Platform: Architecture & APIs, Deployment Models
+- Data Room, Docs, Pricing, Company (About, Trust & Compliance, Contact)
+
+## Homepage sections
+- Hero: title, subtitle, badges (SOC 2, HIPAA, GDPR, ISO 27001)
+- Social proof: logos or testimonial
+- Value pillars (4-up): Identity (Auth0), Asset Control (Blockchain), AI Verification, Immutable Audit
+- Two-Layer Architecture visual
+- AI Engine Protection (Oracle, Forge, Boltz)
+- Solutions preview (VUS, In Silico R&D, Precision Oncology)
+- Deployment models (Cloud, Enterprise, Embedded)
+- Compliance & Trust
+- Developer teaser (APIs/SDKs) + Docs CTA
+- Competitive differentiation
+- Data Room preview (with Executive Summary blurbs)
+- Final CTA band
+
+## Product pages
+- Zeta Shield Security OS: overview, two-layer architecture, asset-level control, audit & lineage, integrations, zero-trust policies
+- AI Engine Protection: Oracle/Forge/Boltz, controls, monitoring, compliance bundles
+
+## Solutions pages
+- VUS, In Silico R&D, Precision Oncology: problem → solution → outcomes → deck CTA
+
+## Platform pages
+- Architecture & APIs: layered diagram, API families, SDKs, quickstarts
+- Deployment Models: Cloud, Enterprise, Embedded + comparison
+
+## Data Room
+- Grid/list, categories, deck cards with `metadata.blurb`, route prefetch on hover
+
+## Components to reuse
+- HeroSection, ValuePillarsGrid, TwoLayerArchitectureVisual, AIEnginesGrid, SolutionsCards, DeploymentModels, TrustBadges, DeveloperTeaser, CompetitiveTable, DataRoomPreviewGrid, PricingTiers, CTABand, Footer
+
+## Content sources (authoritative)
+- Security deck: [src/data/decks/security.jsx](mdc:src/data/decks/security.jsx)
+- CrisPRO 101: [src/data/decks/101.jsx](mdc:src/data/decks/101.jsx)
+- RUNX1: [src/data/decks/runx1.jsx](mdc:src/data/decks/runx1.jsx)
+
+## CTAs
+- Primary: Request Access
+- Secondary: Explore Data Room, Read Docs
+description:
+globs:
+alwaysApply: false
+---

@@ -1,0 +1,48 @@
+# Deck → Website Mapping
+
+Use this map to turn slide content into corresponding website sections. Keep copy DRY by sourcing from slide data when possible.
+
+- Problem (high-stakes) → Homepage Hero + Value framing
+  - Source: `slidesData[].content.type === 'high-stakes'`
+  - Components: HeroSection, ValuePillarsGrid
+
+- Intro (intro) → Product overview
+  - Components: TwoLayerArchitectureVisual + capability cards
+
+- Three Critical Problems (platform-architecture) → Pillars + integration copy
+  - Components: ValuePillarsGrid, IntegrationCallout
+
+- Secure Onboarding (onboarding-pipeline) → How it works (3 steps)
+  - Components: ProcessSteps
+
+- AI Engine Security (agent-security) → AI Engine Protection page
+  - Components: AIEnginesGrid, TwoColumn layout
+
+- Therapeutic Research Services (threat-detection) → Solutions overview
+  - Cards: VUS, In Silico R&D, Precision Oncology
+
+- Multi-Tenant Architecture (multi-tenant-architecture) → Platform isolation section
+  - Components: TenantsGrid + EnterpriseIsolationPillars
+
+- Compliance & Audit (compliance-audit) → Trust & Compliance
+  - Components: StandardsGrid, AuditDashboard, ExportCallout
+
+- Deployment Models (deployment-models) → Platform Deployment page
+  - Components: DeploymentCards + Footer note
+
+- Two-Layer Security Architecture (security-doctrine) → Architecture deep dive
+  - Components: SecurityDoctrineVisual + Explainers
+
+- Enterprise Identity (auth0-gatekeeper) → Auth0 integration section
+
+- Secure AI Research Pipeline (secure-foundation) → End-to-end pipeline section
+
+- Competitive Analysis (competitive-analysis) → Differentiation page/table
+
+- Verifiable Access Control (access-control) → Product messaging block
+
+Reference: [src/data/decks/security.jsx](mdc:src/data/decks/security.jsx)
+description:
+globs:
+alwaysApply: false
+---

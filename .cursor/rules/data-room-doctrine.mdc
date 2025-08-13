@@ -1,0 +1,156 @@
+# Data Room Doctrine: Components, Features, Capabilities, Market
+
+This rule encodes the doctrine for building and evolving the Data Room and the Zeta Shield presentation system. It consolidates product positioning, reusable UI architecture, content structure, and coding conventions. It should guide any future changes across decks, pages, and platform features.
+
+## Product Positioning (Zeta Shield)
+- Security OS for AI-first Biotech R&D
+- Unifies human identity (Auth0), asset-level control (blockchain), AI engine verification (Oracle/Forge/Boltz), and immutable audit
+- Outcomes: verifiable data integrity, granular partner access, cryptographic proof of invention, compliant operations
+
+Authoritative slides: [src/data/decks/security.jsx](mdc:src/data/decks/security.jsx)
+
+## Core Capabilities
+- Identity & Access (Auth0): SSO, MFA, roles/groups, enterprise identity
+- Asset Identity & Control (Blockchain): smart-contract permissions, wallet-based mapping, immutable audit
+- AI Engine Security: input/output signing, environment isolation, run attestations, anomaly monitoring for Oracle, Forge, Boltz
+- Compliance & Audit: SOC 2, HIPAA, GDPR, ISO 27001; dashboards; exportable audit bundles
+- Multi-Tenant Architecture: org isolation for data, compute, and keys; network segmentation; tenant-level compliance
+- Deployment Models: Cloud, Enterprise (VPC/on-prem), Embedded (SDK/OEM)
+
+## Reusable Component Architecture (Decks)
+Primary reference: [src/data/decks/security.jsx](mdc:src/data/decks/security.jsx)
+- Layout & Shell
+  - `SlideLayout` — animated section wrapper
+  - `DigitalSynapseBackground` — subtle animated bg layer
+  - `Brand` — deck watermark (Zeta Shield/CrisPRO)
+- Typography & Blocks
+  - `SlideHeader` — title + subtitle with gradient heading; uses Accessibility scaling
+  - `InfoBlock` — icon + main/sub text; supports HTML via `dangerouslySetInnerHTML`
+- Visuals
+  - `ZetaShieldIntroVisual` — orbiting capability rings (identity, agents, observability, fingerprint)
+  - `Auth0Visual` — identity flow card cluster; Auth0 brand, orange accents
+  - `SecurityDoctrineVisual` — concentric rings for two-layer architecture
+  - `MarketOpportunityVisual` — satellite positioning visual (deprecated in security deck; avoid unless needed)
+- Content Layouts
+  - `ProcessSteps` — 3-step/4-step flows with icons and copy
+  - `TwoColumnGrid` — left: lists; right: status cards with metadata
+  - `NavigationControls` — slide prev/next controls (deck-local)
+- Rendering
+  - `Slide` — universal renderer driven by `content.type`
+  - `slidesData` — array describing slide content; canonical source of truth for deck copy and structure
+
+Complementary reusable components and content types in decks:
+- [src/data/decks/101.jsx](mdc:src/data/decks/101.jsx)
+  - `SlideLayout`, `EnhancedSlideLayout` (3D bg), `FeatureCard`, `ProcessStep`, `TwoHitDiagramCell`, `CompetitivePillar`
+  - Content types: `title-slide`, `two-hit-hypothesis`, `process-steps`, deep dives for Oracle/Forge/Boltz
+- [src/data/decks/runx1.jsx](mdc:src/data/decks/runx1.jsx)
+  - Shares 3D background, process and feature primitives; focused case-study patterns
+
+## Canonical Slide Types (Security Deck)
+Use these types for new content to preserve consistency.
+- `high-stakes` — Problem framing (why infra-centric security fails for IP)
+- `intro` — Zeta Shield overview with capability rings
+- `platform-architecture` — 3 layers: Data Integrity, Granular Access Control, Proof of Invention (+ integration block)
+- `onboarding-pipeline` — Identity verification → Permission mapping → Env provisioning
+- `agent-security` — AI Engine Protection (left) + Verifiable Operations (right)
+- `threat-detection` — Services grid (VUS, In Silico R&D, Precision Oncology) + security response
+- `multi-tenant-architecture` — Org isolation cards + footer pillars (data sovereignty, network segmentation, per-tenant compliance)
+- `compliance-audit` — Standards grid + dashboard metrics + export block + advantages
+- `platform-architecture` and `deployment-models` — Layered and model cards with color-coded accents
+- `security-doctrine` — Two-layer (Auth0 + Blockchain) deep explanation
+- `auth0-gatekeeper` — Identity visual and footnote
+- `secure-foundation` — End-to-end protected research pipeline with AI engines to IP-NFT
+- `competitive-analysis` — Comparison + advantage grid
+- `access-control` — Identity (Auth0) + Permission (Blockchain) + strategic points
+
+## Accessibility & Readability
+- Global context: [src/contexts/AccessibilityContext.tsx](mdc:src/contexts/AccessibilityContext.tsx)
+  - `largeTextMode`, `toggleLargeText`, helpers `getTextSize`, `getIconSize`
+  - Persisted in `localStorage` key `accessibility.largeTextMode`
+- Toggle: [src/components/AccessibilityToggle.tsx](mdc:src/components/AccessibilityToggle.tsx)
+  - Mounted in cinematic and regular headers of [src/pages/DeckViewerPage.tsx](mdc:src/pages/DeckViewerPage.tsx)
+- Text contrast
+  - Prefer `text-slate-200` for body, `text-slate-300` for secondary, avoid `text-slate-400+` for long copy
+  - Small text: scale from `text-sm` → `text-base` under Large Text mode
+
+## Identity Provider (Auth0)
+- All references must be Auth0 (not Okta)
+- Auth0 logo/vector and orange accent are used in `Auth0Visual` and `access-control`
+- Keep enterprise tone; no military jargon
+
+## Data-Driven Approach (DRY)
+- Slides must be defined as data objects in `slidesData` (or deck-equivalent arrays) rather than bespoke components, when possible
+- Reuse primitives (`ProcessSteps`, `TwoColumnGrid`, `SlideHeader`, etc.)
+- Keep copy in data structures for easy edits and localization
+
+## Performance & Routing
+- Client-side routing: [src/App.tsx](mdc:src/App.tsx) uses React Router
+- Vercel rewrites: [vercel.json](mdc:vercel.json) must route all to `index.html`
+- Lazy-load heavy routes/pages
+  - `HomePage` and `DeckViewerPage` via `React.lazy` in [src/App.tsx](mdc:src/App.tsx)
+  - Custom decks via dynamic importers in [src/data/customDecks.ts](mdc:src/data/customDecks.ts) and rendered by [src/components/slides/content/CustomReactContent.tsx](mdc:src/components/slides/content/CustomReactContent.tsx)
+- Home previews: use static/light placeholders; prefetch route on hover ([src/components/DeckCard.tsx](mdc:src/components/DeckCard.tsx))
+- Blurbs: use `metadata.blurb` to render “Executive Summary” under card headers ([src/components/DeckCard.tsx](mdc:src/components/DeckCard.tsx))
+
+## Content & Messaging Guidelines
+- Tone: professional, precise, outcome-focused; avoid hype and military jargon
+- Hero copy templates (for web or decks):
+  - Title: “Secure AI R&D with asset-level control and verifiable trust”
+  - Subhead: “Zeta Shield unifies Auth0 identity, blockchain asset permissions, AI engine verification, and immutable audit—so partners can trust every result.”
+- Pillars: Identity (Auth0), Asset Governance (Blockchain), AI Verification, Immutable Audit
+- Two-Layer Architecture: “Auth0 resolves who; smart contracts govern what.”
+- Services (deck `threat-detection`): VUS Classification, In Silico Drug Discovery, Precision Oncology
+- Compliance: SOC2, HIPAA, GDPR, ISO 27001; audit exports; continuous monitoring
+
+## Adding a New Slide (Security Deck)
+1. Choose an existing `content.type` (see canonical list) or propose a minimal new type if not covered
+2. Add data object to `slidesData` in [security.jsx](mdc:src/data/decks/security.jsx)
+3. Keep body text readable (`text-slate-200`), scale via Accessibility helpers
+4. Prefer existing primitives (e.g., `ProcessSteps`, `TwoColumnGrid`); avoid one-off bespoke UIs
+5. If adding Auth0 visuals, match brand color (#EB5424) and `border-orange-500` accents
+
+## Adding a New Deck
+- Register via [src/data/customDecks.ts](mdc:src/data/customDecks.ts)
+  - Provide: `id`, `title`, `description`, `author`, `category`, optional `thumbnail`, `metadata.blurb`
+  - For heavy decks, pass a dynamic `import()` as `componentOrImporter` for lazy loading
+- Use data-driven rendering: implement a universal `Slide` and a `slidesData` array in the new deck
+- Follow text contrast and accessibility guidelines
+
+## Multi-Deck Reuse Patterns
+- Backgrounds: `DigitalSynapseBackground` (Three.js) patterns are present in both 101 and RUNX1 decks; keep it subtle and performant
+- Cards & Steps: Use `FeatureCard`, `ProcessStep` variations for case studies and overviews
+- Competitive sections: Prefer `CompetitivePillar`/tables for objective comparisons
+
+## Market & Differentiation Themes
+- Traditional IAM/tools protect infrastructure; Zeta Shield protects the IP asset itself
+- Verifiable AI outcomes: proof of every step (Oracle/Forge/Boltz) via cryptographic evidence
+- Partner-grade collaboration: granular, auditable, scoped access without platform overexposure
+- Enterprise fit: multi-tenant isolation, BYO‑KMS, optional VPC/on‑prem, audit exports
+
+## Compliance & Trust
+- Maintain explicit references and correct spellings for standards: SOC 2, HIPAA, GDPR, ISO 27001
+- Compliance dashboards should present: access events, auth success rate, verification coverage, compliance score
+- Provide an “Audit Export Ready” affordance where relevant
+
+## Do/Don’t
+- Do: keep decks data-driven, reusing primitives, and use large-text scaling helpers
+- Do: prefer dynamic imports for heavy decks and sections
+- Don’t: introduce new identity provider wording (Okta) — use Auth0
+- Don’t: regress text contrast or ship small `text-xs` for long paragraphs
+
+## File References
+- Security deck: [security.jsx](mdc:src/data/decks/security.jsx)
+- CrisPRO 101 deck: [101.jsx](mdc:src/data/decks/101.jsx)
+- RUNX1 deck: [runx1.jsx](mdc:src/data/decks/runx1.jsx)
+- Router/App: [src/App.tsx](mdc:src/App.tsx)
+- Deck Viewer: [src/pages/DeckViewerPage.tsx](mdc:src/pages/DeckViewerPage.tsx)
+- Home: [src/pages/HomePage.tsx](mdc:src/pages/HomePage.tsx)
+- Deck cards: [src/components/DeckCard.tsx](mdc:src/components/DeckCard.tsx)
+- Accessibility: [src/contexts/AccessibilityContext.tsx](mdc:src/contexts/AccessibilityContext.tsx), [src/components/AccessibilityToggle.tsx](mdc:src/components/AccessibilityToggle.tsx)
+- Custom decks registry: [src/data/customDecks.ts](mdc:src/data/customDecks.ts)
+- Renderer: [src/components/slides/SlideRenderer.tsx](mdc:src/components/slides/SlideRenderer.tsx), [src/components/slides/content/CustomReactContent.tsx](mdc:src/components/slides/content/CustomReactContent.tsx)
+- Vercel rewrites: [vercel.json](mdc:vercel.json)
+description:
+globs:
+alwaysApply: false
+---

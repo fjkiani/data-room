@@ -37,6 +37,7 @@ export interface SlideDeck {
     template?: string;
     theme?: 'corporate' | 'scientific' | 'dark' | 'futuristic';
     previewImage?: string;
+    blurb?: string;
   };
 }
 

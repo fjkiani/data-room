@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Shield, UserPlus, ArrowRight, Bot, CheckCircle, Link, ShieldAlert, ShieldCheck, FileClock, Fingerprint, Cpu, Package, Dna, FlaskConical, BrainCircuit, Gem, Globe, KeyRound, Lock, FileJson, Building, Zap, UserCheck, Eye, Activity, AlertTriangle, Users, Settings, Database, Network, Workflow, FileCheck, Layers, Monitor, Bell, Search, BarChart3, Target } from 'lucide-react';
+import { useAccessibility } from '../../contexts/AccessibilityContext';
 
 //================================================================================
 // 1. REUSABLE UI & LAYOUT COMPONENTS
@@ -35,27 +36,35 @@ const SlideLayout = ({ children, className = '' }) => (
     </motion.section>
 );
 
-const SlideHeader = ({ title, subtitle, titleGradient, subtitleClassName = '' }) => (
-    <div className="space-y-4">
-        <h1 className={`text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r ${titleGradient}`}>
-            {title}
-        </h1>
-        <p className={`text-2xl md:text-3xl font-light text-slate-300 ${subtitleClassName}`}>
-            {subtitle}
-        </p>
-    </div>
-);
+const SlideHeader = ({ title, subtitle, titleGradient, subtitleClassName = '' }) => {
+    const { getTextSize } = useAccessibility();
+    
+    return (
+        <div className="space-y-4">
+            <h1 className={`${getTextSize('text-5xl')} md:${getTextSize('text-7xl')} font-black text-transparent bg-clip-text bg-gradient-to-r ${titleGradient}`}>
+                {title}
+            </h1>
+            <p className={`${getTextSize('text-2xl')} md:${getTextSize('text-3xl')} font-light text-slate-300 ${subtitleClassName}`}>
+                {subtitle}
+            </p>
+        </div>
+    );
+};
 
-const InfoBlock = ({ icon, mainText, subText, iconColor, animateIcon }) => (
-    <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 max-w-4xl mx-auto text-center">
-        {React.createElement(icon, {
-            size: 64,
-            className: `mx-auto ${iconColor} mb-6 ${animateIcon ? 'animate-pulse' : ''}`
-        })}
-        <p className="text-xl text-slate-200 mb-4 max-w-3xl mx-auto" dangerouslySetInnerHTML={{ __html: mainText }}></p>
-        <p className="text-lg text-slate-300 mt-6" dangerouslySetInnerHTML={{ __html: subText }}></p>
-    </div>
-);
+const InfoBlock = ({ icon, mainText, subText, iconColor, animateIcon }) => {
+    const { getTextSize, getIconSize } = useAccessibility();
+    
+    return (
+        <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 max-w-4xl mx-auto text-center">
+            {React.createElement(icon, {
+                size: getIconSize(64),
+                className: `mx-auto ${iconColor} mb-6 ${animateIcon ? 'animate-pulse' : ''}`
+            })}
+            <p className={`${getTextSize('text-xl')} text-slate-200 mb-4 max-w-3xl mx-auto`} dangerouslySetInnerHTML={{ __html: mainText }}></p>
+            <p className={`${getTextSize('text-lg')} text-slate-300 mt-6`} dangerouslySetInnerHTML={{ __html: subText }}></p>
+        </div>
+    );
+};
 
 const ZetaShieldIntroVisual = ({ visual, summary }) => (
     <>
@@ -146,64 +155,72 @@ const Auth0Visual = ({ processSteps }) => (
     </div>
 );
 
-const ProcessSteps = ({ steps }) => (
-    <div className="bg-slate-800/50 p-12 rounded-3xl border border-slate-700">
-        <div className="flex flex-col lg:flex-row items-center justify-around space-y-8 lg:space-y-0 lg:space-x-4">
-            {steps.map((step, i) => (
-                <React.Fragment key={i}>
-                    <div className="flex flex-col items-center space-y-3 text-center">
-                        <div className={`text-4xl p-4 rounded-full border-2 ${step.iconBgClass} ${step.iconBorderClass} ${step.iconColorClass}`}>
-                            {React.createElement(step.icon)}
+const ProcessSteps = ({ steps }) => {
+    const { getTextSize, getIconSize } = useAccessibility();
+    
+    return (
+        <div className="bg-slate-800/50 p-12 rounded-3xl border border-slate-700">
+            <div className="flex flex-col lg:flex-row items-center justify-around space-y-8 lg:space-y-0 lg:space-x-4">
+                {steps.map((step, i) => (
+                    <React.Fragment key={i}>
+                        <div className="flex flex-col items-center space-y-3 text-center">
+                            <div className={`${getTextSize('text-4xl')} p-4 rounded-full border-2 ${step.iconBgClass} ${step.iconBorderClass} ${step.iconColorClass}`}>
+                                {React.createElement(step.icon)}
+                            </div>
+                            <h3 className={`${getTextSize('text-xl')} font-bold ${step.titleColor}`}>{step.title}</h3>
+                            <p className={`text-slate-300 ${getTextSize('text-base')} max-w-xs`} dangerouslySetInnerHTML={{ __html: step.description }}></p>
                         </div>
-                        <h3 className={`text-xl font-bold ${step.titleColor}`}>{step.title}</h3>
-                        <p className="text-slate-300 text-base max-w-xs" dangerouslySetInnerHTML={{ __html: step.description }}></p>
-                    </div>
-                    {i < steps.length - 1 && <div className="text-3xl text-slate-600 animate-pulse hidden lg:block"><ArrowRight/></div>}
-                </React.Fragment>
-            ))}
+                        {i < steps.length - 1 && <div className={`${getTextSize('text-3xl')} text-slate-600 animate-pulse hidden lg:block`}><ArrowRight/></div>}
+                    </React.Fragment>
+                ))}
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
-const TwoColumnGrid = ({ content }) => (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className={`bg-slate-800/50 p-8 rounded-2xl border ${content.column1.borderColor}`}>
-            <div className="flex items-center space-x-4 mb-6">
-                {React.createElement(content.column1.icon, { size: 48, className: content.column1.iconColor })}
-                <h3 className={`text-2xl font-bold ${content.column1.titleColor}`}>{content.column1.title}</h3>
-            </div>
-            <div className="space-y-4 text-left">
-                {content.column1.items.map((item, i) => (
-                    <div key={i} className="flex items-start space-x-3">
-                        {React.createElement(item.icon, { className: `${item.iconColor} mt-1`, size: 20 })}
-                        <div>
-                            <h4 className="font-semibold text-slate-200">{item.title}</h4>
-                            <p className="text-slate-200 text-base">{item.text}</p>
+const TwoColumnGrid = ({ content }) => {
+    const { getTextSize, getIconSize } = useAccessibility();
+    
+    return (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className={`bg-slate-800/50 p-8 rounded-2xl border ${content.column1.borderColor}`}>
+                <div className="flex items-center space-x-4 mb-6">
+                    {React.createElement(content.column1.icon, { size: getIconSize(48), className: content.column1.iconColor })}
+                    <h3 className={`${getTextSize('text-2xl')} font-bold ${content.column1.titleColor}`}>{content.column1.title}</h3>
+                </div>
+                <div className="space-y-4 text-left">
+                    {content.column1.items.map((item, i) => (
+                        <div key={i} className="flex items-start space-x-3">
+                            {React.createElement(item.icon, { className: `${item.iconColor} mt-1`, size: getIconSize(20) })}
+                            <div>
+                                <h4 className={`font-semibold text-slate-200 ${getTextSize('text-base')}`}>{item.title}</h4>
+                                <p className={`text-slate-200 ${getTextSize('text-base')}`}>{item.text}</p>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
+            </div>
+            <div className={`bg-slate-800/50 p-8 rounded-2xl border ${content.column2.borderColor}`}>
+                <div className="flex items-center space-x-4 mb-6">
+                    {React.createElement(content.column2.icon, { size: getIconSize(48), className: content.column2.iconColor })}
+                    <h3 className={`${getTextSize('text-2xl')} font-bold ${content.column2.titleColor}`}>{content.column2.title}</h3>
+                </div>
+                <div className="space-y-4">
+                    {content.column2.items.map((item, i) => (
+                        <div key={i} className="bg-slate-900/50 p-4 rounded-lg border border-slate-700">
+                            <div className={`flex justify-between items-center ${getTextSize('text-sm')}`}>
+                                <span className="text-slate-400">{item.label}</span>
+                                <span className={item.statusColor}>{item.status}</span>
+                            </div>
+                            <p className={`text-slate-200 mt-2 ${getTextSize('text-base')}`}>{item.description}</p>
+                            <p className={`${getTextSize('text-sm')} text-slate-400`}>{item.metadata}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
-        <div className={`bg-slate-800/50 p-8 rounded-2xl border ${content.column2.borderColor}`}>
-            <div className="flex items-center space-x-4 mb-6">
-                {React.createElement(content.column2.icon, { size: 48, className: content.column2.iconColor })}
-                <h3 className={`text-2xl font-bold ${content.column2.titleColor}`}>{content.column2.title}</h3>
-            </div>
-            <div className="space-y-4">
-                {content.column2.items.map((item, i) => (
-                    <div key={i} className="bg-slate-900/50 p-4 rounded-lg border border-slate-700">
-                        <div className="flex justify-between items-center text-sm">
-                            <span className="text-slate-400">{item.label}</span>
-                            <span className={item.statusColor}>{item.status}</span>
-                        </div>
-                        <p className="text-slate-200 mt-2">{item.description}</p>
-                        <p className="text-sm text-slate-400">{item.metadata}</p>
-                    </div>
-                ))}
-            </div>
-        </div>
-    </div>
-);
+    );
+};
 
 const SecurityDoctrineVisual = ({ visual }) => (
     <div className="relative flex justify-center items-center h-64">

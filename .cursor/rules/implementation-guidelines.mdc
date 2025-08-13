@@ -1,0 +1,34 @@
+# Implementation Guidelines
+
+## DRY & data-driven
+- Define slides/sections as data objects; use universal renderers where possible
+- Reuse primitives: `SlideHeader`, `InfoBlock`, `ProcessSteps`, `TwoColumnGrid`, visuals
+- Keep copy in data structures for easy edits/localization
+
+## Accessibility
+- Use `useAccessibility` from [src/contexts/AccessibilityContext.tsx](mdc:src/contexts/AccessibilityContext.tsx)
+  - Scale via `getTextSize`, `getIconSize`; persist with `toggleLargeText`
+- Mount `AccessibilityToggle` in viewers/pages where relevant
+- Contrast: body `text-slate-200`, secondary `text-slate-300`; avoid long `text-slate-400+`
+
+## Identity provider
+- Use Auth0 throughout copy/visuals; correct logo (#EB5424)
+
+## React/TS style
+- Descriptive names; functions as verbs; explicit types on public APIs
+- Guard clauses, shallow nesting; meaningful error handling (no silent catches unless UX-driven)
+- No inline explanatory comments inside code; keep comments “why”, not “how”
+- Match existing formatting; prefer multi-line over complex one-liners
+
+## Components
+- Break down pages into small, reusable blocks (see Website Foundation rule)
+- Prefer composition; pass data arrays into grids/visuals
+
+## Testing/build
+- After edits to core rendering or schema, build locally; watch for type errors and chunk size warnings
+
+References: [security.jsx](mdc:src/data/decks/security.jsx), [101.jsx](mdc:src/data/decks/101.jsx), [runx1.jsx](mdc:src/data/decks/runx1.jsx)
+description:
+globs:
+alwaysApply: false
+---

@@ -1,0 +1,26 @@
+# Performance & Deployment
+
+## Routing & client-side navigation
+- Use React Router (see [src/App.tsx](mdc:src/App.tsx))
+- Vercel rewrite all to `index.html` using [vercel.json](mdc:vercel.json)
+
+## Code splitting
+- Lazy-load routes: `HomePage`, `DeckViewerPage` via `React.lazy` ([src/App.tsx](mdc:src/App.tsx))
+- Lazy-load heavy decks via dynamic importers in [src/data/customDecks.ts](mdc:src/data/customDecks.ts)
+- Render importer with Suspense in [CustomReactContent.tsx](mdc:src/components/slides/content/CustomReactContent.tsx)
+
+## Homepage previews
+- Avoid mounting live decks; use lightweight thumbnail/placeholder
+- Prefetch deck route on hover in [DeckCard.tsx](mdc:src/components/DeckCard.tsx)
+
+## Build chunking
+- Consider vendor chunk splits via `build.rollupOptions.output.manualChunks`
+- Watch for large chunks; move non-critical code behind dynamic imports
+
+## Caching (Vercel)
+- Keep SPA semantics: long-cache hashed assets in `dist/assets/*`, short-cache `index.html`
+- Optionally add headers config to improve asset caching (ensure no SPA breakage)
+description:
+globs:
+alwaysApply: false
+---

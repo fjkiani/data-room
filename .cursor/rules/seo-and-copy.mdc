@@ -1,0 +1,26 @@
+# SEO & Copy
+
+## Tone
+- Professional, precise, outcome-focused; avoid military jargon and hype
+
+## Hero templates
+- Title: “Secure AI R&D with asset-level control and verifiable trust”
+- Subhead: “Zeta Shield unifies Auth0 identity, blockchain asset permissions, AI engine verification, and immutable audit—so partners can trust every result.”
+- CTAs: Request Access (primary), Explore Data Room, Read Docs
+
+## Keywords
+- Auth0 identity, blockchain permissions, AI engine verification, immutable audit, IP-NFT, multi-tenant security, SOC 2, HIPAA, GDPR, ISO 27001
+
+## Meta & schema
+- Per-page titles/descriptions; use JSON-LD (`SoftwareApplication` or `Product`) where relevant
+- Include compliance chips on pages where trust is critical
+
+## Content sourcing
+- Prefer pulling copy from deck data (e.g., [security.jsx](mdc:src/data/decks/security.jsx)) to keep consistent
+
+## Sections to include
+- Value pillars, Two-layer architecture, AI engines, Solutions, Deployment, Trust & Compliance, Data Room preview
+description:
+globs:
+alwaysApply: false
+---
