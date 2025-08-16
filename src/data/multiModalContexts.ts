@@ -122,6 +122,30 @@ export const multiModalContexts: MultiModalContext = {
             { label: 'Combination success', value: '85%', subtitle: 'sustained response', improvement: 'vs 30% sequential' }
           ]
         }
+      },
+      'crispr-targeting': {
+        title: 'CRISPR Guide Design for Essential Genes',
+        description: 'Design high-efficacy CRISPR guides targeting context-essential oncogenes',
+        applicableProducts: ['oracle', 'forge'],
+        data: {
+          contexts: [
+            { context: { cellLine: 'KRAS-driven NSCLC', mutations: ['KRAS-G12C'] }, score: 0.94 },
+            { context: { cellLine: 'EGFR-driven NSCLC', mutations: ['EGFR-L858R'] }, score: 0.89 },
+            { context: { cellLine: 'Normal lung epithelium', mutations: [] }, score: 0.12 },
+            { context: { cellLine: 'Normal hepatocytes', mutations: [] }, score: 0.08 }
+          ]
+        },
+        businessContext: {
+          problem: 'CRISPR therapies fail due to poor guide efficacy and off-target effects',
+          solution: 'Combine gene essentiality prediction with CRISPR spacer efficacy optimization',
+          impact: 'Design precision CRISPR therapies with 90%+ on-target efficacy and minimal toxicity',
+          metrics: [
+            { label: 'Guide efficacy', value: '92%', subtitle: 'on-target cutting efficiency', improvement: 'vs 65% random guides' },
+            { label: 'Off-target risk', value: '0.3%', subtitle: 'predicted off-target rate', improvement: 'vs 15% unoptimized' },
+            { label: 'Therapeutic window', value: '75x', subtitle: 'cancer vs normal selectivity', improvement: 'Safe therapeutic dosing' },
+            { label: 'Clinical success rate', value: '85%', subtitle: 'predicted efficacy', improvement: 'vs 35% traditional design' }
+          ]
+        }
       }
     }
   },
@@ -236,6 +260,28 @@ export const multiModalContexts: MultiModalContext = {
             { label: 'Dosing optimization', value: '3x', subtitle: 'personalized dose range', improvement: 'Precision vs standard' },
             { label: 'Adverse event reduction', value: '60%', subtitle: 'variant-aware dosing', improvement: 'vs standard protocols' },
             { label: 'Treatment success', value: '85%', subtitle: 'personalized therapy', improvement: 'vs 45% standard' }
+          ]
+        }
+      },
+      'variant-impact-correlation': {
+        title: 'Variant Impact to Protein Function Correlation',
+        description: 'Connect genomic variant predictions with protein-level functional consequences',
+        applicableProducts: ['oracle'],
+        data: {
+          function: -0.89,
+          stability: -0.45,
+          foldingImpact: 0.76,
+          notes: 'High-impact variant (Δ likelihood: -2.34) correlates with severe protein dysfunction'
+        },
+        businessContext: {
+          problem: 'Genomic variants and protein function predictions are analyzed in isolation',
+          solution: 'Integrate variant impact prediction with protein functionality analysis',
+          impact: 'Provide comprehensive molecular understanding from DNA to protein to phenotype',
+          metrics: [
+            { label: 'Prediction correlation', value: '94%', subtitle: 'variant impact vs protein function', improvement: 'Molecular consistency' },
+            { label: 'Mechanistic insight', value: '85%', subtitle: 'variants with explained mechanism', improvement: 'vs 30% traditional' },
+            { label: 'Clinical actionability', value: '78%', subtitle: 'variants with therapeutic implications', improvement: 'vs 25% sequence-only' },
+            { label: 'Drug development success', value: '3x', subtitle: 'target validation rate', improvement: 'Mechanism-informed design' }
           ]
         }
       }
@@ -372,6 +418,32 @@ export const multiModalContexts: MultiModalContext = {
             { label: 'Therapeutic window', value: '30x', subtitle: 'cancer vs normal selectivity', improvement: 'Reduced toxicity' },
             { label: 'Combination potential', value: '85%', subtitle: 'synergy with existing drugs', improvement: 'Enhanced efficacy' },
             { label: 'Patient stratification', value: '70%', subtitle: 'epigenetic biomarker positive', improvement: 'Precision medicine approach' }
+          ]
+        }
+      },
+      'crispr-accessibility': {
+        title: 'CRISPR Accessibility Optimization',
+        description: 'Predict chromatin accessibility for optimal CRISPR guide delivery and cutting efficiency',
+        applicableProducts: ['oracle', 'forge'],
+        data: {
+          context: 'CRISPR target accessibility analysis',
+          points: [
+            { pos: 15, score: 0.89 },
+            { pos: 30, score: 0.95 },
+            { pos: 45, score: 0.23 },
+            { pos: 60, score: 0.78 },
+            { pos: 85, score: 0.92 }
+          ]
+        },
+        businessContext: {
+          problem: 'CRISPR efficiency varies 100x due to chromatin accessibility differences',
+          solution: 'Predict chromatin accessibility to optimize CRISPR guide design and delivery',
+          impact: 'Achieve consistent CRISPR efficiency across diverse genomic targets',
+          metrics: [
+            { label: 'CRISPR efficiency prediction', value: '85%', subtitle: 'correlation with experimental', improvement: 'vs 40% sequence-only' },
+            { label: 'Guide success rate', value: '90%', subtitle: 'accessible targets', improvement: 'vs 45% random selection' },
+            { label: 'Delivery optimization', value: '5x', subtitle: 'improved targeting', improvement: 'Context-aware delivery' },
+            { label: 'Therapeutic window', value: '20x', subtitle: 'on vs off-target accessibility', improvement: 'Enhanced safety' }
           ]
         }
       }

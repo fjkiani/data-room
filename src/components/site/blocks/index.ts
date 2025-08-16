@@ -5,6 +5,12 @@ export { default as ProcessStepper } from './ProcessStepper';
 export { default as OracleExplainTrack } from './OracleExplainTrack';
 export { default as VEPMetrics } from './VEPMetrics';
 export { default as VariantDetailCard } from './VariantDetailCard';
+
+// New Discriminative AI Components
+export { default as CrisprEfficacyCard } from './CrisprEfficacyCard';
+export { default as VariantImpactLandscape } from './VariantImpactLandscape';
+export { default as DiscriminativeAIShowcase } from './DiscriminativeAIShowcase';
+export { default as InteractiveDemoShowcase } from './InteractiveDemoShowcase';
 export { default as EssentialityChart } from './EssentialityChart';
 export { default as AccessibilityTrack } from './AccessibilityTrack';
 export { default as ProteinDeltaCard } from './ProteinDeltaCard';

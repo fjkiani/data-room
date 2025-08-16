@@ -1,7 +1,7 @@
 import React from 'react';
 import { ProductPageLayout, ProductHero, ProductSection } from './ProductPageLayout';
 import { useAccessibility } from '../../contexts/AccessibilityContext';
-import { OracleExplainTrack, VEPMetrics, VariantDetailCard, EssentialityChart, AccessibilityTrack, ProteinDeltaCard, KPIStrip } from './blocks';
+import { OracleExplainTrack, VEPMetrics, VariantDetailCard, EssentialityChart, AccessibilityTrack, ProteinDeltaCard, KPIStrip, CrisprEfficacyCard, VariantImpactLandscape, DiscriminativeAIShowcase } from './blocks';
 import { OracleScore, ProcessStepper } from './blocks';
 
 interface OracleProductProps {
@@ -162,44 +162,144 @@ const OracleProduct: React.FC<OracleProductProps> = ({ content }) => {
         </div>
       </ProductSection>
 
-      {/* Multi-Modal Predictions */}
-      <ProductSection
-        title="Multi-Modal Biological Predictions"
-        subtitle="Oracle provides comprehensive biological insights across multiple modalities. From gene essentiality to protein functional changes to chromatin accessibility—all with context-specific business value for biotech R&D, clinical oncology, and genetic testing labs."
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="space-y-8">
-            <div className="bg-slate-800/50 border border-slate-600 rounded-2xl p-8">
-              <h3 className={`font-bold text-white mb-6 ${getTextSize('text-3xl')}`}>Gene Essentiality by Context</h3>
-              <p className={`text-slate-300 mb-6 leading-relaxed ${getTextSize('text-lg')}`}>
-                Context-dependent gene essentiality predictions across different cell lines and mutation backgrounds. 
-                Critical for target prioritization and therapeutic window assessment.
-              </p>
-              <EssentialityChart series={content.multiModal.essentialitySeries} />
+                {/* Multi-Modal Predictions */}
+          <ProductSection
+            title="Multi-Modal Biological Predictions"
+            subtitle="Oracle provides comprehensive biological insights across multiple modalities. From gene essentiality to protein functional changes to chromatin accessibility—all with context-specific business value for biotech R&D, clinical oncology, and genetic testing labs."
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="space-y-8">
+                <div className="bg-slate-800/50 border border-slate-600 rounded-2xl p-8">
+                  <h3 className={`font-bold text-white mb-6 ${getTextSize('text-3xl')}`}>Gene Essentiality by Context</h3>
+                  <p className={`text-slate-300 mb-6 leading-relaxed ${getTextSize('text-lg')}`}>
+                    Context-dependent gene essentiality predictions across different cell lines and mutation backgrounds.
+                    Critical for target prioritization and therapeutic window assessment.
+                  </p>
+                  <EssentialityChart series={content.multiModal.essentialitySeries} />
+                </div>
+
+                <div className="bg-slate-800/50 border border-slate-600 rounded-2xl p-8">
+                  <h3 className={`font-bold text-white mb-6 ${getTextSize('text-3xl')}`}>Chromatin Accessibility</h3>
+                  <p className={`text-slate-300 mb-6 leading-relaxed ${getTextSize('text-lg')}`}>
+                    Epigenomic predictions showing how variants affect chromatin structure and accessibility.
+                    Essential for understanding regulatory impacts and designing epigenetic therapies.
+                  </p>
+                  <AccessibilityTrack tracks={content.multiModal.accessibilityTracks} />
+                </div>
+              </div>
+
+              <div className="space-y-8">
+                <div className="bg-slate-800/50 border border-slate-600 rounded-2xl p-8">
+                  <h3 className={`font-bold text-white mb-6 ${getTextSize('text-3xl')}`}>Protein Functional Change</h3>
+                  <p className={`text-slate-300 mb-6 leading-relaxed ${getTextSize('text-lg')}`}>
+                    Quantitative predictions of how variants affect protein function, stability, and folding.
+                    Enables precise assessment of therapeutic targets and resistance mechanisms.
+                  </p>
+                  <ProteinDeltaCard {...content.multiModal.proteinDelta} />
+                </div>
+              </div>
             </div>
-            
-            <div className="bg-slate-800/50 border border-slate-600 rounded-2xl p-8">
-              <h3 className={`font-bold text-white mb-6 ${getTextSize('text-3xl')}`}>Chromatin Accessibility</h3>
-              <p className={`text-slate-300 mb-6 leading-relaxed ${getTextSize('text-lg')}`}>
-                Epigenomic predictions showing how variants affect chromatin structure and accessibility. 
-                Essential for understanding regulatory impacts and designing epigenetic therapies.
-              </p>
-              <AccessibilityTrack tracks={content.multiModal.accessibilityTracks} />
+          </ProductSection>
+
+          {/* Discriminative AI Capabilities Showcase */}
+          <ProductSection
+            title="Complete Discriminative AI Arsenal"
+            subtitle="Explore all 5 discriminative AI endpoints that power Oracle's zero-shot predictions. Each endpoint addresses specific biological questions with state-of-the-art accuracy, from variant pathogenicity to CRISPR guide design."
+          >
+            <DiscriminativeAIShowcase selectedEndpoint="variantImpact" showUseCases={true} interactive={true} />
+          </ProductSection>
+
+          {/* Advanced Multi-Modal Analysis */}
+          <ProductSection
+            title="Advanced Multi-Modal Analysis"
+            subtitle="Deep-dive into specific genomic regions and therapeutic targets with comprehensive discriminative AI analysis. See how multiple endpoints work together to provide actionable biological insights."
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <CrisprEfficacyCard 
+                targetGene="KRAS"
+                targetLocus="chr12:25245350-25245370"
+                guides={[
+                  {
+                    sequence: 'GACGGAGGCTAAGCGTCGCAA',
+                    efficacy: 0.92,
+                    frameshift: 0.89,
+                    pam: 'CGG',
+                    position: 25245355
+                  },
+                  {
+                    sequence: 'CTAAGCGTCGCAACGGAGCTT',
+                    efficacy: 0.87,
+                    frameshift: 0.84,
+                    pam: 'TGG',
+                    position: 25245362
+                  },
+                  {
+                    sequence: 'AAGCGTCGCAACGGAGCTTAG',
+                    efficacy: 0.83,
+                    frameshift: 0.91,
+                    pam: 'AGG',
+                    position: 25245368
+                  }
+                ]}
+                metrics={{
+                  avgEfficacy: 0.87,
+                  topGuideScore: 0.92,
+                  frameshiftRate: 0.88
+                }}
+              />
+              
+              <VariantImpactLandscape
+                locus="chr17:43044000-43052000"
+                windowSize={8000}
+                variants={[
+                  {
+                    position: 43044295,
+                    ref: 'A',
+                    alt: 'T',
+                    deltaLikelihood: -2.34,
+                    pathogenicity: 'Pathogenic',
+                    confidence: 0.94,
+                    consequence: 'missense_variant',
+                    gene: 'BRCA1'
+                  },
+                  {
+                    position: 43045123,
+                    ref: 'G',
+                    alt: 'C',
+                    deltaLikelihood: -1.87,
+                    pathogenicity: 'Pathogenic',
+                    confidence: 0.89,
+                    consequence: 'splice_donor_variant',
+                    gene: 'BRCA1'
+                  },
+                  {
+                    position: 43047456,
+                    ref: 'T',
+                    alt: 'G',
+                    deltaLikelihood: -2.91,
+                    pathogenicity: 'Pathogenic',
+                    confidence: 0.96,
+                    consequence: 'frameshift_variant',
+                    gene: 'BRCA1'
+                  }
+                ]}
+                regions={[
+                  { start: 43044200, end: 43044400, type: 'exon', name: 'Exon 2' },
+                  { start: 43044400, end: 43045000, type: 'intron', name: 'Intron 2' },
+                  { start: 43045000, end: 43045200, type: 'exon', name: 'Exon 3' },
+                  { start: 43045200, end: 43046800, type: 'intron', name: 'Intron 3' },
+                  { start: 43046800, end: 43047000, type: 'exon', name: 'Exon 4' },
+                  { start: 43047000, end: 43048000, type: 'intron', name: 'Intron 4' }
+                ]}
+                metrics={{
+                  totalVariants: 8,
+                  pathogenicCount: 4,
+                  vusResolved: 3,
+                  avgConfidence: 0.91
+                }}
+              />
             </div>
-          </div>
-          
-          <div className="space-y-8">
-            <div className="bg-slate-800/50 border border-slate-600 rounded-2xl p-8">
-              <h3 className={`font-bold text-white mb-6 ${getTextSize('text-3xl')}`}>Protein Functional Change</h3>
-              <p className={`text-slate-300 mb-6 leading-relaxed ${getTextSize('text-lg')}`}>
-                Quantitative predictions of how variants affect protein function, stability, and folding. 
-                Enables precise assessment of therapeutic targets and resistance mechanisms.
-              </p>
-              <ProteinDeltaCard {...content.multiModal.proteinDelta} />
-            </div>
-          </div>
-        </div>
-      </ProductSection>
+          </ProductSection>
 
       {/* Scientific Validation */}
       <ProductSection
