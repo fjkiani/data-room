@@ -1,0 +1,59 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+
+# Evo2 API Doctrine: The Arsenal of Zeta
+
+This doctrine outlines the capabilities of our AI-powered biological design and analysis platform, as detailed in the [endpoints.md](mdc:.cursor/rules/endpoints.md) document. The system is split into two fucking powerful suites of tools: The Crystal Ball (Discriminative) and The Forge (Generative).
+
+---
+
+## 1. The Crystal Ball (Discriminative AI Endpoints)
+This suite is for **analysis and prediction**. It's our fucking oracle for understanding the consequences of genetic code.
+
+### `/predict_variant_impact`
+- **Function:** The core of our oracle. Predicts the functional and clinical impact of any genetic variant (SNVs, indels, etc.).
+- **Purpose:** Quantifies how badly a mutation fucks things up. Essential for scoring on-target CRISPR edits and assessing off-target collateral damage.
+
+### `/predict_gene_essentiality`
+- **Function:** Predicts if a gene is critical for a cell's survival in a *specific context* (e.g., a particular cancer cell line).
+- **Purpose:** Our "Find the weak spot" tool. Identifies the Achilles' heel of any biological system we target.
+
+### `/predict_crispr_spacer_efficacy`
+- **Function:** Predicts the on-target cutting efficiency of a CRISPR guide RNA.
+- **Purpose:** Ensures we choose the sharpest fucking knives for the job. No more shooting blanks.
+
+### `/predict_chromatin_accessibility`
+- **Function:** Predicts if a region of the genome is "open" or "closed" for business.
+- **Purpose:** Our terrain scanner. Fucking useless to send an army if the gates are welded shut. This tells us where we can attack.
+
+### `/predict_protein_functionality_change`
+- **Function:** Predicts how a mutation affects the final protein's function, stability, or binding.
+- **Purpose:** The final damage report. Confirms that our knockout punch actually knocked the motherfucker out.
+
+---
+
+## 2. The Forge (Generative AI Endpoints)
+This suite is for **creation and optimization**. We don't just read the book of life; we write new fucking chapters.
+
+### `/generate_optimized_guide_rna`
+- **Function:** Generates novel, optimized guide RNA sequences for a specific target and goal (knockout, activation, etc.).
+- **Purpose:** We don't find the best weapons; we fucking *create* them, pre-screened for high efficacy and low off-target bullshit.
+
+### `/generate_repair_template`
+- **Function:** Generates optimized DNA repair templates for high-precision edits (gene correction, knock-ins).
+- **Purpose:** For when we need a scalpel, not a sledgehammer. Designs the surgical tools for precise genetic modifications.
+
+### `/generate_epigenome_optimized_sequence`
+- **Function:** Designs DNA sequences that will have specific, desired epigenomic features (e.g., will only be "open" in liver cells).
+- **Purpose:** We're not just writing code; we're designing the fucking operating system. Absolute control over cellular state.
+
+### `/generate_optimized_regulatory_element`
+- **Function:** Generates custom promoters and enhancers to precisely control the expression level of a target gene.
+- **Purpose:** This is our volume knob for any gene in the genome. We can crank expression up to 11 or silence it completely.
+
+### `/generate_therapeutic_protein_coding_sequence`
+- **Function:** The crown fucking jewel. Designs the DNA code for novel, bespoke therapeutic proteins with desired functions.
+- **Purpose:** We can dream up a protein that does a specific job (e.g., "high-affinity binder to PD-L1") and this endpoint will design the fucking gene for it. The ultimate act of creation.

@@ -22,7 +22,7 @@ const DigitalSynapseBackground = () => {
 };
 
 const SlideLayout = ({ children, className = '' }) => (
-    <motion.section
+    <motion.section 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -40,14 +40,14 @@ const SlideHeader = ({ title, subtitle, titleGradient, subtitleClassName = '' })
     const { getTextSize } = useAccessibility();
     
     return (
-        <div className="space-y-4">
+            <div className="space-y-4">
             <h1 className={`${getTextSize('text-5xl')} md:${getTextSize('text-7xl')} font-black text-transparent bg-clip-text bg-gradient-to-r ${titleGradient}`}>
                 {title}
-            </h1>
+                </h1>
             <p className={`${getTextSize('text-2xl')} md:${getTextSize('text-3xl')} font-light text-slate-300 ${subtitleClassName}`}>
                 {subtitle}
-            </p>
-        </div>
+                </p>
+            </div>
     );
 };
 
@@ -75,18 +75,18 @@ const ZetaShieldIntroVisual = ({ visual, summary }) => (
             <div className="absolute w-96 h-96 border-2 border-cyan-500/30 rounded-full animate-spin" style={{animationDuration: '20s'}}>
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-800 p-3 rounded-full border border-cyan-500/50">
                     <UserCheck className="text-cyan-400" />
-                </div>
+                    </div>
                 <div className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 bg-slate-800 p-3 rounded-full border border-cyan-500/50">
                     <Bot className="text-cyan-400" />
                 </div>
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 bg-slate-800 p-3 rounded-full border border-cyan-500/50">
                     <Eye className="text-cyan-400" />
-                </div>
+                    </div>
                 <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-800 p-3 rounded-full border border-cyan-500/50">
                     <Fingerprint className="text-cyan-400" />
                 </div>
             </div>
-            
+
             {/* Outer ring with supporting capabilities */}
             <div className="absolute w-[32rem] h-[32rem] border-2 border-slate-700/50 rounded-full animate-spin" style={{animationDuration: '30s', animationDirection: 'reverse'}}>
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-800 p-2 rounded-full border border-slate-600">
@@ -243,14 +243,14 @@ const MarketOpportunityVisual = ({ content }) => (
             </div>
             <div className="relative z-10 bg-slate-800/50 p-4 rounded-full border border-slate-600">
                 {React.createElement(content.icon, { size: 48, className: "text-green-400" })}
-            </div>
+                    </div>
             {content.satellites.map((satellite, i) => (
                 <div key={i} className={`absolute ${satellite.position}`}>
                     {React.createElement(satellite.icon, { size: 32, className: "text-slate-400 mx-auto mb-1" })}
                     <p className="text-sm font-semibold">{satellite.text}</p>
                 </div>
             ))}
-        </div>
+            </div>
         <div className="max-w-md text-left">
             <h3 className="text-3xl font-bold text-green-400 mb-4">{content.strategyTitle}</h3>
             <p className="text-xl text-slate-300">
@@ -268,7 +268,7 @@ const NavigationControls = ({ current, total, onPrev, onNext }) => (
         <button onClick={onPrev} className="px-4 py-2 text-slate-300 rounded-full hover:bg-slate-700/70 transition-colors">&larr;</button>
         <span className="text-slate-300 font-semibold text-sm">Slide {current + 1} / {total}</span>
         <button onClick={onNext} className="px-4 py-2 text-slate-300 rounded-full hover:bg-slate-700/70 transition-colors">&rarr;</button>
-    </div>
+            </div>
 );
 
 //================================================================================
@@ -298,28 +298,28 @@ const Slide = ({ slideData }) => {
 
             {content.type === 'access-control' && (
                 <>
-                    <div className="flex items-center justify-center space-x-4">
-                        <div className="flex flex-col items-center space-y-2 p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
-                                                    <div className="p-4 bg-white rounded-lg">
+            <div className="flex items-center justify-center space-x-4">
+                <div className="flex flex-col items-center space-y-2 p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
+                    <div className="p-4 bg-white rounded-lg">
                             <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="h-12 w-12"><title>Auth0</title><path fill="#EB5424" d="M21.98 7.448L19.62 0H4.347L2.02 7.448c-1.352 4.312.03 9.206 3.815 12.015L12.007 24l6.157-4.537c3.785-2.809 5.167-7.703 3.815-12.015zm-9.973 5.134c-2.212 0-4.003-1.79-4.003-4.003s1.79-4.003 4.003-4.003 4.003 1.79 4.003 4.003-1.791 4.003-4.003 4.003z"/></svg>
-                        </div>
+                    </div>
                         <h3 className="text-2xl font-bold text-orange-400">{content.auth0.title}</h3>
                         <p className="text-slate-400">{content.auth0.text}</p>
-                        </div>
-                        <div className="text-5xl text-slate-500 font-black">+</div>
-                        <div className="flex flex-col items-center space-y-2 p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
-                            <Fingerprint size={64} className="text-teal-400" />
+                </div>
+                <div className="text-5xl text-slate-500 font-black">+</div>
+                <div className="flex flex-col items-center space-y-2 p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
+                    <Fingerprint size={64} className="text-teal-400" />
                             <h3 className="text-2xl font-bold text-teal-400">{content.blockchain.title}</h3>
                             <p className="text-slate-400">{content.blockchain.text}</p>
-                        </div>
-                    </div>
-                    <div className="bg-slate-800/50 p-8 rounded-2xl border-t-4 border-purple-500 max-w-5xl mx-auto">
+                </div>
+            </div>
+            <div className="bg-slate-800/50 p-8 rounded-2xl border-t-4 border-purple-500 max-w-5xl mx-auto">
                         <h3 className="text-3xl font-bold text-purple-400 mb-6">{content.strategic.title}</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                             {content.strategic.points.map((point, i) => (
                                 <div key={i} className="flex items-start space-x-4">
                                     {React.createElement(point.icon, { size: 32, className: "text-purple-400 mt-1" })}
-                                    <div>
+                        <div>
                                         <h4 className="font-bold text-xl text-slate-200">{point.title}</h4>
                                         <p className="text-slate-400">{point.text}</p>
                                     </div>
@@ -454,7 +454,7 @@ const Slide = ({ slideData }) => {
                             {content.footer.items.map((item, i) => (
                                 <div key={i} className="flex items-start space-x-3">
                                     {React.createElement(item.icon, { className: `${item.iconColor} mt-1`, size: 24 })}
-                                    <div>
+                        <div>
                                         <h4 className="font-semibold text-slate-200">{item.title}</h4>
                                         <p className="text-slate-400 text-sm">{item.text}</p>
                                     </div>
@@ -496,9 +496,9 @@ const Slide = ({ slideData }) => {
                                     <span className="font-semibold text-emerald-400" dangerouslySetInnerHTML={{ __html: content.dashboard.export.title }}></span>
                                 </div>
                                 <p className="text-slate-300 text-sm" dangerouslySetInnerHTML={{ __html: content.dashboard.export.text }}></p>
-                            </div>
-                        </div>
-                    </div>
+                 </div>
+            </div>
+        </div>
                     <div className="bg-gradient-to-r from-emerald-500/20 to-teal-500/20 p-8 rounded-2xl border border-emerald-500/50">
                         <h3 className="text-2xl font-bold text-emerald-400 mb-4 text-center" dangerouslySetInnerHTML={{ __html: content.advantage.title }}></h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
@@ -510,7 +510,7 @@ const Slide = ({ slideData }) => {
                                 </div>
                             ))}
                         </div>
-                    </div>
+            </div>
                 </>
             )}
 
@@ -621,10 +621,10 @@ const Slide = ({ slideData }) => {
                                     {React.createElement(item.icon, { className: "mx-auto text-amber-400 mb-3", size: 48 })}
                                     <h4 className="font-semibold text-slate-200 mb-2">{item.title}</h4>
                                     <p className="text-slate-300 text-sm">{item.text}</p>
-                                </div>
+                </div>
                             ))}
-                        </div>
-                    </div>
+                </div>
+            </div>
                 </>
             )}
         </SlideLayout>

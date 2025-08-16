@@ -11,6 +11,14 @@ import {
   TrustBadges,
   DataRoomPreviewGrid,
   CTABand,
+  GuidedDesignPanel,
+  DesignResultSummary,
+  QCBadges,
+  SequencePeaksViewer,
+  PipelineGraph,
+  RunLogPanel,
+  ProvenancePanel,
+  KPIStrip,
 } from '../components/site';
 import type { ValuePillar, AIEngineCard, SolutionCard, DeploymentModel } from '../types/site';
 import { sampleDecks } from '../data/sampleDecks.js';
@@ -43,6 +51,35 @@ const SiteHomePage: React.FC = () => {
     { title: 'Zeta Shield Embedded', icon: <Cpu className="w-6 h-6 text-cyan-600" />, color: 'cyan', features: ['API-first integration', 'White-label options', 'Custom workflows', 'Revenue sharing'], pricing: 'Per-transaction pricing', ideal: 'Platform Providers & VCs' },
   ];
 
+  // Demo props for new blocks
+  const guidedObjectives = [
+    { type: 'peak', start: 20, end: 60, value: 1 as const },
+    { type: 'peak', start: 120, end: 160, value: 0 as const },
+    { type: 'tf', motif: 'CTCF', start: 80, end: 90, weight: 0.8 },
+  ];
+  const demoLength = 200;
+  const demoPeaks = [
+    { start: 20, end: 60, value: 1 },
+    { start: 120, end: 160, value: 0.6 },
+  ];
+  const pipelineSteps = [
+    { id: 'ingest', name: 'Ingest', status: 'done' as const },
+    { id: 'analyze', name: 'Analyze', status: 'done' as const },
+    { id: 'design', name: 'Design', status: 'running' as const },
+    { id: 'validate', name: 'Validate', status: 'queued' as const },
+  ];
+  const runLines = [
+    { ts: '12:01:02', level: 'info' as const, msg: 'Forge started with scorer=enformer beam=8' },
+    { ts: '12:01:06', level: 'warn' as const, msg: 'Objective overlap detected; reweighting' },
+    { ts: '12:01:10', level: 'info' as const, msg: 'Beam 3 improved AUROC to 0.842' },
+  ];
+  const kpis = [
+    { label: 'Variants scored', value: 12843, delta: 4.2 },
+    { label: 'Designs generated', value: 312, delta: 1.1 },
+    { label: 'QC pass rate', value: '96.3%', delta: 0.7 },
+    { label: 'Avg time/run', value: '2m 14s', delta: -3.4 },
+  ];
+
   return (
     <div className="w-full bg-white">
       <HeroSection
@@ -64,7 +101,55 @@ const SiteHomePage: React.FC = () => {
 
       <AIEnginesGrid engines={engines} />
 
+      {/* Links to product pages */}
+      <section className="max-w-7xl mx-auto px-6 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <button onClick={() => navigate('/site/oracle')} className="p-4 rounded-lg border border-slate-200 hover:bg-slate-50 text-left">
+            <div className="text-sm font-semibold text-slate-800 mb-1">Oracle</div>
+            <div className="text-xs text-slate-600">Variant impact, explainability, calibration</div>
+          </button>
+          <button onClick={() => navigate('/site/forge')} className="p-4 rounded-lg border border-slate-200 hover:bg-slate-50 text-left">
+            <div className="text-sm font-semibold text-slate-800 mb-1">Forge</div>
+            <div className="text-xs text-slate-600">Guided design, trajectory, candidates</div>
+          </button>
+          <button onClick={() => navigate('/site/command-center')} className="p-4 rounded-lg border border-slate-200 hover:bg-slate-50 text-left">
+            <div className="text-sm font-semibold text-slate-800 mb-1">Command Center</div>
+            <div className="text-xs text-slate-600">Pipeline, logs, KPIs, evidence, roles</div>
+          </button>
+        </div>
+      </section>
+
       <SolutionsCards solutions={solutions} />
+
+      {/* Forge demo */}
+      <section className="max-w-7xl mx-auto px-6 py-12">
+        <h2 className="text-xl font-semibold text-slate-900 mb-4">Forge: Guided Design</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
+            <GuidedDesignPanel objectives={guidedObjectives as any} scorer="enformer" beamWidth={8} tokensPerBp={4} />
+            <SequencePeaksViewer length={demoLength} peaks={demoPeaks} variantPos={88} />
+          </div>
+          <div className="space-y-6">
+            <DesignResultSummary auroc={0.861} compute={{ beamWidth: 8, tokensPerBp: 4 }} scorerVersion="enformer-2024.08" modelVersion="evo2-1m" seed={42} />
+            <QCBadges synteny={0.93} pfamHitRate={0.88} dinucKL={0.12} />
+          </div>
+        </div>
+      </section>
+
+      {/* Command Center demo */}
+      <section className="max-w-7xl mx-auto px-6 py-12">
+        <h2 className="text-xl font-semibold text-slate-900 mb-4">Command Center</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
+            <PipelineGraph steps={pipelineSteps as any} />
+            <RunLogPanel lines={runLines as any} />
+          </div>
+          <div className="space-y-6">
+            <KPIStrip items={kpis} />
+            <ProvenancePanel model="evo2" modelVersion="1.0.0" scorer="enformer" scorerVersion="2024.08" seed={42} createdAt={new Date().toISOString()} />
+          </div>
+        </div>
+      </section>
 
       <DeploymentModels models={models} />
 

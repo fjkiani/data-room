@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import * as THREE from 'three';
+import { runx1Content } from '../runx1Content';
 
 // Branding Component (No change)
 const Brand = () => (
@@ -155,6 +156,7 @@ const CompetitivePillar = ({ icon, title, text, borderColor, textColor }) => (
 // The new, reusable Slide component
 const Slide = ({ slideData }) => {
     const { title, subtitle, background, content, headerAnimation, extraText } = slideData;
+    const [activeSimStep, setActiveSimStep] = useState(-1);
 
     return (
         <section className={`relative w-full min-h-screen flex flex-col items-center justify-center text-center p-8 ${background} overflow-hidden`}>
@@ -213,10 +215,30 @@ const Slide = ({ slideData }) => {
                 
                 {content.type === 'process-steps' && (
                     <div className="bg-gradient-to-r from-slate-900/80 to-slate-800/80 backdrop-blur-sm p-12 rounded-3xl shadow-2xl border border-slate-600/50">
+                        {content.simulate && (
+                            <div className="flex justify-end mb-4">
+                                <button
+                                    onClick={() => {
+                                        setActiveSimStep(-1);
+                                        let s = -1;
+                                        const id = setInterval(() => {
+                                            s += 1;
+                                            setActiveSimStep(s);
+                                            if (s >= content.steps.length - 1) clearInterval(id);
+                                        }, 400);
+                                    }}
+                                    className="px-3 py-1 text-xs rounded bg-blue-600 text-white hover:bg-blue-500"
+                                >
+                                    Simulate
+                                </button>
+                            </div>
+                        )}
                         <div className="flex flex-col lg:flex-row items-center justify-around space-y-8 lg:space-y-0 lg:space-x-8">
                             {content.steps.map((step, index) => (
                                 <React.Fragment key={index}>
-                                    {step.type === 'feature-card' ? <FeatureCard {...step} /> : <ProcessStep {...step} />}
+                                    <div className={`${index <= activeSimStep ? 'ring-2 ring-green-400 rounded-2xl' : ''}`}>
+                                        {step.type === 'feature-card' ? <FeatureCard {...step} /> : <ProcessStep {...step} />}
+                                    </div>
                                     {index < content.steps.length - 1 && (
                                         <div className="text-6xl text-slate-500 animate-pulse">➡️</div>
                                     )}
@@ -225,7 +247,7 @@ const Slide = ({ slideData }) => {
                         </div>
                     </div>
                 )}
-
+                
                 {content.type === 'risk-prediction-map' && (
                     <div className="bg-gradient-to-r from-slate-900/80 to-slate-800/80 backdrop-blur-sm p-12 rounded-3xl shadow-2xl border border-slate-600/50">
                         <div className="flex flex-col lg:flex-row items-center justify-around space-y-8 lg:space-y-0 lg:space-x-8">
@@ -244,7 +266,7 @@ const Slide = ({ slideData }) => {
                         </div>
                     </div>
                 )}
-
+                
                 {content.type === 'therapeutic-arsenal' && (
                     <div className="bg-gradient-to-r from-slate-900/80 to-slate-800/80 backdrop-blur-sm p-12 rounded-3xl shadow-2xl border border-slate-600/50">
                         <div className="flex flex-col lg:flex-row items-center justify-around space-y-8 lg:space-y-0 lg:space-x-8">
@@ -334,7 +356,7 @@ const Slide = ({ slideData }) => {
                         </div>
                     </>
                 )}
-
+                
                 {content.type === 'command-center-grid' && (
                     <>
                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
@@ -375,7 +397,7 @@ const Slide = ({ slideData }) => {
                         </div>
                     </>
                 )}
-
+                
                 {extraText && (
                     <p className="text-slate-300 text-xl max-w-4xl mx-auto mt-8">{extraText}</p>
                 )}
@@ -387,8 +409,8 @@ const Slide = ({ slideData }) => {
 // --- SLIDE DATA DEFINITION ---
 const slidesData = [
     {
-        title: <>The RUNX1<br/><span className="text-6xl md:text-7xl lg:text-8xl bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Conquest</span></>,
-        subtitle: <>How Our Agentic Platform Solved a <span className="font-bold text-yellow-400"> Multi-Year Leukemia Grant </span><span className="italic font-semibold text-cyan-400">In Silico</span></>,
+        title: <>{runx1Content.hero.title.split(' ')[0]}<br/><span className="text-6xl md:text-7xl lg:text-8xl bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">{runx1Content.hero.title.replace(runx1Content.hero.title.split(' ')[0] + ' ', '')}</span></>,
+        subtitle: <>{runx1Content.hero.subtitle}</>,
         background: 'bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900',
         headerAnimation: 'text-7xl md:text-8xl lg:text-9xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 mb-8 tracking-tight leading-none',
         content: {
@@ -405,14 +427,9 @@ const slidesData = [
         headerAnimation: 'text-6xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 mb-6 leading-tight',
         content: {
             type: 'two-hit-hypothesis',
-            steps: [
-                { title: 'Healthy<br/>Cell', subtext: 'Normal RUNX1', colorClass: 'bg-gradient-to-br from-green-400 to-emerald-600' },
-                { title: 'First<br/>Hit', subtext: 'Inherited RUNX1<br/>Mutation', colorClass: 'bg-gradient-to-br from-yellow-400 to-orange-500', mutationIcon: '🧬' },
-                { title: 'Second<br/>Hit', subtext: 'Acquired Somatic<br/>Mutation', colorClass: 'bg-gradient-to-br from-orange-500 to-red-600', mutationIcon: '💥', animationClass: 'animate-spin' },
-                { title: 'Leukemic<br/>Cell', subtext: 'Full-Blown<br/>Leukemia', colorClass: 'bg-gradient-to-br from-red-600 to-red-900', animationClass: 'animate-pulse' }
-            ]
+            steps: runx1Content.twoHit.steps.map(s => ({ title: s.titleHTML, subtext: s.subtextHTML, colorClass: s.color === 'green' ? 'bg-gradient-to-br from-green-400 to-emerald-600' : s.color === 'yellow' ? 'bg-gradient-to-br from-yellow-400 to-orange-500' : s.color === 'orange' ? 'bg-gradient-to-br from-orange-500 to-red-600' : 'bg-gradient-to-br from-red-600 to-red-900', mutationIcon: s.icon, animationClass: s.animated === 'pulse' ? 'animate-pulse' : s.animated === 'spin' ? 'animate-spin' : '' }))
         },
-        extraText: "This slide illustrates the 'two-hit' model, a fundamental concept in cancer genetics. It shows how an initial inherited mutation (the 'first hit') creates a predisposition, which can then progress to full-blown disease after a second, acquired mutation. Our entire approach begins with a deep, first-principles understanding of this pathway."
+        extraText: runx1Content.twoHit.caption
     },
     {
         title: 'Phase I: From Ambiguity to Actionable Insight',
@@ -435,15 +452,11 @@ const slidesData = [
         headerAnimation: 'text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 mb-6 leading-tight',
         content: {
             type: 'risk-prediction-map',
-            knownThreat: { icon: '🧬', title: 'Known Genetic Risk', subtext: 'RUNX1 (First Hit)', iconBg: 'bg-red-500/20', borderColor: 'border-red-500', accentColor: 'text-red-400' },
-            aiCore: { icon: '🧠', title: 'Zeta Oracle Analysis', borderColor: 'border-cyan-400/50' },
-            predictions: [
-                { name: 'ASXL1', risk: '(-15k Risk)', colorClass: 'text-red-400' },
-                { name: 'TET2', risk: '(-12k Risk)', colorClass: 'text-red-400' },
-                { name: 'DNMT3A', risk: '(-9k Risk)', colorClass: 'text-orange-400' }
-            ]
+            knownThreat: { icon: '🧬', title: runx1Content.riskMap.knownThreat.title, subtext: runx1Content.riskMap.knownThreat.subtext, iconBg: 'bg-red-500/20', borderColor: 'border-red-500', accentColor: 'text-red-400' },
+            aiCore: { icon: '🧠', title: runx1Content.riskMap.aiCore.title, borderColor: 'border-cyan-400/50' },
+            predictions: runx1Content.riskMap.predictions.map(p => ({ name: p.name, risk: p.risk, colorClass: p.level === 'high' ? 'text-red-400' : p.level === 'medium' ? 'text-orange-400' : 'text-yellow-400' }))
         },
-        extraText: "Instead of reacting to a disease after it evolves, our platform simulates its most likely future paths. By understanding how a cancer is likely to change, we can design therapies that are not only effective today but are built to overcome future resistance. This transforms drug development from a reactive process into a proactive, strategic one."
+        extraText: runx1Content.riskMap.caption
     },
     {
         title: 'Phase II: Engineering the Therapeutic Solution',
@@ -452,15 +465,29 @@ const slidesData = [
         headerAnimation: 'text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 mb-6 leading-tight',
         content: {
             type: 'therapeutic-arsenal',
-            input: { icon: '🗺️', title: 'Input: Disease Map', iconBg: 'bg-yellow-500/20', borderColor: 'border-yellow-500', accentColor: 'text-yellow-400' },
-            process: { icon: '🔨', title: 'Zeta Forge Engine', borderColor: 'border-purple-400/50' },
-            outputs: [
-                { icon: '🧬', text: 'Gene Correction' },
-                { icon: '✂️', text: 'Clone Elimination' },
-                { icon: '⚛️', text: 'Novel Biologics' }
+            input: { icon: '🗺️', title: runx1Content.arsenal.input, iconBg: 'bg-yellow-500/20', borderColor: 'border-yellow-500', accentColor: 'text-yellow-400' },
+            process: { icon: '🔨', title: runx1Content.arsenal.processTitle, borderColor: 'border-purple-400/50' },
+            outputs: runx1Content.arsenal.outputs.map(t => ({ icon: '🧬', text: t }))
+        },
+        extraText: runx1Content.arsenal.caption
+    },
+    {
+        title: 'How Forge works',
+        subtitle: 'From objective to decision in five steps',
+        background: 'bg-gradient-to-br from-slate-900 via-sky-900/20 to-slate-900',
+        headerAnimation: 'text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-400 to-emerald-400 mb-6 leading-tight',
+        content: {
+            type: 'process-steps',
+            simulate: true,
+            steps: [
+                { icon: '🎯', title: 'Objectives', description: 'Define peaks/motifs and desired behavior at the locus.', borderColor: 'border-emerald-400', accentColor: 'bg-emerald-500/20' },
+                { icon: '🧰', title: 'Constraints', description: 'GC range, avoid homopolymers, length, restriction sites.', borderColor: 'border-yellow-400', accentColor: 'bg-yellow-500/20' },
+                { icon: '⚙️', title: 'Compute', description: 'Beam width + tokens/bp → predictable quality scaling.', borderColor: 'border-sky-400', accentColor: 'bg-sky-500/20' },
+                { icon: '📈', title: 'Evidence', description: 'AUROC, ensemble agreement, synteny, dinuc KL, structure.', borderColor: 'border-violet-400', accentColor: 'bg-violet-500/20' },
+                { icon: '✅', title: 'Decision', description: 'Meet thresholds → handoff to Command Center with provenance.', borderColor: 'border-green-400', accentColor: 'bg-green-500/20' },
             ]
         },
-        extraText: "With a predictive map of the disease's evolutionary pathways, our Zeta Forge engine moves from analysis to creation. It designs a multi-pronged therapeutic strategy, generating blueprints for precise gene correction, targeted clone elimination, and novel biologics—all entirely in silico. This transforms drug discovery from a process of chance into a deterministic engineering discipline."
+        extraText: 'More compute → higher match; constraints keep designs practical; evidence builds trust.'
     },
     {
         title: 'Therapeutic Strategy 1: Precision Gene Correction',
@@ -469,12 +496,9 @@ const slidesData = [
         headerAnimation: 'text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 mb-6 leading-tight',
         content: {
             type: 'gene-correction',
-            problem: { icon: '🧬', title: 'The Problem', subtext: 'RUNX1 Mutation (First Hit)', borderColor: 'border-red-500', accentColor: 'bg-red-500/20', textColor: 'text-red-400' },
-            outcome: { icon: '🧬', title: 'The Outcome', subtext: 'Corrected RUNX1 Gene', borderColor: 'border-green-500', accentColor: 'bg-green-500/20', textColor: 'text-green-400' },
-            infoBoxes: [
-                { title: 'The CrisPRO Advantage', text: 'Our massive, AI-generated homology arms provide unparalleled genomic context. This ensures the gene correction payload is delivered with surgical precision, dramatically increasing efficacy and virtually eliminating the risk of dangerous off-target edits.', bgClass: 'bg-slate-800/50', borderColor: 'border-purple-500/30', textColor: 'text-purple-400' },
-                { title: 'The Industry Limitation', text: 'Standard approaches use tiny, context-unaware homology arms. This is like performing surgery with a blunt instrument—it leads to low efficiency and a high probability of off-target effects, a risk that is unacceptable in clinical applications.', bgClass: 'bg-slate-800/50', borderColor: 'border-red-500/30', textColor: 'text-red-400' }
-            ]
+            problem: { icon: '🧬', title: runx1Content.geneCorrection.problem.title, subtext: runx1Content.geneCorrection.problem.subtext, borderColor: 'border-red-500', accentColor: 'bg-red-500/20', textColor: 'text-red-400' },
+            outcome: { icon: '🧬', title: runx1Content.geneCorrection.outcome.title, subtext: runx1Content.geneCorrection.outcome.subtext, borderColor: 'border-green-500', accentColor: 'bg-green-500/20', textColor: 'text-green-400' },
+            infoBoxes: runx1Content.geneCorrection.advantages.map((a, i) => ({ title: a.title, text: a.text, bgClass: 'bg-slate-800/50', borderColor: i === 0 ? 'border-purple-500/30' : 'border-red-500/30', textColor: i === 0 ? 'text-purple-400' : 'text-red-400' }))
         }
     },
     {
@@ -499,17 +523,9 @@ const slidesData = [
         headerAnimation: 'text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-teal-400 to-cyan-400 mb-6 leading-tight',
         content: {
             type: 'approval-process',
-            dossier: [
-                { title: 'The Zeta Score', subtitle: '(Quantified Damage)', bgClass: 'bg-gradient-to-br from-purple-600 to-indigo-700', borderClass: 'border-2 border-purple-400/50' },
-                { title: 'Therapeutic Blueprints', subtitle: '(AI-Designed Solutions)', bgClass: 'bg-gradient-to-br from-blue-600 to-cyan-700', borderClass: 'border-2 border-blue-400/50' },
-                { title: 'In Silico Validation', subtitle: '(Predicted Efficacy & Safety)', bgClass: 'bg-gradient-to-br from-green-600 to-teal-700', borderClass: 'border-2 border-green-400/50' }
-            ],
-            fdaTiers: [
-                { title: 'Tier 3: Case Reports', bgClass: 'bg-red-500/20', textColor: 'text-red-300' },
-                { title: 'Tier 2: Cohort Studies', bgClass: 'bg-yellow-500/20', textColor: 'text-yellow-300' },
-                { title: 'Tier 1: Randomized Controlled Trials (RCTs)', bgClass: 'bg-green-500/20', textColor: 'text-green-300' }
-            ],
-            fdaText: 'Our Digital Dossier provides the evidence to accelerate through FDA tiers.'
+            dossier: runx1Content.approval.dossier.map((d, idx) => idx === 0 ? { title: d.title, subtitle: d.subtitle, bgClass: 'bg-gradient-to-br from-purple-600 to-indigo-700', borderClass: 'border-2 border-purple-400/50' } : idx === 1 ? { title: d.title, subtitle: d.subtitle, bgClass: 'bg-gradient-to-br from-blue-600 to-cyan-700', borderClass: 'border-2 border-blue-400/50' } : { title: d.title, subtitle: d.subtitle, bgClass: 'bg-gradient-to-br from-green-600 to-teal-700', borderClass: 'border-2 border-green-400/50' }),
+            fdaTiers: runx1Content.approval.tiers.map((t, idx) => idx === 0 ? { title: t.title, bgClass: 'bg-red-500/20', textColor: 'text-red-300' } : idx === 1 ? { title: t.title, bgClass: 'bg-yellow-500/20', textColor: 'text-yellow-300' } : { title: t.title, bgClass: 'bg-green-500/20', textColor: 'text-green-300' }),
+            fdaText: runx1Content.approval.text
         }
     },
     {
@@ -532,19 +548,9 @@ const slidesData = [
         background: 'bg-gradient-to-br from-slate-900 via-indigo-900/30 to-slate-900',
         content: {
             type: 'command-center-grid',
-            inputs: [
-                { icon: '🧬', text: 'Genomic Data' },
-                { icon: '❓', text: 'Clinical Uncertainty', subtext: '(40% VUS Rate)' }
-            ],
-            outputs: [
-                { icon: '✅', text: 'Validated Therapeutics' },
-                { icon: '🛡️', text: 'De-Risked Pipelines' }
-            ],
-            infoBoxes: [
-                { title: 'The Zeta Oracle (Prediction)', text: 'Our foundational AI that understands the language of biology to annihilate clinical uncertainty.' },
-                { title: 'The Zeta Forge (Generation)', text: 'Our generative AI that forges novel, validated therapeutic candidates entirely in silico.' },
-                { title: 'The Command Center (Orchestration)', text: 'The central nervous system that unifies our arsenal, turning a query into a complete therapeutic battle plan.' }
-            ]
+            inputs: runx1Content.commandCenter.inputs.map(t => ({ icon: '🧬', text: t })),
+            outputs: runx1Content.commandCenter.outputs.map(t => ({ icon: '✅', text: t })),
+            infoBoxes: runx1Content.commandCenter.info.map(i => ({ title: i.title, text: i.text }))
         }
     },
 ];

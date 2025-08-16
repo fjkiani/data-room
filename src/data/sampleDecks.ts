@@ -18,17 +18,10 @@ export const categories: DeckCategory[] = [
   },
   {
     id: 'marketing',
-    name: 'Marketing',
-    description: 'Marketing presentations and campaigns',
+    name: 'validation',
+    description: 'Clinical and Scientific Validation',
     icon: '📈',
     color: 'purple'
-  },
-  {
-    id: 'finance',
-    name: 'Finance',
-    description: 'Financial reports and analysis',
-    icon: '💰',
-    color: 'yellow'
   },
 ];
 

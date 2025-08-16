@@ -67,6 +67,10 @@ import {
   Bot as BotIcon, ArrowRight as ArrowRightIcon, UserCheck, Lock
 } from 'lucide-react';
 import * as THREE from 'three';
+import { OracleExplainTrack, VEPMetrics, VariantDetailCard, GuidedDesignPanel, DesignResultSummary, QCBadges, SequencePeaksViewer, PipelineGraph, RunLogPanel, ProvenancePanel, KPIStrip } from '@site';
+import { crispro101Content } from '../crispro101Content';
+import { toOracleBlocks, toForgeBlocks, toBoltzBlocks } from '../adapters/crispro101';
+import { ZetaOracleInAction, ZetaForgeTwoColumn, StructuralGauntlet } from '@slides';
 
 //================================================================================
 // 1. REUSABLE UI & LAYOUT COMPONENTS
@@ -196,6 +200,36 @@ const SlideLayout = ({ children, className = '' }) => (
     </motion.section>
 );
 
+// Helper to render new site blocks if present on a slide's content
+const renderSiteBlock = (b, key) => {
+  switch (b?.kind) {
+    case 'oracle-explain':
+      return <OracleExplainTrack key={key} {...b.props} />;
+    case 'vep-metrics':
+      return <VEPMetrics key={key} {...b.props} />;
+    case 'variant-detail':
+      return <VariantDetailCard key={key} {...b.props} />;
+    case 'forge-guided':
+      return <GuidedDesignPanel key={key} {...b.props} />;
+    case 'design-summary':
+      return <DesignResultSummary key={key} {...b.props} />;
+    case 'qc-badges':
+      return <QCBadges key={key} {...b.props} />;
+    case 'sequence-peaks':
+      return <SequencePeaksViewer key={key} {...b.props} />;
+    case 'pipeline':
+      return <PipelineGraph key={key} {...b.props} />;
+    case 'run-log':
+      return <RunLogPanel key={key} {...b.props} />;
+    case 'provenance':
+      return <ProvenancePanel key={key} {...b.props} />;
+    case 'kpi-strip':
+      return <KPIStrip key={key} {...b.props} />;
+    default:
+      return null;
+  }
+};
+
 /**
  * A layout wrapper for slides with the 3D synapse background.
  */
@@ -208,7 +242,6 @@ const EnhancedSlideLayout = ({ children, className = '' }) => (
         className={`relative w-full h-full flex flex-col items-center justify-center text-center p-8 bg-slate-900 text-slate-200 overflow-hidden ${className}`}
     >
         <DigitalSynapseBackground />
-        <Brand />
         <div className="relative z-10 w-full max-w-6xl space-y-12">
             {children}
         </div>
@@ -391,7 +424,11 @@ const Slide = ({ slideData }) => {
                     ))}
                 </div>
             )}
-            
+
+            {content?.type === 'custom' && typeof content.render === 'function' && (
+                <div className="pt-4">{content.render()}</div>
+            )}
+
             {content?.type === 'zeta-oracle-in-action' && (
                 <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 max-w-3xl mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -685,6 +722,12 @@ const Slide = ({ slideData }) => {
                 <p className="text-slate-400 text-lg max-w-4xl mx-auto mt-8" dangerouslySetInnerHTML={{ __html: notes }}></p>
             )}
 
+            {Array.isArray(content?.siteBlocks) && (
+              <div className="mt-8 space-y-6">
+                {content.siteBlocks.map((b, i) => renderSiteBlock(b, i))}
+              </div>
+            )}
+
         </Layout>
     );
 };
@@ -931,10 +974,15 @@ const slidesData = [
     subtitle: "Resolving the Billion-Dollar 'Variant of Uncertain Significance' Problem",
     titleClassName: "from-cyan-400 to-sky-300",
     content: {
-      type: 'zeta-oracle-in-action',
-      left: { title: 'Traditional Verdict', value: 'VUS', subtitle: '(Variant of Uncertain Significance)' },
-      right: { title: 'CrisPRO\'s Verdict', value: 'PATHOGENIC', subtitle: '(Confirmed High-Risk Threat)' },
-      score: { title: 'Zeta Score (Functional Damage):', value: '-26,140.8' }
+      type: 'custom',
+      siteBlocks: [],
+      render: () => (
+        <ZetaOracleInAction
+          left={{ title: 'Traditional Verdict', value: 'VUS', subtitle: '(Variant of Uncertain Significance)' }}
+          right={{ title: "CrisPRO's Verdict", value: 'PATHOGENIC', subtitle: '(Confirmed High-Risk Threat)' }}
+          score={{ title: 'Zeta Score (Functional Damage):', value: '-26,140.8' }}
+        />
+      )
     }
   },
   // SLIDE 5: THE GENERATIVE IMPERATIVE
@@ -959,23 +1007,28 @@ const slidesData = [
     subtitle: "From `In Silico` Insight to Validated Therapeutic Blueprints",
     titleClassName: "from-purple-400 to-pink-400",
     content: {
-      type: 'two-column',
-      column1: {
-        input: 'Validated Pathogenic Threat from Zeta Oracle',
-        mission: 'Engineer Multi-Modal Therapeutic Solutions',
-        assets: [
-          { icon: Dna, label: "Gene Correction Blueprint" },
-          { icon: Shield, label: '"Clone Assassin" Payload' },
-          { icon: TestTube2, label: "Novel Nanobody Inhibitor" },
-        ]
-      },
-      column2: {
-        title: 'Our Unfair Advantage:',
-        highlight: '1M Token Context',
-        description: "We see the entire genomic neighborhood.",
-        infoHeader: 'This allows us to forge:',
-        infoText: "Ultra-Long Homology Arms (HDR), a DNA repair mechanism in cells for high-efficiency gene correction —a capability where we don't just design a patch; we engineer a perfect, factory-spec replacement part."
-      }
+      type: 'custom',
+      siteBlocks: [],
+      render: () => (
+        <ZetaForgeTwoColumn
+          column1={{
+            input: 'Validated Pathogenic Threat from Zeta Oracle',
+            mission: 'Engineer Multi-Modal Therapeutic Solutions',
+            assets: [
+              { icon: Dna, label: 'Gene Correction Blueprint' },
+              { icon: Shield, label: '"Clone Assassin" Payload' },
+              { icon: TestTube2, label: 'Novel Nanobody Inhibitor' },
+            ]
+          }}
+          column2={{
+            title: 'Our Unfair Advantage:',
+            highlight: '1M Token Context',
+            description: 'We see the entire genomic neighborhood.',
+            infoHeader: 'This allows us to forge:',
+            infoText: 'Ultra-Long Homology Arms (HDR), a DNA repair mechanism in cells for high-efficiency gene correction —a capability where we do not just design a patch; we engineer a perfect, factory-spec replacement part.'
+          }}
+        />
+      )
     }
   },
   // SLIDE 7: THE STRUCTURAL BLIND SPOT
@@ -1000,11 +1053,16 @@ const slidesData = [
     subtitle: "Proving Lethality in 3D",
     titleClassName: "from-orange-400 to-yellow-300",
     content: {
-      type: 'structural-gauntlet',
-      description: "The `in silico` kill chain does not end with a sequence. It ends with proof of a physical interaction. Zeta Boltz is our structural validation engine, powered by AlphaFold 3.",
-      output: { title: "Zeta Forge Output:", text: "QVQLQESGGGL..." },
-      simulation: { title: "Zeta Boltz Simulation:", icon: Cuboid },
-      verdict: { title: "Validation Verdict:", result: "High-Confidence Interaction Confirmed", confidence: "complex_plddt: 95.78" }
+      type: 'custom',
+      siteBlocks: [],
+      render: () => (
+        <StructuralGauntlet
+          description="The `in silico` kill chain does not end with a sequence. It ends with proof of a physical interaction. Zeta Boltz is our structural validation engine, powered by AlphaFold 3."
+          output={{ title: 'Zeta Forge Output:', text: 'QVQLQESGGGL...' }}
+          simulation={{ title: 'Zeta Boltz Simulation:', icon: Cuboid }}
+          verdict={{ title: 'Validation Verdict:', result: 'High-Confidence Interaction Confirmed', confidence: 'complex_plddt: 95.78' }}
+        />
+      )
     }
   },
   // SLIDE 9: THE COMMAND CENTER (REPRISE)
@@ -1469,7 +1527,8 @@ const slidesData = [
           colorClass: 'bg-gradient-to-br from-purple-400 to-pink-600',
           mutationIcon: '🎯'
         }
-      ]
+      ],
+      siteBlocks: toOracleBlocks(crispro101Content)
     },
     notes: "The Zeta Oracle doesn't just check databases—it understands the fundamental grammar of biology. This allows it to predict the functional impact of any variant, even those never seen before."
   },
@@ -1499,7 +1558,8 @@ const slidesData = [
         { icon: '✂️', text: 'Synthetic Lethal Payload' },
         { icon: '🛡️', text: 'Novel Nanobody Inhibitor' },
         { icon: '💊', text: 'Small Molecule Modulator' }
-      ]
+      ],
+      siteBlocks: toForgeBlocks(crispro101Content)
     },
     notes: "Our 1M token context window provides an unfair advantage: we can design ultra-long homology arms and complex therapeutic architectures that are impossible for smaller models."
   },
@@ -1518,7 +1578,6 @@ const slidesData = [
         subtext: 'Sequence ≠ Function', 
         borderColor: 'border-yellow-500', 
         accentColor: 'bg-yellow-500/20', 
-        textColor: 'text-yellow-400' 
       },
       outcome: { 
         icon: '🏆', 
@@ -1543,7 +1602,8 @@ const slidesData = [
           borderColor: 'border-green-500/30', 
           textColor: 'text-green-400' 
         }
-      ]
+      ],
+      siteBlocks: toBoltzBlocks(crispro101Content)
     },
     notes: "Zeta Boltz transforms drug discovery from an art into an engineering discipline. We don't hope for binding—we engineer it."
   },
