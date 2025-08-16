@@ -278,7 +278,7 @@ const ProductOracle: React.FC = () => {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Biotech R&D Transformation */}
               <div className="bg-slate-800 border border-slate-700 rounded-xl p-8 hover:border-blue-500/50 transition-colors group">
                 <div className="space-y-6">
@@ -360,6 +360,49 @@ const ProductOracle: React.FC = () => {
                     className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-500 text-white rounded-lg font-semibold transition-colors group-hover:bg-green-500"
                   >
                     Explore Clinical Transformation
+                    <span className="text-lg">→</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Genetic Testing Labs Transformation */}
+              <div className="bg-slate-800 border border-slate-700 rounded-xl p-8 hover:border-purple-500/50 transition-colors group">
+                <div className="space-y-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center text-2xl">
+                      🧬
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-white">Genetic Testing Transformation</h3>
+                      <p className="text-slate-300">From VUS crisis to precision diagnostics</p>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-3 gap-4 text-center">
+                    <div>
+                      <div className="text-2xl font-bold text-purple-400">73%</div>
+                      <div className="text-xs text-slate-400">VUS reduction</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-purple-400">12x</div>
+                      <div className="text-xs text-slate-400">Faster turnaround</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-purple-400">97%</div>
+                      <div className="text-xs text-slate-400">Cost reduction</div>
+                    </div>
+                  </div>
+                  
+                  <p className="text-slate-300 text-sm">
+                    Transform genetic testing labs with instant VUS resolution, complex loci analysis, 
+                    and AI-designed quality controls for population-aware validation.
+                  </p>
+                  
+                  <a 
+                    href="/site/genetic-testing-transformation" 
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-lg font-semibold transition-colors group-hover:bg-purple-500"
+                  >
+                    Explore Genetic Testing Transformation
                     <span className="text-lg">→</span>
                   </a>
                 </div>

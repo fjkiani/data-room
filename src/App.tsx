@@ -13,6 +13,7 @@ const ProductCommandCenter = React.lazy(() => import('./pages/ProductCommandCent
 const ProductBoltz = React.lazy(() => import('./pages/ProductBoltz'));
 const BiotechTransformation = React.lazy(() => import('./pages/BiotechTransformation'));
 const ClinicalTransformation = React.lazy(() => import('./pages/ClinicalTransformation'));
+const GeneticTestingTransformation = React.lazy(() => import('./pages/GeneticTestingTransformation'));
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               <Route path="/site/boltz" element={<ProductBoltz />} />
               <Route path="/site/biotech-transformation" element={<BiotechTransformation />} />
               <Route path="/site/clinical-transformation" element={<ClinicalTransformation />} />
+              <Route path="/site/genetic-testing-transformation" element={<GeneticTestingTransformation />} />
               {/* Legacy aliases */}
               <Route path="/ProductOracle" element={<Navigate to="/site/oracle" replace />} />
               <Route path="/ProductForge" element={<Navigate to="/site/forge" replace />} />

@@ -76,6 +76,30 @@ export const multiModalContexts: MultiModalContext = {
           ]
         }
       },
+      'variant-classification': {
+        title: 'VUS Resolution in Genetic Testing',
+        description: 'Classify variants of uncertain significance with calibrated confidence scores',
+        applicableProducts: ['oracle'],
+        data: {
+          contexts: [
+            { context: { cellLine: 'BRCA1 Variant', mutations: ['c.5266dupC'] }, score: 0.92 },
+            { context: { cellLine: 'TP53 Variant', mutations: ['c.742C>T'] }, score: 0.88 },
+            { context: { cellLine: 'MLH1 Variant', mutations: ['c.1852_1854del'] }, score: 0.15 },
+            { context: { cellLine: 'ATM Variant', mutations: ['c.8147T>C'] }, score: 0.23 }
+          ]
+        },
+        businessContext: {
+          problem: '40-60% of genetic variants are classified as VUS, requiring expensive manual review',
+          solution: 'Zero-shot variant classification with calibrated pathogenicity scores',
+          impact: 'Reduce VUS rate from 40-60% to 15% with automated classification',
+          metrics: [
+            { label: 'VUS reduction', value: '73%', subtitle: '40-60% → 15% VUS rate', improvement: 'Massive patient impact' },
+            { label: 'Turnaround time', value: '24 hours', subtitle: 'vs 2-4 weeks manual', improvement: '12x faster' },
+            { label: 'Cost per variant', value: '$5', subtitle: 'vs $150 manual review', improvement: '97% cost reduction' },
+            { label: 'Analyst productivity', value: '20x', subtitle: 'cases per week', improvement: 'Throughput revolution' }
+          ]
+        }
+      },
       'resistance-mechanisms': {
         title: 'Drug Resistance Pathway Analysis',
         description: 'Understand essential gene networks driving therapeutic resistance',
@@ -168,6 +192,28 @@ export const multiModalContexts: MultiModalContext = {
             { label: 'Treatment planning', value: '6 months early', subtitle: 'resistance anticipation', improvement: 'Proactive vs reactive' },
             { label: 'Combination therapy success', value: '78%', subtitle: 'sustained response', improvement: 'vs 35% monotherapy' },
             { label: 'Patient outcomes', value: '+8 months', subtitle: 'progression-free survival', improvement: 'Resistance-aware design' }
+          ]
+        }
+      },
+      'complex-loci-analysis': {
+        title: 'Complex Genomic Loci Processing',
+        description: 'Handle challenging regions like HLA, immunoglobulin loci, and repetitive elements',
+        applicableProducts: ['oracle'],
+        data: {
+          function: 0.75,
+          stability: 0.82,
+          foldingImpact: 0.18,
+          notes: 'Long-context analysis resolves variants in complex genomic regions'
+        },
+        businessContext: {
+          problem: 'Complex loci have 80% VUS rate due to short-read limitations and manual curation challenges',
+          solution: '1M-token context windows enable comprehensive analysis of complex genomic regions',
+          impact: 'Resolve variants in previously intractable genomic regions',
+          metrics: [
+            { label: 'Complex loci success', value: '75%', subtitle: 'vs 20% traditional', improvement: '3.75x improvement' },
+            { label: 'Processing time', value: '2 hours', subtitle: 'vs 40 hours manual', improvement: '20x faster' },
+            { label: 'Cost reduction', value: '90%', subtitle: 'per complex case', improvement: '$45K → $5K' },
+            { label: 'Analyst productivity', value: '20x', subtitle: 'cases per week', improvement: 'Massive throughput gain' }
           ]
         }
       },
@@ -274,6 +320,32 @@ export const multiModalContexts: MultiModalContext = {
             { label: 'Expression prediction', value: '78%', subtitle: 'accuracy for variant effects', improvement: 'vs 35% sequence-only' },
             { label: 'Disease mechanism insight', value: '90%', subtitle: 'regulatory pathways identified', improvement: 'Novel therapeutic targets' },
             { label: 'Treatment personalization', value: '65%', subtitle: 'patients with actionable insights', improvement: 'vs 15% standard analysis' }
+          ]
+        }
+      },
+      'assay-design': {
+        title: 'Quality Control Assay Design',
+        description: 'Generate synthetic positive and negative controls for genetic testing assay validation',
+        applicableProducts: ['forge', 'oracle'],
+        data: {
+          context: 'Assay control design',
+          points: [
+            { pos: 10, score: 0.95 },
+            { pos: 25, score: 0.88 },
+            { pos: 40, score: 0.92 },
+            { pos: 60, score: 0.15 },
+            { pos: 80, score: 0.05 }
+          ]
+        },
+        businessContext: {
+          problem: 'Manual control design costs $50K per panel and fails 30% of the time due to population bias',
+          solution: 'AI-designed synthetic controls with population-aware optimization',
+          impact: 'Robust assay validation with 90% cost reduction and 95% population coverage',
+          metrics: [
+            { label: 'Control design cost', value: '$5K', subtitle: 'vs $50K manual', improvement: '90% cost reduction' },
+            { label: 'Validation time', value: '2 weeks', subtitle: 'vs 6 months', improvement: '12x faster' },
+            { label: 'Population coverage', value: '95%', subtitle: 'vs 70% manual', improvement: 'Global applicability' },
+            { label: 'Assay failure rate', value: '5%', subtitle: 'vs 30% traditional', improvement: '6x more reliable' }
           ]
         }
       },
