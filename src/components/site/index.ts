@@ -28,3 +28,7 @@ export { default as VariantDetailCard } from './blocks/VariantDetailCard';
 export * as Forge from './forge';
 export * as Command from './command';
 export * as Security from './security';
+
+// Product Page Components
+export { default as ProductPageLayout, ProductHero, ProductSection } from './ProductPageLayout';
+export { default as OracleProduct } from './OracleProduct';
