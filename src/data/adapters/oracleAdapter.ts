@@ -2,8 +2,8 @@ import { oracleContent } from '../oracleContent';
 
 export const adaptOracleContent = () => {
   return {
-    title: 'Oracle',
-    subtitle: 'The world\'s most powerful discriminative AI for biological sequences. Zero-shot prediction of variant pathogenicity, splice effects, and protein function—without any task-specific training.',
+    title: 'Solving 40% VUS Crises',
+    subtitle: 'CrisPRO.ai Discriminative AI is the world\'s most powerful discriminative AI for biological sequences. Zero-shot prediction of variant pathogenicity, splice effects, and protein function—without any task-specific training.',
     badge: {
       icon: '🔮',
       text: 'Discriminative AI',

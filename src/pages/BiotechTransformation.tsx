@@ -1,9 +1,11 @@
 import React from 'react';
-import { BusinessTransformation } from '../components/site/blocks';
+import { BusinessTransformation, VisualCapabilityGrid } from '../components/site/blocks';
 import { TwoHitDiagram, RiskMap, Arsenal } from '../components/site/runx1';
 import { renderContextualComponent } from '../utils/componentRenderer';
 import { oracleContent } from '../data/oracleContent';
 import { runx1Content } from '../data/runx1Content';
+import { biotechDiscriminativeCapabilities, biotechTransformationMetrics } from '../data/biotechDiscriminativeContent';
+import { useAccessibility } from '../contexts/AccessibilityContext';
 import type { ComponentConfig } from '../types/transformation';
 
 const transformationComponents = {
@@ -28,20 +30,82 @@ const transformationComponents = {
 };
 
 const BiotechTransformation: React.FC = () => {
+  const { getTextSize } = useAccessibility();
+  
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100">
-      {/* Hero Section */}
+      {/* Enhanced Hero Section */}
       <section className="py-20 px-6">
-        <div className="max-w-6xl mx-auto text-center space-y-6">
-          <h1 className="text-5xl font-bold text-white">
-            Biotech R&D Transformation
+        <div className="max-w-6xl mx-auto text-center space-y-8">
+          <div className="inline-flex items-center gap-3 px-4 py-2 bg-cyan-900/30 border border-cyan-700/50 rounded-full">
+            <span className="text-2xl">🧬</span>
+            <span className="text-cyan-300 font-medium">Biotech R&D</span>
+          </div>
+          
+          <h1 className={`font-bold text-white ${getTextSize('text-5xl')}`}>
+            From 90% Failure to 
+            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"> Predictable Success</span>
           </h1>
-          <p className="text-xl text-slate-300 max-w-4xl mx-auto">
-            From 90% failure rates to predictable success: How Oracle eliminates the guesswork in therapeutic development
+          
+          <p className={`text-slate-300 max-w-4xl mx-auto leading-relaxed ${getTextSize('text-xl')}`}>
+            Transform biotech R&D with <strong>Discriminative AI</strong>. Validate targets, design therapeutics, and predict outcomes 
+            using Oracle's 5 core endpoints—eliminating guesswork and accelerating discovery.
           </p>
+          
+          {/* Key Transformation Metrics Preview */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mt-12">
+            <div className="text-center p-4 bg-slate-800/50 border border-slate-600 rounded-xl">
+              <div className={`font-bold text-cyan-400 ${getTextSize('text-2xl')}`}>
+                72x
+              </div>
+              <div className={`text-slate-300 font-medium ${getTextSize('text-sm')}`}>
+                Target Validation
+              </div>
+              <div className={`text-slate-400 ${getTextSize('text-xs')}`}>
+                18 months → 1 week
+              </div>
+            </div>
+            
+            <div className="text-center p-4 bg-slate-800/50 border border-slate-600 rounded-xl">
+              <div className={`font-bold text-green-400 ${getTextSize('text-2xl')}`}>
+                99.8%
+              </div>
+              <div className={`text-slate-300 font-medium ${getTextSize('text-sm')}`}>
+                Cost Reduction
+              </div>
+              <div className={`text-slate-400 ${getTextSize('text-xs')}`}>
+                $2.5M → $3K per target
+              </div>
+            </div>
+            
+            <div className="text-center p-4 bg-slate-800/50 border border-slate-600 rounded-xl">
+              <div className={`font-bold text-purple-400 ${getTextSize('text-2xl')}`}>
+                6x
+              </div>
+              <div className={`text-slate-300 font-medium ${getTextSize('text-sm')}`}>
+                Success Rate
+              </div>
+              <div className={`text-slate-400 ${getTextSize('text-xs')}`}>
+                15% → 90% validated
+              </div>
+            </div>
+            
+            <div className="text-center p-4 bg-slate-800/50 border border-slate-600 rounded-xl">
+              <div className={`font-bold text-orange-400 ${getTextSize('text-2xl')}`}>
+                88%
+              </div>
+              <div className={`text-slate-300 font-medium ${getTextSize('text-sm')}`}>
+                False Discovery
+              </div>
+              <div className={`text-slate-400 ${getTextSize('text-xs')}`}>
+                85% → 10% reduction
+              </div>
+            </div>
+          </div>
+          
           <div className="flex flex-wrap justify-center gap-3 mt-8">
             {oracleContent.about.evo2Context.map((badge, i) => (
-              <span key={i} className="px-3 py-1 bg-slate-800 border border-slate-700 rounded-full text-sm text-slate-300">
+              <span key={i} className={`px-4 py-2 bg-slate-800 border border-slate-700 rounded-full text-slate-300 ${getTextSize('text-sm')}`}>
                 {badge}
               </span>
             ))}
@@ -191,6 +255,27 @@ const BiotechTransformation: React.FC = () => {
               props: { product: 'oracle' }
             } as ComponentConfig)}
           </div>
+        </div>
+      </section>
+
+      {/* Discriminative AI Arsenal Enhancement */}
+      <section className="py-16 px-6 bg-slate-800/30">
+        <div className="max-w-7xl mx-auto space-y-12">
+          <div className="text-center space-y-6">
+            <h2 className={`font-bold text-white ${getTextSize('text-4xl')}`}>
+              🎯 Complete Discriminative AI Arsenal
+            </h2>
+            <p className={`text-slate-300 max-w-4xl mx-auto leading-relaxed ${getTextSize('text-lg')}`}>
+              Five core AI endpoints that power every biotech transformation. Each capability includes live demos 
+              showing real biotech R&D applications with factual performance metrics.
+            </p>
+          </div>
+          
+          <VisualCapabilityGrid
+            capabilities={biotechDiscriminativeCapabilities}
+            title=""
+            subtitle=""
+          />
         </div>
       </section>
 

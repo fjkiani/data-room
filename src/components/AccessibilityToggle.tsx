@@ -1,5 +1,5 @@
 import React from 'react';
-import { Type, Eye } from 'lucide-react';
+import { Type, Eye, Moon, Sun, Palette } from 'lucide-react';
 import { useAccessibility } from '../contexts/AccessibilityContext';
 
 interface AccessibilityToggleProps {
@@ -7,10 +7,11 @@ interface AccessibilityToggleProps {
 }
 
 const AccessibilityToggle: React.FC<AccessibilityToggleProps> = ({ positionClass = "fixed top-4 right-4 z-50" }) => {
-  const { largeTextMode, toggleLargeText } = useAccessibility();
+  const { largeTextMode, toggleLargeText, themeMode, setThemeMode } = useAccessibility();
 
   return (
-    <div className={positionClass}>
+    <div className={`${positionClass} flex flex-col gap-2`}>
+      {/* Large Text Toggle */}
       <button
         onClick={toggleLargeText}
         className={`flex items-center space-x-2 px-4 py-2 rounded-full border transition-all duration-200 ${
@@ -28,6 +29,34 @@ const AccessibilityToggle: React.FC<AccessibilityToggleProps> = ({ positionClass
         )}
         <span className="text-sm font-medium">
           {largeTextMode ? 'Large Text: ON' : 'Large Text'}
+        </span>
+      </button>
+
+      {/* Theme Cycle Toggle */}
+      <button
+        onClick={() => {
+          const nextTheme = themeMode === 'default' ? 'black' : themeMode === 'black' ? 'white' : 'default';
+          setThemeMode(nextTheme);
+        }}
+        className={`flex items-center space-x-2 px-4 py-2 rounded-full border transition-all duration-200 ${
+          themeMode === 'black'
+            ? 'bg-gray-900 text-white border-gray-700 shadow-lg'
+            : themeMode === 'white'
+            ? 'bg-white text-gray-900 border-gray-300 shadow-lg'
+            : 'bg-white/10 text-slate-300 border-slate-600 hover:bg-white/20 backdrop-blur-sm'
+        }`}
+        title={`Current: ${themeMode.charAt(0).toUpperCase() + themeMode.slice(1)} Theme - Click to cycle`}
+        aria-label={`Switch from ${themeMode} theme`}
+      >
+        {themeMode === 'black' ? (
+          <Moon size={16} />
+        ) : themeMode === 'white' ? (
+          <Sun size={16} />
+        ) : (
+          <Palette size={16} />
+        )}
+        <span className="text-sm font-medium">
+          {themeMode === 'black' ? 'Black Theme' : themeMode === 'white' ? 'White Theme' : 'Default Theme'}
         </span>
       </button>
     </div>

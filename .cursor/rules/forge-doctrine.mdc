@@ -1,0 +1,158 @@
+
+# Forge Page Doctrine
+
+This doctrine guides building an interactive, demo‑driven Forge page by reusing Oracle primitives and adding Forge‑specific use‑cases. It focuses on generative design (guides, repair templates, proteins) with discriminative checks, all presented step‑by‑step with explainable outputs and an agentic “Design Brief.”
+
+## Objectives
+- Make Forge a hands‑on “Design Studio” for CRISPR and sequence design.
+- Reuse Oracle’s demo primitives; avoid restyling unless for cohesion and accessibility.
+- Present flows step‑by‑step (no single dump), with evidence, provenance, and agentic next steps.
+
+## Reusable Components (from Oracle)
+- Accessibility & theming: [AccessibilityToggle.tsx](mdc:src/components/AccessibilityToggle.tsx), [AccessibilityContext.tsx](mdc:src/contexts/AccessibilityContext.tsx)
+- Demo primitives: [DemoFactory.tsx](mdc:src/components/site/blocks/DemoFactory.tsx)
+- Step runner: [InteractiveAnalysisPipeline.tsx](mdc:src/components/site/blocks/InteractiveAnalysisPipeline.tsx)
+- Dossier summary: [EnhancedDossierSummary.tsx](mdc:src/components/site/blocks/EnhancedDossierSummary.tsx)
+- Data & orchestration: [dossierSummaries.ts](mdc:src/data/dossierSummaries.ts), [simulations.ts](mdc:src/utils/simulations.ts), [runUseCase.ts](mdc:src/utils/runUseCase.ts)
+- Forge detail panes (optional beneath pipeline): [CandidateTable.tsx](mdc:src/components/site/forge/CandidateTable.tsx), [ConstraintPanel.tsx](mdc:src/components/site/forge/ConstraintPanel.tsx), [ObjectiveList.tsx](mdc:src/components/site/forge/ObjectiveList.tsx), [TrajectoryGraph.tsx](mdc:src/components/site/forge/TrajectoryGraph.tsx)
+
+## Endpoints to Showcase
+- Generative (primary): `/generate_optimized_guide_rna`, `/generate_repair_template`, `/generate_therapeutic_protein_coding_sequence`
+'/generate_epigenome_optimized_sequence,' '/generate_therapeutic_protein_coding_sequence"
+- Discriminative (support): `/predict_crispr_spacer_efficacy`, `/predict_chromatin_accessibility`, `/predict_variant_impact`, optional `/predict_immunogenicity`
+
+See platform plan in [endpoints.md](mdc:.cursor/rules/endpoints.md).
+
+## Page Layout (Forge)
+- Header: title, mission statement, [AccessibilityToggle.tsx](mdc:src/components/AccessibilityToggle.tsx)
+- Capability Grid: 3–5 Forge tiles with “Run Demo” CTAs (mirror Oracle’s `VisualCapabilityGrid` pattern)
+- Forge Demo Factory: Cards for core generative demos with “🚀 Run Live Demo”
+- Interactive Pipeline: [InteractiveAnalysisPipeline.tsx](mdc:src/components/site/blocks/InteractiveAnalysisPipeline.tsx) updates per step; click to inspect
+- Design Brief: [EnhancedDossierSummary.tsx](mdc:src/components/site/blocks/EnhancedDossierSummary.tsx) tailored to design outputs
+- Detail Panes (optional): Forge blocks under pipeline for candidates, constraints, objectives, trajectory
+
+## Demo Flows (Step‑by‑Step)
+- Guide RNA Design (Knockout)
+  1) Generate candidates → 2) Score on‑target efficacy → 3) Check target accessibility → 4) Off‑target safety snapshot → 5) Rank + export.
+- HDR Repair Template Design (Correction)
+  1) Build homology context → 2) Generate templates with constraints → 3) Likelihood/QC optimization → 4) Validate → 5) Export.
+- Therapeutic Protein Design (Binder/Enzyme)
+  1) Generate candidates → 2) Function + structure scoring → 3) Immunogenicity scan (optional) → 4) Rank + export.
+
+All flows must: (a) run in the step runner, (b) show evidence/provenance, (c) produce a Design Brief.
+
+## Forge Use‑Cases
+Define in [forge.ts](mdc:src/data/useCases/forge.ts); expose via `/site/demo/usecase/{id}`.
+- `knockout_brca1`: design high‑efficacy, low off‑target guides for BRCA1
+- `repair_brca1_correction`: design HDR template to restore WT
+- `design_pd_l1_binder`: generate a nanobody candidate for PD‑L1
+
+Use [runUseCase.ts](mdc:src/utils/runUseCase.ts) to orchestrate; simulate via [simulations.ts](mdc:src/utils/simulations.ts).
+
+## Design Brief (Dossier)
+- Reuse [EnhancedDossierSummary.tsx](mdc:src/components/site/blocks/EnhancedDossierSummary.tsx); copy in [dossierSummaries.ts](mdc:src/data/dossierSummaries.ts)
+- Agentic actions:
+  - Analyze off‑targets → run discriminative checks on selected guides
+  - Ensure accessibility → run chromatin check on locus
+  - Regenerate with constraints → open constraints panel and re‑run
+  - Export assets → FASTA/CSV/JSON for guides/templates/proteins
+
+## Theming & Accessibility
+- Respect [AccessibilityContext.tsx](mdc:src/contexts/AccessibilityContext.tsx) `themeMode` and text sizing across all Forge UI
+- No color hard‑coding; rely on CSS variables + Tailwind with theme overrides (white mode default)
+
+## DRY & Data‑Driven
+- Declarative content:
+  - Use‑cases → [forge.ts](mdc:src/data/useCases/forge.ts)
+  - Simulations → [simulations.ts](mdc:src/utils/simulations.ts)
+  - Dossier mapping → [dossierSummaries.ts](mdc:src/data/dossierSummaries.ts)
+- Reuse `DemoFactory` patterns to minimize bespoke logic
+
+## Integration Steps
+1) Update [ProductForge.tsx](mdc:src/pages/ProductForge.tsx): Capability Grid, Forge Demo Factory, Pipeline, Design Brief
+2) Create [forge.ts](mdc:src/data/useCases/forge.ts) with 3 use‑cases; add links from capability grid and factory
+3) Ensure demo CTAs call into the step runner and auto‑scroll to pipeline
+4) Populate dossier data for generative endpoints in [dossierSummaries.ts](mdc:src/data/dossierSummaries.ts)
+5) Use [simulations.ts](mdc:src/utils/simulations.ts) to provide per‑step meta: `processingSteps`, `insights`, `evidence`, `provenance`
+
+## Validator Integration Plan (Discriminative across flows)
+- Guide RNA Design
+  - On‑target: `/predict_crispr_spacer_efficacy` after generation for each candidate
+  - Accessibility: `/predict_chromatin_accessibility` on target locus (context‑specific)
+  - Off‑target proxy: `/predict_variant_impact` on top N off‑target sites (snapshot, not exhaustive)
+  - Optional: `/exon_intron_map` to ensure coding disruption intent (KO)
+- HDR Repair Template Design
+  - Correction validation: `/predict_variant_impact` on pre/post edit (delta toward WT)
+  - Accessibility at insertion: `/predict_chromatin_accessibility` around locus
+  - Target biology: `/predict_gene_essentiality` to support prioritization
+- Therapeutic Protein Design
+  - Function proxy: `/predict_protein_functionality_change` on designed protein vs reference
+  - Safety: `/predict_immunogenicity` for epitope/MHC hotspot scan
+  - Context: `/predict_chromatin_accessibility` only when paired with regulatory elements or expression context
+- Regulatory/Epigenome Design (future)
+  - Accessibility target: `/predict_chromatin_accessibility` against desired tissue/context
+  - Motif sanity: optional splice/motif checks as available
+
+Notes
+- Validators run as pipeline steps with their own evidence/provenance
+- Composite scores shown in UI with per‑criterion breakdown (efficacy, accessibility, safety)
+
+## Orchestrators Plan
+- Diagnostics aggregator: `analyze_cancer_hallmarks` (aka `get_hallmark_profile`)
+  - Use: pre‑design framing or post‑validation summary of vulnerabilities guiding design choices
+  - Output: hallmark scores, prioritized vulnerabilities shown as context panel and fed into Design Brief
+- Therapy strategy: `design_personalized_therapy` (aka `get_personalized_strategy`)
+  - Use: end‑of‑demo synthesis that selects targets and bundles generated assets (guides/templates) with rationale
+  - Output: target, modality, asset list; surfaces as top of the Design Brief with agentic next steps
+
+## Hybrid End‑to‑End Demo Plan
+- Execution modes
+  - Simulated (default): fast, deterministic demos using [simulations.ts](mdc:src/utils/simulations.ts)
+  - Live (later): swap in adapters per endpoint via [runUseCase.ts](mdc:src/utils/runUseCase.ts) `adapters` map
+- Orchestration
+  - Use‑case defined in data (`forge.ts`) → step runner executes generative → validators → orchestrator
+  - Each step updates [InteractiveAnalysisPipeline.tsx](mdc:src/components/site/blocks/InteractiveAnalysisPipeline.tsx) incrementally
+- Artifacts & provenance
+  - Persist demo artifacts (FASTA/CSV/JSON) and display evidence/provenance per step
+  - Design Brief summarizes assets and statuses; agentic buttons trigger follow‑ups (validators or regeneration)
+- Extensibility
+  - Add constraints & re‑run: integrate [ConstraintPanel.tsx](mdc:src/components/site/forge/ConstraintPanel.tsx) to update inputs and rerun selectively
+  - Toggle simulated/live per step with a `runMode` flag in use‑case steps
+
+## Testing
+- Visual: White mode default; high contrast text; dark borders in white mode
+- Functional: Steps update incrementally; clicking completed steps opens detail modal
+- Export: Download artifacts post‑run (FASTA/CSV/JSON)
+
+## Non‑Goals
+- Do not purge existing Forge styles unless needed for cohesion/accessibility
+- Avoid bespoke one‑offs when an Oracle primitive fits
+
+## Flow Patterns (Applied Across Demos)
+- Guide RNA design
+  - Generate candidates → Efficacy check → Accessibility check → Off‑target proxy snapshot → Rank → Export assets
+- HDR repair template design
+  - Generate templates → Likelihood/QC optimization → Variant correction validation → Accessibility check → Export assets
+- Therapeutic protein design
+  - Generate candidates → Function + Structure proxy → Immunogenicity scan → Rank → Export assets
+
+## Metrics & Ranking Surfaced Per Step
+- Guides: on_target efficacy, accessibility, off_target_proxy; composite score and rank
+- HDR templates: sequence likelihood, GC/repeats QC, correction delta toward WT
+- Proteins: function_score (proxy), structure_score (proxy), immunogenicity_risk
+
+## UI Reuse Plan
+- Demo launch: Forge‑scoped DemoFactory cards with “🚀 Run Live Demo”
+- Step execution: InteractiveAnalysisPipeline with incremental updates and click‑to‑inspect
+- Summary: EnhancedDossierSummary as “Design Brief” with agentic actions (off‑target scan, accessibility check, regenerate with constraints, export)
+- Refine loops: ConstraintPanel + CandidateTable beneath pipeline to tweak inputs and re‑run selected steps
+
+## Hybrid Execution Modes (Details)
+- Default simulated: use simulations.ts to provide output, processingSteps, insights, evidence, provenance for fast demos
+- Live adapters later: supply adapters map to runUseCase; set per‑step runMode to 'live' to mix simulated + live in one pipeline
+- Provenance: label each step (evo2-core, tier2-augmented, simulated) and display in step details and Design Brief
+
+## Rollout Phases
+- Phase 1: Simulated end‑to‑end demos on /site/forge with Design Brief and artifact export
+- Phase 2: Hybrid runs — enable selected validator steps to hit live adapters while others stay simulated
+- Phase 3: Add regulatory/epigenome generators, deeper off‑target analysis, and enriched orchestrator summaries

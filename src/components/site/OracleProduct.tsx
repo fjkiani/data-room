@@ -1,7 +1,8 @@
 import React from 'react';
 import { ProductPageLayout, ProductHero, ProductSection } from './ProductPageLayout';
+import { oracleCapabilities } from '../../data/oracleCapabilities';
 import { useAccessibility } from '../../contexts/AccessibilityContext';
-import { OracleExplainTrack, VEPMetrics, VariantDetailCard, EssentialityChart, AccessibilityTrack, ProteinDeltaCard, KPIStrip, CrisprEfficacyCard, VariantImpactLandscape, DiscriminativeAIShowcase } from './blocks';
+import { OracleExplainTrack, VEPMetrics, VariantDetailCard, EssentialityChart, AccessibilityTrack, ProteinDeltaCard, KPIStrip, CrisprEfficacyCard, VariantImpactLandscape, DemoFactory, InteractiveDemoShowcase, VUSResolutionDemo, DynamicOracleExplain, VisualCapabilityGrid } from './blocks';
 import { OracleScore, ProcessStepper } from './blocks';
 
 interface OracleProductProps {
@@ -58,6 +59,7 @@ interface OracleProductProps {
 
 const OracleProduct: React.FC<OracleProductProps> = ({ content }) => {
   const { getTextSize } = useAccessibility();
+  const [analyzedVariant, setAnalyzedVariant] = React.useState<any>(null);
 
   return (
     <ProductPageLayout>
@@ -71,344 +73,127 @@ const OracleProduct: React.FC<OracleProductProps> = ({ content }) => {
       />
 
       {/* Process Flow */}
-      <ProductSection
+      {/* <ProductSection
         title="Zero-Shot Prediction Pipeline"
         subtitle="Resolve uncertainty with quantitative, zero-shot predictions."
       >
         <ProcessStepper steps={content.processSteps} />
-      </ProductSection>
+      </ProductSection> */}
 
       {/* Oracle in Action */}
       <ProductSection
-        title="Oracle in Action"
-        subtitle="From uncertain variants to clinical verdicts with explainable evidence. See how Oracle resolves VUS into quantitative, defensible decisions."
+        title="Annihilation of Uncertainty"
+        subtitle="From uncertain variants to clinical verdicts with explainable evidence. "
       >
-        <div className="bg-gradient-to-r from-slate-800/80 to-slate-700/80 border border-slate-600 rounded-2xl p-8">
-          <OracleScore {...content.oracleScore} />
-          
-          {/* 101 Doc Context */}
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-            <div className="bg-slate-700/50 border border-slate-600 rounded-lg p-6">
-              <div className={`font-bold text-cyan-400 mb-2 ${getTextSize('text-3xl')}`}>Validated Target</div>
-              <div className={`text-slate-200 ${getTextSize('text-lg')}`}>Quantitative verdict with confidence</div>
-            </div>
-            <div className="bg-slate-700/50 border border-slate-600 rounded-lg p-6">
-              <div className={`font-bold text-cyan-400 mb-2 ${getTextSize('text-3xl')}`}>Defensible Score</div>
-              <div className={`text-slate-200 ${getTextSize('text-lg')}`}>Suitable for regulatory evidence</div>
-            </div>
-            <div className="bg-slate-700/50 border border-slate-600 rounded-lg p-6">
-              <div className={`font-bold text-cyan-400 mb-2 ${getTextSize('text-3xl')}`}>Unblocks Decisions</div>
-              <div className={`text-slate-200 ${getTextSize('text-lg')}`}>Eliminates wrong-target spend</div>
-            </div>
-          </div>
-        </div>
+        <VUSResolutionDemo onVariantAnalyzed={setAnalyzedVariant} />
       </ProductSection>
 
-      {/* Variant Impact Analysis */}
-      <ProductSection
-        title="Variant Impact Analysis"
-        subtitle="Deep sequence understanding with mechanistic interpretability. Oracle computes the Zeta Score (functional damage) for any variant, including unseen ones, with AUROC > 0.95 for hard variants."
-      >
-        <div className="bg-slate-800 border border-slate-600 rounded-2xl p-8">
-          <div className="mb-8 space-y-6">
-            <h3 className={`font-bold text-white ${getTextSize('text-3xl')}`}>Oracle Explain Track</h3>
-            
-            <div className="bg-slate-700/50 border border-slate-600 rounded-xl p-6">
-              <h4 className={`font-bold text-cyan-300 mb-4 flex items-center gap-3 ${getTextSize('text-xl')}`}>
-                🧠 Sparse Autoencoder Features (32,768 learned concepts)
-              </h4>
-              <p className={`text-slate-200 leading-relaxed ${getTextSize('text-lg')}`}>
-                <span className="font-bold text-cyan-300">Top ribbon:</span> Shows activation of 32,768 biological features learned by Evo2's layer 26 
-                through mechanistic interpretability. Each feature represents specific biological concepts discovered without supervision—
-                exon-intron boundaries, transcription factor motifs, protein structural elements, and prophage regions.
-              </p>
-            </div>
-            
-            <div className="bg-slate-700/50 border border-slate-600 rounded-xl p-6">
-              <h4 className={`font-bold text-purple-300 mb-4 flex items-center gap-3 ${getTextSize('text-xl')}`}>
-                📊 Discriminative Likelihood Analysis
-              </h4>
-              <p className={`text-slate-200 leading-relaxed ${getTextSize('text-lg')}`}>
-                <span className="font-bold text-purple-300">Bottom chart:</span> Δ likelihood around the variant position shows how the mutation 
-                changes Evo2's prediction confidence across the genomic window. Negative values indicate functional disruption, 
-                enabling zero-shot pathogenicity prediction with 95.7% AUROC.
-              </p>
-            </div>
-          </div>
-          
-          <OracleExplainTrack {...content.explainTrack} />
-          
-          <div className="mt-6 p-6 bg-gradient-to-r from-cyan-900/30 to-purple-900/30 border border-cyan-600/50 rounded-xl">
-            <div className={`text-cyan-200 font-bold mb-3 ${getTextSize('text-lg')}`}>Example Analysis - BRCA1:c.123A&gt;T:</div>
-            <div className={`text-slate-100 space-y-2 ${getTextSize('text-base')}`}>
-              <div>🎯 <span className="text-cyan-300 font-semibold">SAE Features:</span> Exon boundary preserved, CTCF motif intact</div>
-              <div>📈 <span className="text-purple-300 font-semibold">Likelihood Impact:</span> Moderate disruption (-0.8 Δ likelihood)</div>
-              <div>🔮 <span className="text-orange-300 font-semibold">Zero-shot Verdict:</span> Pathogenic (AUROC: 0.957)</div>
-            </div>
-          </div>
-        </div>
+      {/* Oracle's Thinking Process */}
+    
+        <DynamicOracleExplain analyzedVariant={analyzedVariant} />
+   
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <VariantDetailCard {...content.variantDetail} />
-          <div className="bg-slate-800 border border-slate-600 rounded-2xl p-8">
-            <h3 className={`font-bold text-white mb-6 text-center ${getTextSize('text-3xl')}`}>Discriminative AI Performance</h3>
-            <KPIStrip items={content.performanceMetrics} />
-            <div className={`mt-6 text-slate-300 text-center leading-relaxed space-y-2 ${getTextSize('text-base')}`}>
-              <div className={`font-semibold text-slate-200 ${getTextSize('text-base')}`}>Performance validated across multiple benchmarks:</div>
-              <div>VUS resolution based on ClinVar non-coding improvement</div>
-              <div>Cohort: Combined ClinVar + BRCA1/2 + SpliceVarDB studies</div>
-            </div>
-          </div>
-        </div>
-      </ProductSection>
-
-      {/* Multi-Modal Predictions */}
+      {/* Multi-Modal Predictions - Visual Grid */}
       <ProductSection
         title="Multi-Modal Biological Predictions"
-        subtitle="Oracle provides comprehensive biological insights across multiple modalities. From gene essentiality to protein functional changes to chromatin accessibility—all with context-specific business value for biotech R&D, clinical oncology, and genetic testing labs."
+        subtitle="Oracle's comprehensive biological insights across multiple modalities. Click any capability to explore features and see live demos."
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="space-y-8">
-            <div className="bg-slate-800/50 border border-slate-600 rounded-2xl p-8">
-              <h3 className={`font-bold text-white mb-6 ${getTextSize('text-3xl')}`}>Gene Essentiality by Context</h3>
-              <p className={`text-slate-300 mb-6 leading-relaxed ${getTextSize('text-lg')}`}>
-                Context-dependent gene essentiality predictions across different cell lines and mutation backgrounds. 
-                Critical for target prioritization and therapeutic window assessment.
-              </p>
-              <EssentialityChart series={content.multiModal.essentialitySeries} />
-            </div>
-            
-            <div className="bg-slate-800/50 border border-slate-600 rounded-2xl p-8">
-              <h3 className={`font-bold text-white mb-6 ${getTextSize('text-3xl')}`}>Chromatin Accessibility</h3>
-              <p className={`text-slate-300 mb-6 leading-relaxed ${getTextSize('text-lg')}`}>
-                Epigenomic predictions showing how variants affect chromatin structure and accessibility. 
-                Essential for understanding regulatory impacts and designing epigenetic therapies.
-              </p>
-              <AccessibilityTrack tracks={content.multiModal.accessibilityTracks} />
-            </div>
-          </div>
-          
-          <div className="space-y-8">
-            <div className="bg-slate-800/50 border border-slate-600 rounded-2xl p-8">
-              <h3 className={`font-bold text-white mb-6 ${getTextSize('text-3xl')}`}>Protein Functional Change</h3>
-              <p className={`text-slate-300 mb-6 leading-relaxed ${getTextSize('text-lg')}`}>
-                Quantitative predictions of how variants affect protein function, stability, and folding. 
-                Enables precise assessment of therapeutic targets and resistance mechanisms.
-              </p>
-              <ProteinDeltaCard {...content.multiModal.proteinDelta} />
-            </div>
-          </div>
-        </div>
+        <VisualCapabilityGrid
+          capabilities={oracleCapabilities.multiModalPredictions}
+          title=""
+          subtitle=""
+        />
       </ProductSection>
 
       {/* Complete Discriminative AI Arsenal */}
       <ProductSection
-        title="Complete Discriminative AI Arsenal"
-        subtitle="Explore all 5 discriminative AI endpoints that power Oracle's zero-shot predictions. Each endpoint addresses specific biological questions with state-of-the-art accuracy, from variant pathogenicity to CRISPR guide design."
+        title="5 Discriminative AI Endpoints"
+        subtitle="Zero-shot predictions. Each endpoint addresses specific biological questions with state-of-the-art accuracy, from variant pathogenicity to CRISPR guide design."
       >
-        <DiscriminativeAIShowcase selectedEndpoint="variantImpact" showUseCases={true} interactive={true} />
+        <DemoFactory />
       </ProductSection>
 
-      {/* Real-World Case Studies */}
+      {/* Interactive AI Analysis Workflows */}
       <ProductSection
-        title="Real-World Case Studies"
-        subtitle="See Oracle's discriminative AI in action with specific genomic targets and therapeutic scenarios. These case studies demonstrate how variant impact and CRISPR efficacy predictions work together for precision medicine."
+        title="In-Silico Validation"
+        subtitle="Watch how multiple endpoints work together to provide comprehensive biological insights and therapeutic guidance."
       >
-        <div className="space-y-12">
-          {/* Row 1: Variant Impact + CRISPR Efficacy */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <VariantImpactLandscape
-              locus="chr17:43044000-43052000"
-              windowSize={8000}
-              variants={[
-                {
-                  position: 43044295,
-                  ref: 'A',
-                  alt: 'T',
-                  deltaLikelihood: -2.34,
-                  pathogenicity: 'Pathogenic',
-                  confidence: 0.94,
-                  consequence: 'missense_variant',
-                  gene: 'BRCA1'
-                },
-                {
-                  position: 43045123,
-                  ref: 'G',
-                  alt: 'C',
-                  deltaLikelihood: -1.87,
-                  pathogenicity: 'Pathogenic',
-                  confidence: 0.89,
-                  consequence: 'splice_donor_variant',
-                  gene: 'BRCA1'
-                },
-                {
-                  position: 43047456,
-                  ref: 'T',
-                  alt: 'G',
-                  deltaLikelihood: -2.91,
-                  pathogenicity: 'Pathogenic',
-                  confidence: 0.96,
-                  consequence: 'frameshift_variant',
-                  gene: 'BRCA1'
-                }
-              ]}
-              regions={[
-                { start: 43044200, end: 43044400, type: 'exon', name: 'Exon 2' },
-                { start: 43044400, end: 43045000, type: 'intron', name: 'Intron 2' },
-                { start: 43045000, end: 43045200, type: 'exon', name: 'Exon 3' },
-                { start: 43045200, end: 43046800, type: 'intron', name: 'Intron 3' },
-                { start: 43046800, end: 43047000, type: 'exon', name: 'Exon 4' },
-                { start: 43047000, end: 43048000, type: 'intron', name: 'Intron 4' }
-              ]}
-              metrics={{
-                totalVariants: 8,
-                pathogenicCount: 4,
-                vusResolved: 3,
-                avgConfidence: 0.91
-              }}
-            />
-
-            <CrisprEfficacyCard 
-              targetGene="KRAS"
-              targetLocus="chr12:25245350-25245370"
-              guides={[
-                {
-                  sequence: 'GACGGAGGCTAAGCGTCGCAA',
-                  efficacy: 0.92,
-                  frameshift: 0.89,
-                  pam: 'CGG',
-                  position: 25245355
-                },
-                {
-                  sequence: 'CTAAGCGTCGCAACGGAGCTT',
-                  efficacy: 0.87,
-                  frameshift: 0.84,
-                  pam: 'TGG',
-                  position: 25245362
-                },
-                {
-                  sequence: 'AAGCGTCGCAACGGAGCTTAG',
-                  efficacy: 0.83,
-                  frameshift: 0.91,
-                  pam: 'AGG',
-                  position: 25245368
-                }
-              ]}
-              metrics={{
-                avgEfficacy: 0.87,
-                topGuideScore: 0.92,
-                frameshiftRate: 0.88
-              }}
-            />
-          </div>
-
-          {/* Case Study: KRAS G12C Therapeutic Design */}
-          <div className="bg-gradient-to-r from-slate-800/80 to-slate-700/80 border border-slate-600 rounded-2xl p-8">
-            <div className="mb-8">
-              <h3 className={`font-bold text-white mb-4 ${getTextSize('text-3xl')}`}>🎯 Case Study: KRAS G12C Therapeutic Design</h3>
-              <p className={`text-slate-300 leading-relaxed ${getTextSize('text-lg')}`}>
-                Complete workflow from variant identification to CRISPR therapeutic design. This case study demonstrates how Oracle's 
-                variant impact and CRISPR efficacy predictions work together to design precision oncology interventions.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div>
-                <h4 className={`font-semibold text-blue-400 mb-4 ${getTextSize('text-xl')}`}>Step 1: Variant Impact Assessment</h4>
-                <VariantImpactLandscape
-                  locus="chr12:25245300-25245400"
-                  windowSize={100}
-                  variants={[
-                    {
-                      position: 25245350,
-                      ref: 'G',
-                      alt: 'T',
-                      deltaLikelihood: -3.12,
-                      pathogenicity: 'Pathogenic',
-                      confidence: 0.96,
-                      consequence: 'missense_variant',
-                      gene: 'KRAS'
-                    }
-                  ]}
-                  regions={[
-                    { start: 25245300, end: 25245400, type: 'exon', name: 'KRAS Exon 2' }
-                  ]}
-                  metrics={{
-                    totalVariants: 1,
-                    pathogenicCount: 1,
-                    vusResolved: 0,
-                    avgConfidence: 0.96
-                  }}
-                />
-              </div>
-              
-              <div>
-                <h4 className={`font-semibold text-green-400 mb-4 ${getTextSize('text-xl')}`}>Step 2: CRISPR Guide Design</h4>
-                <CrisprEfficacyCard 
-                  targetGene="KRAS"
-                  targetLocus="chr12:25245350-25245370"
-                  guides={[
-                    {
-                      sequence: 'GACGGAGGCTAAGCGTCGCAA',
-                      efficacy: 0.92,
-                      frameshift: 0.89,
-                      pam: 'CGG',
-                      position: 25245355
-                    },
-                    {
-                      sequence: 'CTAAGCGTCGCAACGGAGCTT',
-                      efficacy: 0.87,
-                      frameshift: 0.84,
-                      pam: 'TGG',
-                      position: 25245362
-                    }
-                  ]}
-                  metrics={{
-                    avgEfficacy: 0.90,
-                    topGuideScore: 0.92,
-                    frameshiftRate: 0.87
-                  }}
-                />
-              </div>
-            </div>
-            
-            <div className="mt-8 p-6 bg-slate-700/30 border border-slate-600 rounded-xl">
-              <h4 className={`font-semibold text-yellow-400 mb-4 ${getTextSize('text-xl')}`}>🏆 Therapeutic Outcome</h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className={`font-bold text-green-400 ${getTextSize('text-2xl')}`}>96%</div>
-                  <div className={`text-slate-300 ${getTextSize('text-sm')}`}>Variant confidence</div>
-                  <div className={`text-slate-400 ${getTextSize('text-xs')}`}>High-confidence pathogenic</div>
-                </div>
-                <div className="text-center">
-                  <div className={`font-bold text-blue-400 ${getTextSize('text-2xl')}`}>92%</div>
-                  <div className={`text-slate-300 ${getTextSize('text-sm')}`}>Guide efficacy</div>
-                  <div className={`text-slate-400 ${getTextSize('text-xs')}`}>Optimal cutting efficiency</div>
-                </div>
-                <div className="text-center">
-                  <div className={`font-bold text-purple-400 ${getTextSize('text-2xl')}`}>87%</div>
-                  <div className={`text-slate-300 ${getTextSize('text-sm')}`}>Frameshift rate</div>
-                  <div className={`text-slate-400 ${getTextSize('text-xs')}`}>Functional knockout</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <InteractiveDemoShowcase selectedDemo="brca1Analysis" />
       </ProductSection>
 
       {/* Scientific Validation */}
       <ProductSection
         title="Scientific Validation"
-        subtitle="State-of-the-art performance across the most challenging clinical prediction tasks. Oracle achieves superior results on ClinVar, BRCA1/2, and SpliceVarDB—the gold-standard benchmarks that define variant prediction excellence."
+        subtitle="State-of-the-art performance across gold-standard benchmarks with rigorous evaluation."
       >
-        <VEPMetrics {...content.validation} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="p-6 rounded-xl border border-blue-700/50 bg-gradient-to-br from-blue-900/30 to-blue-800/30">
+            <div className="font-bold text-blue-300 mb-3 text-lg">ClinVar Pathogenicity</div>
+            <div className="space-y-2 text-blue-200">
+              <div>Coding SNVs: <span className="font-semibold">95.7% AUROC</span></div>
+              <div>Non-coding variants: <span className="font-semibold">95.7% AUROC</span></div>
+              <div>Indels: <span className="font-semibold">93.9% AUROC</span></div>
+            </div>
+            <div className="text-blue-400 mt-3 text-xs">Gold standard clinical variant database (53,210 variants)</div>
+          </div>
+
+          <div className="p-6 rounded-xl border border-green-700/50 bg-gradient-to-br from-green-900/30 to-green-800/30">
+            <div className="font-bold text-green-300 mb-3 text-lg">BRCA1/2 Classification</div>
+            <div className="space-y-2 text-green-200">
+              <div>Supervised AUROC: <span className="font-semibold">94.0%</span></div>
+              <div>Zero-shot AUROC: <span className="font-semibold">89.1%</span></div>
+              <div>AUPRC: <span className="font-semibold">84.0%</span></div>
+            </div>
+            <div className="text-green-400 mt-3 text-xs">Breast cancer variant functional assessment (3,893 variants)</div>
+          </div>
+
+          <div className="p-6 rounded-xl border border-purple-700/50 bg-gradient-to-br from-purple-900/30 to-purple-800/30">
+            <div className="font-bold text-purple-300 mb-3 text-lg">Gene Essentiality</div>
+            <div className="space-y-2 text-purple-200">
+              <div>Cross-species: <span className="font-semibold">82-99% AUROC</span></div>
+              <div>lncRNA prediction: <span className="font-semibold">SOTA</span></div>
+              <div>Bacterial/phage: <span className="font-semibold">Matched Evo1</span></div>
+            </div>
+            <div className="text-purple-400 mt-3 text-xs">Zero-shot essentiality across 8 species</div>
+          </div>
+
+          <div className="p-6 rounded-xl border border-orange-700/50 bg-gradient-to-br from-orange-900/30 to-orange-800/30">
+            <div className="font-bold text-orange-300 mb-3 text-lg">Protein Function</div>
+            <div className="space-y-2 text-orange-200">
+              <div>DMS correlation: <span className="font-semibold">Strong</span></div>
+              <div>Cross-species: <span className="font-semibold">Prokaryotic + Eukaryotic</span></div>
+              <div>Specialization: <span className="font-semibold">Competitive</span></div>
+            </div>
+            <div className="text-orange-400 mt-3 text-xs">Deep mutational scanning validation (Figure 2E)</div>
+          </div>
+
+          <div className="p-6 rounded-xl border border-cyan-700/50 bg-gradient-to-br from-cyan-900/30 to-cyan-800/30">
+            <div className="font-bold text-cyan-300 mb-3 text-lg">Chromatin Accessibility</div>
+            <div className="space-y-2 text-cyan-200">
+              <div>TF motif detection: <span className="font-semibold">SAE validated</span></div>
+              <div>DART-Eval tasks: <span className="font-semibold">1/2/5 validated</span></div>
+              <div>Regulatory elements: <span className="font-semibold">Unsupervised</span></div>
+            </div>
+            <div className="text-cyan-400 mt-3 text-xs">Learned TF binding motifs without supervision (Figure 4F)</div>
+          </div>
+
+          <div className="p-6 rounded-xl border border-red-700/50 bg-gradient-to-br from-red-900/30 to-red-800/30">
+            <div className="font-bold text-red-300 mb-3 text-lg">CRISPR Efficacy</div>
+            <div className="space-y-2 text-red-200">
+              <div>Prediction method: <span className="font-semibold">Variant impact</span></div>
+              <div>Frameshift proxy: <span className="font-semibold">Empirical priors</span></div>
+              <div>Off-target: <span className="font-semibold">Separate analysis</span></div>
+            </div>
+            <div className="text-red-400 mt-3 text-xs">Guide RNA efficacy via frameshift simulation</div>
+          </div>
+        </div>
       </ProductSection>
 
       {/* Industry Transformations CTA */}
       <section className="py-20 px-8 bg-gradient-to-r from-slate-800/60 to-slate-700/60 rounded-3xl">
         <div className="max-w-7xl mx-auto space-y-16">
           <div className="text-center space-y-8">
-            <h2 className={`font-bold text-white ${getTextSize('text-6xl')}`}>See How Oracle is Transforming Industries</h2>
+            <h2 className={`font-bold text-white ${getTextSize('text-6xl')}`}>See How CrisPRO.ai is Transforming Industries</h2>
             <p className={`text-slate-200 max-w-5xl mx-auto leading-relaxed font-medium ${getTextSize('text-3xl')}`}>
               Dive deep into specific industry transformations and see the complete workflow revolution. 
               From 90% failure rates to predictable success across biotech, clinical, and genetic testing.

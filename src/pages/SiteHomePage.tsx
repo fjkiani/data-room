@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Shield, Fingerprint, Bot, FileClock, Globe, Building, Cpu, Search as SearchIcon, FlaskConical as FlaskIcon, Activity as ActivityIcon } from 'lucide-react';
+import AccessibilityToggle from '../components/AccessibilityToggle';
 import {
   HeroSection,
   ValuePillarsGrid,
@@ -81,7 +82,8 @@ const SiteHomePage: React.FC = () => {
   ];
 
   return (
-    <div className="w-full bg-white">
+    <div className="w-full bg-slate-900">
+      <AccessibilityToggle />
       <HeroSection
         title="Secure AI R&D with asset-level control and verifiable trust"
         subtitle="Zeta Shield unifies Auth0 identity, blockchain permissions, AI engine verification, and immutable audit—so partners can trust every result."

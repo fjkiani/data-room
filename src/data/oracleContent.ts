@@ -42,6 +42,18 @@ export type TransformationSummary = {
 };
 
 export const oracleContent = {
+	title: "Oracle: Variant Impact Prediction",
+	subtitle: "Zero-shot pathogenicity prediction with biological reasoning at protein, transcript, and genomic scales",
+	badge: {
+		icon: "🧬",
+		text: "Discriminative AI",
+		color: "blue"
+	},
+	metrics: [
+		{ value: "94.2%", label: "AUROC", description: "Area under ROC curve for pathogenicity classification" },
+		{ value: "91.8%", label: "Precision", description: "Positive predictive value for pathogenic variants" },
+		{ value: "89.3%", label: "Recall", description: "Sensitivity for detecting pathogenic variants" }
+	],
 	about: {
 		oneLiner: 'Turn raw variants into explainable, clinical decisions.',
 		purpose: 'Resolve uncertainty with quantitative, zero-shot predictions.',
@@ -545,7 +557,7 @@ export const oracleContent = {
 				{ label: 'Faster discovery', value: '36x' },
 				{ label: 'Success rate', value: '73%' }
 			],
-			description: 'See how Oracle eliminates guesswork in therapeutic development with variant triaging, explainable evidence, and guided sequence generation.',
+			description: 'See how CrisPRO eliminates guesswork in therapeutic development with variant triaging, explainable evidence, and guided sequence generation.',
 			href: '/site/biotech-transformation',
 			buttonText: 'Explore Biotech Transformation'
 		},

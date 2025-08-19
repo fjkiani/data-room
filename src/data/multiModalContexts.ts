@@ -76,6 +76,30 @@ export const multiModalContexts: MultiModalContext = {
           ]
         }
       },
+      'vus-resolution': {
+        title: 'VUS Resolution with Zero-Shot Prediction',
+        description: 'Transform variants of uncertain significance into actionable pathogenicity classifications',
+        applicableProducts: ['oracle'],
+        data: {
+          contexts: [
+            { context: { cellLine: 'BRCA1 Variant', mutations: ['c.123A>T'] }, score: 0.94 },
+            { context: { cellLine: 'TP53 Variant', mutations: ['c.456G>A'] }, score: 0.957 },
+            { context: { cellLine: 'MSH2 Variant', mutations: ['c.789C>T'] }, score: 0.91 },
+            { context: { cellLine: 'APC Variant', mutations: ['c.321T>G'] }, score: 0.939 }
+          ]
+        },
+        businessContext: {
+          problem: '50% of genetic variants remain VUS, blocking clinical decision-making',
+          solution: 'Zero-shot pathogenicity prediction with 95.7% AUROC accuracy',
+          impact: 'Resolve 73% more variants with explainable evidence from Evo2',
+          metrics: [
+            { label: 'VUS resolution rate', value: '73%', subtitle: 'vs 50% traditional', improvement: '46% more variants resolved' },
+            { label: 'ClinVar AUROC', value: '95.7%', subtitle: 'zero-shot accuracy', improvement: 'State-of-the-art performance' },
+            { label: 'BRCA1 AUROC', value: '94%', subtitle: 'supervised performance', improvement: 'Clinical-grade accuracy' },
+            { label: 'Time to classification', value: '5 min', subtitle: 'vs 6 weeks traditional', improvement: '1,680x faster' }
+          ]
+        }
+      },
       'variant-classification': {
         title: 'VUS Resolution in Genetic Testing',
         description: 'Classify variants of uncertain significance with calibrated confidence scores',

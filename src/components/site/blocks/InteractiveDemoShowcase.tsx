@@ -160,86 +160,161 @@ const InteractiveDemoShowcase: React.FC<InteractiveDemoShowcaseProps> = ({
             })}
           </div>
 
-          {/* Current Step Details */}
-          <div className="space-y-6">
-            {currentDemo.steps.map((step, index) => {
-              if (index > currentStep) return null;
-              
-              const colors = getColorClasses(getEndpointColor(step.endpoint));
-              const isCurrentStep = index === currentStep;
-              
-              return (
-                <div
-                  key={index}
-                  className={`p-6 rounded-xl border transition-all duration-500 ${
-                    isCurrentStep 
-                      ? `${colors.light} ${colors.border} border-opacity-50 scale-105` 
-                      : 'bg-slate-700/30 border-slate-600 opacity-80'
-                  }`}
-                >
-                  <div className="space-y-4">
-                    {/* Step Header */}
-                    <div className="flex items-center gap-4">
-                      <div className={`w-8 h-8 ${colors.bg} rounded-lg flex items-center justify-center text-white font-bold`}>
-                        {index + 1}
+          {/* Current Step Details - LEFT TO RIGHT FLOW */}
+          {currentStep < currentDemo.steps.length && (
+            <div className="space-y-8">
+              {/* Current Step Only */}
+              <div className="p-8 rounded-xl border-2 border-cyan-500/50 bg-gradient-to-r from-cyan-900/20 to-blue-900/20">
+                <div className="space-y-6">
+                  {/* Step Header */}
+                  <div className="text-center space-y-3">
+                    <div className="flex items-center justify-center gap-4">
+                      <div className={`w-12 h-12 ${getColorClasses(getEndpointColor(currentDemo.steps[currentStep].endpoint)).bg} rounded-xl flex items-center justify-center text-white font-bold text-xl`}>
+                        {currentStep + 1}
                       </div>
-                      <div>
-                        <h4 className={`font-bold text-white ${getTextSize('text-xl')}`}>
-                          {step.title}
+                      <div className="text-left">
+                        <h4 className={`font-bold text-white ${getTextSize('text-2xl')}`}>
+                          {currentDemo.steps[currentStep].title}
                         </h4>
-                        <p className={`text-slate-400 font-mono ${getTextSize('text-sm')}`}>
-                          /{step.endpoint}
+                        <p className={`text-cyan-400 font-mono ${getTextSize('text-base')}`}>
+                          /{currentDemo.steps[currentStep].endpoint}
                         </p>
                       </div>
                     </div>
+                  </div>
 
-                    {/* Input/Output */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {/* Input */}
-                      <div className="space-y-3">
-                        <h5 className={`font-semibold ${colors.text} ${getTextSize('text-base')}`}>
-                          Input Parameters
+                  {/* LEFT TO RIGHT: Input → Processing → Output */}
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                    {/* LEFT: Input */}
+                    <div className="space-y-4">
+                      <div className="text-center">
+                        <h5 className={`font-bold text-blue-400 ${getTextSize('text-lg')} mb-3`}>
+                          📥 Input Parameters
                         </h5>
-                        <div className="bg-slate-700/50 rounded-lg p-4">
-                          <pre className={`text-slate-300 ${getTextSize('text-sm')} font-mono`}>
-                            {JSON.stringify(step.input, null, 2)}
-                          </pre>
-                        </div>
                       </div>
+                      <div className="bg-slate-800/80 border border-blue-500/30 rounded-xl p-4">
+                        <pre className={`text-slate-300 ${getTextSize('text-sm')} font-mono leading-relaxed`}>
+                          {JSON.stringify(currentDemo.steps[currentStep].input, null, 2)}
+                        </pre>
+                      </div>
+                    </div>
 
-                      {/* Output */}
-                      <div className="space-y-3">
-                        <h5 className={`font-semibold ${colors.text} ${getTextSize('text-base')}`}>
-                          Prediction Results
+                    {/* CENTER: Processing Animation */}
+                    <div className="flex flex-col items-center space-y-4">
+                      <div className="text-center">
+                        <h5 className={`font-bold text-purple-400 ${getTextSize('text-lg')} mb-3`}>
+                          🧠 AI Processing
                         </h5>
-                        <div className="bg-slate-700/50 rounded-lg p-4">
-                          <div className="space-y-2">
-                            {Object.entries(step.result).map(([key, value]) => (
-                              <div key={key} className="flex justify-between">
+                      </div>
+                      {isPlaying ? (
+                        <div className="flex flex-col items-center space-y-3">
+                          <div className="w-16 h-16 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></div>
+                          <div className={`text-purple-400 font-semibold ${getTextSize('text-base')} animate-pulse`}>
+                            Analyzing...
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center space-y-3">
+                          <div className="w-16 h-16 border-4 border-slate-600 rounded-full flex items-center justify-center">
+                            <span className="text-slate-400 text-2xl">⚡</span>
+                          </div>
+                          <div className={`text-slate-400 ${getTextSize('text-base')}`}>
+                            Ready to analyze
+                          </div>
+                        </div>
+                      )}
+                      {/* Arrow indicators */}
+                      <div className="hidden lg:flex absolute left-1/3 transform -translate-x-1/2">
+                        <div className="text-cyan-400 text-2xl">→</div>
+                      </div>
+                      <div className="hidden lg:flex absolute right-1/3 transform translate-x-1/2">
+                        <div className="text-cyan-400 text-2xl">→</div>
+                      </div>
+                    </div>
+
+                    {/* RIGHT: Output (Only show if step is completed or not playing) */}
+                    <div className="space-y-4">
+                      <div className="text-center">
+                        <h5 className={`font-bold text-green-400 ${getTextSize('text-lg')} mb-3`}>
+                          📤 Prediction Results
+                        </h5>
+                      </div>
+                      {(currentStep < currentDemo.steps.length && !isPlaying) || currentStep === currentDemo.steps.length - 1 ? (
+                        <div className="bg-slate-800/80 border border-green-500/30 rounded-xl p-4">
+                          <div className="space-y-3">
+                            {Object.entries(currentDemo.steps[currentStep].result).map(([key, value]) => (
+                              <div key={key} className="flex justify-between items-center">
                                 <span className={`text-slate-400 ${getTextSize('text-sm')}`}>
                                   {key}:
                                 </span>
-                                <span className={`${colors.text} font-mono ${getTextSize('text-sm')}`}>
+                                <span className={`text-green-400 font-mono font-bold ${getTextSize('text-sm')}`}>
                                   {typeof value === 'number' ? value.toFixed(3) : value}
                                 </span>
                               </div>
                             ))}
                           </div>
                         </div>
-                      </div>
-                    </div>
-
-                    {/* Explanation */}
-                    <div className={`p-4 ${colors.light} border ${colors.border} border-opacity-30 rounded-lg`}>
-                      <p className={`text-slate-200 ${getTextSize('text-base')}`}>
-                        💡 <strong>Insight:</strong> {step.explanation}
-                      </p>
+                      ) : (
+                        <div className="bg-slate-800/50 border border-slate-600 rounded-xl p-4 flex items-center justify-center h-32">
+                          <div className={`text-slate-500 ${getTextSize('text-base')} text-center`}>
+                            {isPlaying ? (
+                              <div className="space-y-2">
+                                <div className="animate-pulse">🔄 Computing...</div>
+                                <div className="text-xs">Results will appear here</div>
+                              </div>
+                            ) : (
+                              <div className="space-y-2">
+                                <div>⏳ Awaiting analysis</div>
+                                <div className="text-xs">Click Play Demo to start</div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
+
+                  {/* BOTTOM: Explanation (Only show after step completion) */}
+                  {(currentStep < currentDemo.steps.length && !isPlaying) || currentStep === currentDemo.steps.length - 1 ? (
+                    <div className={`p-4 bg-gradient-to-r from-cyan-900/20 to-purple-900/20 border border-cyan-600/30 rounded-xl`}>
+                      <p className={`text-slate-200 ${getTextSize('text-base')} text-center`}>
+                        💡 <strong>AI Insight:</strong> {currentDemo.steps[currentStep].explanation}
+                      </p>
+                    </div>
+                  ) : null}
                 </div>
-              );
-            })}
-          </div>
+              </div>
+
+              {/* Completed Steps Summary (Only show previous steps, not current) */}
+              {currentStep > 0 && (
+                <div className="space-y-4">
+                  <h4 className={`font-bold text-slate-300 ${getTextSize('text-lg')} text-center`}>
+                    📋 Completed Analysis Steps
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {currentDemo.steps.slice(0, currentStep).map((step, index) => {
+                      const colors = getColorClasses(getEndpointColor(step.endpoint));
+                      return (
+                        <div key={index} className="bg-slate-800/50 border border-slate-600 rounded-lg p-4">
+                          <div className="flex items-center gap-3 mb-2">
+                            <div className={`w-6 h-6 ${colors.bg} rounded-lg flex items-center justify-center text-white font-bold text-xs`}>
+                              ✓
+                            </div>
+                            <div className={`font-semibold text-slate-200 ${getTextSize('text-sm')}`}>
+                              {step.title}
+                            </div>
+                          </div>
+                          <div className={`text-slate-400 ${getTextSize('text-xs')} font-mono`}>
+                            {step.endpoint}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Demo Summary */}
           {currentStep >= currentDemo.steps.length - 1 && (

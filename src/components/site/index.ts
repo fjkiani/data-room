@@ -32,3 +32,4 @@ export * as Security from './security';
 // Product Page Components
 export { default as ProductPageLayout, ProductHero, ProductSection } from './ProductPageLayout';
 export { default as OracleProduct } from './OracleProduct';
+export { default as DemoFactory } from './blocks/DemoFactory';

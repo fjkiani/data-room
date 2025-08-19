@@ -51,9 +51,10 @@ export const discriminativeAIContent = {
       icon: '🧬',
       color: 'green',
       metrics: {
-        crossSpecies: { aurocRange: '0.82-0.99', species: 8, description: 'Cross-species gene prediction' },
-        depMapCorrelation: { correlation: 0.73, description: 'DepMap essentiality correlation' },
-        contextAccuracy: { accuracy: 0.89, description: 'Context-specific predictions' }
+        crossSpecies: { aurocRange: '0.82-0.99', species: 8, description: 'Cross-species exon classification (Figure 2G)' },
+        bacterialPhage: { description: 'Matched Evo 1 performance on bacterial/phage essentiality (Figure 2I)' },
+        lncRNA: { description: 'Massively outperformed other models on lncRNA essentiality (Figure 2J)' },
+        zeroShot: { description: 'No task-specific training required - pure sequence understanding' }
       },
       outputs: ['essentiality_score', 'essentiality_category', 'context_specificity', 'confidence'],
       categories: ['Essential', 'Non-essential', 'Conditionally Essential'],
@@ -86,9 +87,10 @@ export const discriminativeAIContent = {
       icon: '✂️',
       color: 'purple',
       metrics: {
-        cuttingEfficiency: { correlation: 0.76, description: 'Correlation with experimental cutting' },
-        frameshiftPrediction: { accuracy: 0.82, description: 'Frameshift outcome prediction' },
-        indel_outcomes: { precision: 0.79, description: 'Indel pattern prediction' }
+        variantImpactBased: { description: 'Efficacy predicted via variant impact simulation (endpoints.md)' },
+        frameshiftProxy: { description: 'Frameshift probability as efficacy proxy' },
+        empiricalPriors: { description: 'Combined with empirical indel outcome priors' },
+        offTargetSeparate: { description: 'Off-target analysis handled separately in guide design' }
       },
       outputs: ['efficacy_score', 'efficacy_prediction', 'frameshift_probability', 'indel_patterns'],
       applications: [
@@ -121,10 +123,10 @@ export const discriminativeAIContent = {
       icon: '🧭',
       color: 'orange',
       metrics: {
-        atac_seq_correlation: { correlation: 0.85, description: 'ATAC-seq data correlation' },
-        dnase_correlation: { correlation: 0.82, description: 'DNase-seq data correlation' },
-        tissue_specificity: { accuracy: 0.78, description: 'Tissue-specific predictions' },
-        enhancer_prediction: { auroc: 0.89, description: 'Enhancer region identification' }
+        sae_tf_motifs: { description: 'SAE features activate on TF binding motifs (Figure 4F)' },
+        enformer_borzoi: { description: 'Tier 2: Integration with Enformer/Borzoi tracks (endpoints.md)' },
+        dart_eval: { description: 'Validated on DART-Eval Tasks 1/2/5 (endpoints.md)' },
+        regulatory_elements: { description: 'Learned representations of regulatory motifs without supervision' }
       },
       outputs: ['accessibility_score', 'accessibility_state', 'tissue_specificity', 'regulatory_elements'],
       states: ['Open_Chromatin', 'Closed_Chromatin', 'Poised_Chromatin', 'Heterochromatin'],
@@ -156,10 +158,10 @@ export const discriminativeAIContent = {
       icon: '🔬',
       color: 'red',
       metrics: {
-        dms_correlation: { correlation: 0.71, description: 'Deep Mutational Scanning correlation' },
-        stability_prediction: { correlation: 0.68, description: 'Protein stability changes' },
-        binding_affinity: { correlation: 0.74, description: 'Binding affinity predictions' },
-        folding_impact: { accuracy: 0.83, description: 'Protein folding impact' }
+        dms_correlation: { description: 'Strong correlation with Deep Mutational Scanning (Figure 2E)' },
+        competitive_performance: { description: 'Competitive with protein-specialized models (Evo2 paper)' },
+        prokaryotic_eukaryotic: { description: 'Works across prokaryotic and eukaryotic proteins' },
+        zero_shot_capability: { description: 'No task-specific training required' }
       },
       outputs: ['functionality_score_change', 'stability_change', 'folding_impact_score', 'binding_predictions'],
       applications: [
